@@ -1,0 +1,3 @@
+include ':buildsrc'
+include ':app'
+rootProject.name = "SendBizCard"

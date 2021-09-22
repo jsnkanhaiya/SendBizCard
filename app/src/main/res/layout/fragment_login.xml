@@ -4,7 +4,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        >
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTitle"
@@ -36,7 +38,7 @@
 
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etMobile"
+            android:id="@+id/etEmailID"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/tvTitleImage"
@@ -44,15 +46,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="40dp"
             android:hint="@string/mobileno"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/etEmailID"
+            android:layout_marginTop="20dp"
+            android:hint="@string/password"
+            android:inputType="textVisiblePassword"
             />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/etMobile"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="50dp"

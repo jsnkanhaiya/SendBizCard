@@ -11,7 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SendBizCard">
         <activity
-            android:name=".HomeActivity"
+            android:name=".ui.MainActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.SendBizCard.NoActionBar">
 
@@ -22,7 +22,7 @@
             </intent-filter>
 
         </activity>
-        <activity android:name=".ui.MainActivity">
+        <activity android:name=".HomeActivity">
 
         </activity>
     </application>

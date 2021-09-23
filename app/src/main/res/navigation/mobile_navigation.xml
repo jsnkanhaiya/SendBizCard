@@ -3,7 +3,43 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_my_profile">
+    app:startDestination="@+id/nav_Splash">
+
+    <fragment
+        android:id="@+id/nav_Splash"
+        android:name="com.sendbizcard.ui.splash.SplashFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_slideshow">
+
+        <action
+            android:id="@+id/actionSplashToLoginFragment"
+            app:destination="@id/nav_login"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/actionSplashToSignUpFragment"
+            app:destination="@id/nav_Singup"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_login"
+        android:name="com.sendbizcard.ui.SiginFragment"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_Singup"
+        android:name="com.sendbizcard.ui.register.SignUpFragment"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_my_profile"
@@ -39,4 +75,6 @@
         android:name="com.sendbizcard.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_logout"
         tools:layout="@layout/fragment_slideshow" />
+
+
 </navigation>

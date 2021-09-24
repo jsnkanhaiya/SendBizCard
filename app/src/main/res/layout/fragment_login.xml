@@ -43,7 +43,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="40dp"
-        android:hint="@string/mobileno"
+        android:inputType="textEmailAddress"
+        android:hint="@string/emailID"
         />
     <com.google.android.material.textfield.TextInputEditText
         android:id="@+id/etPassword"

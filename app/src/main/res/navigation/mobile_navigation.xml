@@ -14,7 +14,7 @@
 
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.sendbizcard.ui.SigInFragment"
+        android:name="com.sendbizcard.ui.signin.SigInFragment"
         android:label="@string/menu_my_profile"
         tools:layout="@layout/fragment_login" />
 

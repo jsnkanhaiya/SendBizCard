@@ -1,5 +1,8 @@
 package com.sendbizcard.utils
 
+import android.text.TextUtils
+import android.util.Patterns
+
 
 object ValidationUtils {
 
@@ -12,6 +15,14 @@ object ValidationUtils {
     return userName.isNullOrEmpty()
   }
 
+  fun isValidOtp(otp: String): Boolean {
+    return otp.length==6
+  }
+
+  fun isValidMobileNo(mobileNo: String): Boolean {
+    return mobileNo.length==10
+  }
+
   fun isRequiredPasswordLengthForChangePassword(password: String): Boolean {
     return password.length >= AppConstants.MINIMUM_PASSWORD_LENGTH
   }
@@ -22,6 +33,10 @@ object ValidationUtils {
 
   fun isBothPasswordMatch(password: String, confirmPassword: String): Boolean {
     return password == confirmPassword
+  }
+
+   fun isValidEmail(email: String): Boolean {
+    return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
   }
 
 }

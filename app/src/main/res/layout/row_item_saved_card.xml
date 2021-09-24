@@ -90,7 +90,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:layout_marginLeft="15dp"
-            android:background="@drawable/ic_launcher_background"
+            android:backgroundTint="@color/red"
+            android:background="@android:drawable/ic_menu_close_clear_cancel"
             />
     </LinearLayout>
 

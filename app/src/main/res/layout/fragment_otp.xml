@@ -1,112 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/enterpin"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/textcolour"
+        android:textStyle="bold"
+        android:layout_marginTop="63dp"
+        />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/tvTitleImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/create_account"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/ic_otp"
+        />
+
+    <com.chaos.view.PinView
+        android:id="@+id/otpPinView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleImage"
+        android:layout_centerHorizontal="true"
+        android:inputType="number"
+        android:layout_margin="30dp"
+        app:itemCount="6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:itemRadius="@dimen/pv_pin_view_item_radius" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAlreadyAccount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/otpPinView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/dontrecive"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/textcolour"
+        android:layout_marginTop="34dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSendOtp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvAlreadyAccount"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/sendOtpText"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="@color/textcolour"
+        android:layout_margin="30dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/cbAccept"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tvSendOtp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="@string/acceptTNC"
+        android:layout_margin="30dp"
+        android:textSize="16sp"
+        android:padding="10dp"
+        />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@string/enterpin"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/textcolour"
-            android:textStyle="bold"
-            android:layout_marginTop="63dp"
-            />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/cbAccept"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="30dp"
+        android:paddingLeft="65sp"
+        android:paddingRight="65sp"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_rectangle"
+        android:text="@string/next"
+        android:layout_margin="30dp"
+        />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/tvTitleImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/create_account"
-            android:gravity="center"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/ic_otp"
-            />
-
-        <com.chaos.view.PinView
-            android:id="@+id/otpPinView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvTitleImage"
-            android:layout_centerHorizontal="true"
-            android:inputType="number"
-            android:layout_margin="30dp"
-            app:itemCount="6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:itemRadius="@dimen/pv_pin_view_item_radius" />
-
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvAlreadyAccount"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/otpPinView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/dontrecive"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/textcolour"
-            android:layout_marginTop="34dp"
-            />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSendOtp"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvAlreadyAccount"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/sendOtpText"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textColor="@color/textcolour"
-            android:layout_margin="30dp"
-            />
-
-        <androidx.appcompat.widget.AppCompatCheckBox
-            android:id="@+id/cbAccept"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvSendOtp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/acceptTNC"
-            android:layout_margin="30dp"
-            android:textSize="16sp"
-            android:padding="10dp"
-            />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/cbAccept"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="30dp"
-            android:paddingLeft="65sp"
-            android:paddingRight="65sp"
-            android:textSize="16sp"
-            android:textColor="@color/white"
-            android:background="@drawable/button_rectangle"
-            android:text="@string/next"
-            android:layout_margin="30dp"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,30 +4,45 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.R
 import com.sendbizcard.databinding.FragmentSiginupBinding
+import com.sendbizcard.databinding.FragmentSlideshowBinding
+import com.sendbizcard.ui.slideshow.SlideshowViewModel
 
 class SignUpFragment : Fragment() {
+
     private val TAG = "SignUpFragment"
-    private lateinit var binding: FragmentSiginupBinding
-    private lateinit var viewModel: SignUpViewModel
+
+    private lateinit var signUpViewModel: SignUpViewModel
+    private var _binding: FragmentSiginupBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProvider(requireActivity())[SignUpViewModel::class.java]
-        binding = DataBindingUtil.inflate(
-            inflater,
-            R.layout.fragment_siginup, container, false
-        )
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
-        return binding.root
+        signUpViewModel =
+            ViewModelProvider(this).get(SignUpViewModel::class.java)
+
+        _binding = FragmentSiginupBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+
+        return root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

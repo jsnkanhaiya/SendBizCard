@@ -1,16 +1,29 @@
 package com.sendbizcard.base
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseActivity : AppCompatActivity() {
+abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {
 
-    @LayoutRes
-    abstract fun getLayoutId(): Int
+    private var _binding: ViewBinding? = null
+    abstract val bindingInflater: (LayoutInflater) -> VB
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(getLayoutId())
+        _binding = bindingInflater.invoke(layoutInflater)
+        setContentView(requireNotNull(_binding).root)
+    }
+
+    @Suppress("UNCHECKED_CAST")
+    protected fun getViewBinding(): VB {
+        return _binding as VB
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

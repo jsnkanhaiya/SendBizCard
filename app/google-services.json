@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "876781391346",
+    "project_id": "send-business-card",
+    "storage_bucket": "send-business-card.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:876781391346:android:f707204b61075691066f6b",
+        "android_client_info": {
+          "package_name": "com.sendbizcard"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "876781391346-e4i4kq3qt8jrkf0ao1cgf4cp6ei4071j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtNiwPGqP5DMptcRTmzeRzaVZpxH7FJS0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "876781391346-e4i4kq3qt8jrkf0ao1cgf4cp6ei4071j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

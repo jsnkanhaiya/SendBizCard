@@ -13,6 +13,7 @@ import com.sendbizcard.databinding.FragmentSiginupBinding
 import com.sendbizcard.databinding.FragmentSlideshowBinding
 import com.sendbizcard.ui.slideshow.SlideshowViewModel
 
+
 class SignUpFragment : Fragment() {
 
     private val TAG = "SignUpFragment"
@@ -46,10 +47,10 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        setupObservers()
+        setUpObservers()
     }
 
-    private fun setupObservers() {
+    private fun setUpObservers() {
 
     }
 

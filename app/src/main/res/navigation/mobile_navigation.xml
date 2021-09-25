@@ -14,15 +14,15 @@
 
     <fragment
         android:id="@+id/nav_login"
-        android:name="com.sendbizcard.ui.signin.SigInFragment"
+        android:name="com.sendbizcard.ui.login.LoginFragment"
         android:label="@string/menu_my_profile"
         tools:layout="@layout/fragment_login" />
 
     <fragment
         android:id="@+id/nav_sign_up"
-        android:name="com.sendbizcard.ui.register.SignUpFragment"
+        android:name="com.sendbizcard.ui.register.RegisterFragment"
         android:label="@string/menu_my_profile"
-        tools:layout="@layout/fragment_siginup" />
+        tools:layout="@layout/fragment_register" />
 
     <fragment
         android:id="@+id/nav_my_profile"

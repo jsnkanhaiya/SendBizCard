@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.databinding.FragmentCreateNewPasswordBinding
 
-
 class CreateNewPasswordFragment : Fragment(){
 
 

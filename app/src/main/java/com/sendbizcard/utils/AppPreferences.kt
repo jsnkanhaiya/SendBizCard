@@ -4,4 +4,5 @@ import com.chibatching.kotpref.KotprefModel
 
 internal object AppPreferences : KotprefModel(){
     var isUserLoggedin by booleanPref()
+    var userId by stringPref()
 }

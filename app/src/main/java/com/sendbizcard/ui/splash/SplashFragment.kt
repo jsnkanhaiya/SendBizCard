@@ -15,11 +15,12 @@ import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
+import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentSlideshowBinding
 import com.sendbizcard.databinding.FragmentSplashBinding
 import com.sendbizcard.ui.slideshow.SlideshowViewModel
 
-class SplashFragment : Fragment() {
+class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     private val TAG = "SplashFragment"
     private var _binding: FragmentSplashBinding? = null
@@ -71,4 +72,7 @@ class SplashFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSplashBinding
+        get() = FragmentSplashBinding::inflate
 }

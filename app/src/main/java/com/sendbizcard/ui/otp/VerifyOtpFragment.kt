@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.databinding.FragmentChangePasswordVerificationBinding
 
-
 class VerifyOtpFragment : Fragment() {
 
     private val TAG = "VerifyOtpFragment"

@@ -18,7 +18,6 @@ class ApiRepositoryImpl @Inject constructor(
             preferenceSource.isUserLoggedIn = value
         }
 
-
     override suspend fun login(): NetworkResponse<SavedCards, ErrorsListResponse> {
         return apiService.login("")
     }
@@ -26,4 +25,5 @@ class ApiRepositoryImpl @Inject constructor(
     override suspend fun register(): NetworkResponse<SavedCards, ErrorsListResponse> {
         return apiService.register("")
     }
+
 }

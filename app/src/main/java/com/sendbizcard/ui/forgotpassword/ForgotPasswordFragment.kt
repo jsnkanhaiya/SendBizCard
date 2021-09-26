@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.databinding.*
-import com.sendbizcard.ui.register.SignUpViewModel
-import com.sendbizcard.ui.signin.SigInViewModel
 
 class ForgotPasswordFragment :Fragment() {
 

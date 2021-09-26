@@ -1,10 +1,14 @@
 package com.sendbizcard.di
 
+import android.content.Context
 import com.sendbizcard.api.ApiService
 import com.sendbizcard.BuildConfig
+import com.sendbizcard.utils.PreferenceSource
+import com.sendbizcard.utils.PreferenceSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -71,4 +75,8 @@ object NetworkModule {
     fun provideRetrofitApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }
+
+
+
+
 }

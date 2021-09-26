@@ -79,6 +79,8 @@ dependencies {
     def liveData_version = "2.3.1"
     def viewModel_version = "2.3.1"
     def navigation_version = "2.3.5"
+    def kotPref = "2.6.0"
+
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.6.0'
@@ -121,4 +123,9 @@ dependencies {
     //Firebase
     implementation platform('com.google.firebase:firebase-bom:28.4.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+
+    // Kotlin preferences
+    implementation "com.chibatching.kotpref:kotpref:$kotPref"
+    implementation "com.chibatching.kotpref:enum-support:$kotPref"
+
 }

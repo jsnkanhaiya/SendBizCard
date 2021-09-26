@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentRegisterBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private lateinit var registerViewModel: RegisterViewModel
@@ -19,8 +20,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
         registerViewModel =
             ViewModelProvider(this).get(RegisterViewModel::class.java)
     }
-
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

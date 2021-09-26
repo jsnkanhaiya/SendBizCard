@@ -7,6 +7,8 @@
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_siginup.xml" value="0.16576086956521738" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.2175925925925926" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_thankyou_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_change_password_verification.xml" value="0.12284701114488349" />
@@ -16,6 +18,7 @@
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_register.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_siginup.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/row_item_saved_card.xml" value="0.2346014492753623" />
       </map>

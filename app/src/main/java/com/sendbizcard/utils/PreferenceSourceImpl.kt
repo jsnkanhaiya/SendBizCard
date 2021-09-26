@@ -9,4 +9,10 @@ class PreferenceSourceImpl(private val context: Context) : PreferenceSource {
         set(value) {
             AppPreferences.isUserLoggedin = value
         }
+
+    override var userId: String
+        get() = AppPreferences.userId
+        set(value) {
+            AppPreferences.userId = value
+        }
 }

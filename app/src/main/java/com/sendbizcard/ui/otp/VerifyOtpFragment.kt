@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.databinding.FragmentChangePasswordVerificationBinding
-import com.sendbizcard.databinding.FragmentSiginupBinding
-import com.sendbizcard.ui.register.SignUpViewModel
 
 class VerifyOtpFragment : Fragment() {
 

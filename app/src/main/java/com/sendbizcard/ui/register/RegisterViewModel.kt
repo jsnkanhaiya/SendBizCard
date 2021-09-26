@@ -6,7 +6,7 @@ import com.sendbizcard.utils.ValidationUtils
 import com.sendbizcard.utils.ValidationUtils.isValidEmail
 import com.sendbizcard.utils.ValidationUtils.isValidMobileNo
 
-class SignUpViewModel : ViewModel() {
+class RegisterViewModel : ViewModel() {
 
     var strName = MutableLiveData<String>()
     var strMobileNo = MutableLiveData<String>()

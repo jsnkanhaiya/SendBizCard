@@ -23,8 +23,23 @@ object NetworkModule {
     private val CONNECT_TIMEOUT_SECONDS = 10
 
 
-    @Singleton
     @Provides
+    @Singleton
+    fun provideOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor
+    ): OkHttpClient {
+        return OkHttpClient.Builder()
+            .connectTimeout(CONNECT_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
+            .readTimeout(READ_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
+            .writeTimeout(WRITE_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
+            .addInterceptor(httpLoggingInterceptor)
+            .build()
+    }
+
+
+
+    @Provides
+    @Singleton
     fun provideHttpLogger(): HttpLoggingInterceptor {
         return if (BuildConfig.DEBUG) {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
@@ -40,32 +55,19 @@ object NetworkModule {
     }
 
 
-    @Singleton
-    @Provides
-    fun provideOtherInterceptorOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient {
-        return OkHttpClient.Builder()
-            .connectTimeout(CONNECT_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            .readTimeout(READ_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            .writeTimeout(WRITE_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
-            .addInterceptor(httpLoggingInterceptor)
-            .build()
 
-    }
-
-    @Singleton
     @Provides
-    fun provideRetrofit(httpClient: OkHttpClient.Builder): Retrofit {
+    @Singleton
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
-            .client(httpClient.build())
             .build()
     }
 
-    @Singleton
     @Provides
+    @Singleton
     fun provideRetrofitApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
     }

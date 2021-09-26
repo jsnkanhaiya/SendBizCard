@@ -1,4 +1,3 @@
-package com.sendbizcard.ui.signin
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

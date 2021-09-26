@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentLoginBinding
 import com.sendbizcard.ui.register.RegisterViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private lateinit var loginViewModel: LoginViewModel

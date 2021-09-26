@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -19,31 +20,17 @@ import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentSlideshowBinding
 import com.sendbizcard.databinding.FragmentSplashBinding
 import com.sendbizcard.ui.slideshow.SlideshowViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     private val TAG = "SplashFragment"
-    private var _binding: FragmentSplashBinding? = null
-    private lateinit var splashViewModel: SplashViewModel
+    private var binding: FragmentSplashBinding? = null
+    private val splashViewModel: SplashViewModel by viewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        splashViewModel =
-            ViewModelProvider(this).get(SplashViewModel::class.java)
-
-        _binding = FragmentSplashBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        return root
-    }
-
 
     private fun setupObservers() {
 
@@ -51,6 +38,8 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding = getViewBinding()
 
         withDelayOnMain(3000){
             if (splashViewModel.isUserLoggedIn){
@@ -66,11 +55,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
 
     fun withDelayOnMain(delay: Long, block: () -> Unit) {
         Handler(Looper.getMainLooper()).postDelayed(Runnable(block), delay)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSplashBinding

@@ -18,7 +18,7 @@ package com.sendbizcard.di
 
 import com.sendbizcard.api.ApiService
 import com.sendbizcard.repository.ApiRepositoryImpl
-import com.sendbizcard.utils.PreferenceSource
+import com.sendbizcard.prefs.PreferenceSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,9 +33,8 @@ object RepositoryModule {
   @Provides
   @ViewModelScoped
   fun provideApiRepository(
-    apiService: ApiService,
-    preferenceSource: PreferenceSource
+    apiService: ApiService
   ): ApiRepositoryImpl {
-    return ApiRepositoryImpl(apiService,preferenceSource)
+    return ApiRepositoryImpl(apiService)
   }
 }

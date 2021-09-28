@@ -1,4 +1,4 @@
-package com.sendbizcard.utils
+package com.sendbizcard.prefs
 
 interface PreferenceSource {
     var isUserLoggedIn: Boolean

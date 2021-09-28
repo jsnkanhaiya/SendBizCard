@@ -1,9 +1,12 @@
 package com.sendbizcard.di
 
+import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.sendbizcard.ui.home.adapter.SavedCardsAdapter
-import com.sendbizcard.utils.PreferenceSource
-import com.sendbizcard.utils.PreferenceSourceImpl
+import com.sendbizcard.prefs.PreferenceSource
+import com.sendbizcard.prefs.PreferenceSourceImpl
+import com.sendbizcard.utils.AppConstants.APPLICATION_PREFERENCE_NAME
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,9 +22,17 @@ object AppModule  {
     @Singleton
     fun provideSavedCardsAdapter() : SavedCardsAdapter = SavedCardsAdapter()
 
-    @Singleton
     @Provides
-    fun providesPreferencesSource(@ApplicationContext context: Context): PreferenceSource =
-        PreferenceSourceImpl(context)
+    @Singleton
+    fun provideSharedPreference(@ApplicationContext context: Context) : SharedPreferences {
+        return context.getSharedPreferences(APPLICATION_PREFERENCE_NAME, Context.MODE_PRIVATE)
+    }
+
+    @Provides
+    @Singleton
+    fun providesPreferencesSourceImpl(preferences: SharedPreferences): PreferenceSourceImpl {
+        return PreferenceSourceImpl(preferences)
+    }
+
 
 }

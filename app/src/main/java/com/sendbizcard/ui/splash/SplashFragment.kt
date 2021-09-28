@@ -29,8 +29,6 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     private var binding: FragmentSplashBinding? = null
     private val splashViewModel: SplashViewModel by viewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
 
     private fun setupObservers() {
 
@@ -42,9 +40,9 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
         binding = getViewBinding()
 
         withDelayOnMain(3000){
-            if (splashViewModel.isUserLoggedIn){
-                var i = Intent(requireContext(),HomeActivity::class.java)
-                startActivity(i)
+            if (splashViewModel.checkIfUserIsLoggedIn()){
+                val intent = Intent(requireContext(),HomeActivity::class.java)
+                startActivity(intent)
             }else{
                 findNavController().navigate(R.id.nav_login)
             }

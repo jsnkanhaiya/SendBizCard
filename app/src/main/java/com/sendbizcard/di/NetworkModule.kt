@@ -17,7 +17,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private val BASE_URL = "https://example.com"
+    private val BASE_URL = "http://xapi.sendbusinesscard.com"
     private val READ_TIMEOUT_SECONDS = 60
     private val WRITE_TIMEOUT_SECONDS = 60
     private val CONNECT_TIMEOUT_SECONDS = 10

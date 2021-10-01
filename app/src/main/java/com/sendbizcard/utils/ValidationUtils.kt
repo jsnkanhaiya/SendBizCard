@@ -23,6 +23,8 @@ object ValidationUtils {
     return mobileNo.length==10
   }
 
+
+
   fun isRequiredPasswordLengthForChangePassword(password: String): Boolean {
     return password.length >= AppConstants.MINIMUM_PASSWORD_LENGTH
   }

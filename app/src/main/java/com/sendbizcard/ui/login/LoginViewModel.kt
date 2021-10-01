@@ -2,9 +2,9 @@ package com.sendbizcard.ui.login
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.sendbizcard.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
+import com.sendbizcard.models.request.LoginRequestModel
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.ValidationUtils
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,12 +19,14 @@ class LoginViewModel @Inject constructor(
 ) : BaseViewModel(), LifecycleObserver {
 
     var strEmailId = MutableLiveData<String>()
+    var strPassword = MutableLiveData<String>()
 
     fun login() {
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {
-                    apiRepositoryImpl.login()
+                    var reqObj = LoginRequestModel(strEmailId.value,strPassword.value)
+                    apiRepositoryImpl.login(reqObj)
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
@@ -49,10 +51,14 @@ class LoginViewModel @Inject constructor(
 
 
 
-    fun isValidEmailID(): Boolean {
+    fun isValidLoginData(): Boolean {
         if (strEmailId.value.isNullOrBlank()) {
             return false
         } else if (!ValidationUtils.isValidEmail(strEmailId.value!!)) {
+            return false
+        }else if (strPassword.value.isNullOrBlank()) {
+            return false
+        } else if (!ValidationUtils.isRequiredPasswordLengthForChangePassword(strPassword.value!!)) {
             return false
         } else {
             return true

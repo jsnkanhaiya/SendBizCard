@@ -28,8 +28,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun initViews() {
         binding?.btnSave?.setOnClickListener {
-            if (loginViewModel.isValidLoginData()) {
-
+            val emailId = binding?.etEmailID?.text.toString()
+            val password = binding?.etPassword?.text.toString()
+            if (loginViewModel.isValidLoginData(emailId,password)) {
+                loginViewModel.login(emailId,password)
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.sendbizcard.di
 
+import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import com.sendbizcard.api.ApiService
 import com.sendbizcard.BuildConfig
 import dagger.Module
@@ -63,6 +64,7 @@ object NetworkModule {
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(NetworkResponseAdapterFactory())
             .build()
     }
 

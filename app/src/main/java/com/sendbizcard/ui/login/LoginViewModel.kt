@@ -1,8 +1,7 @@
 package com.sendbizcard.ui.login
 
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.MutableLiveData
-import com.sendbizcard.NetworkResponse
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
 import com.sendbizcard.models.request.LoginRequestModel
 import com.sendbizcard.repository.ApiRepositoryImpl
@@ -18,15 +17,12 @@ class LoginViewModel @Inject constructor(
     private val apiRepositoryImpl: ApiRepositoryImpl
 ) : BaseViewModel(), LifecycleObserver {
 
-    var strEmailId = MutableLiveData<String>()
-    var strPassword = MutableLiveData<String>()
-
-    fun login() {
+    fun login(emailId: String, password: String) {
+        val loginRequest = LoginRequestModel(emailId,password)
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {
-                    var reqObj = LoginRequestModel(strEmailId.value,strPassword.value)
-                    apiRepositoryImpl.login(reqObj)
+                    apiRepositoryImpl.login(loginRequest)
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
@@ -51,17 +47,15 @@ class LoginViewModel @Inject constructor(
 
 
 
-    fun isValidLoginData(): Boolean {
-        if (strEmailId.value.isNullOrBlank()) {
-            return false
-        } else if (!ValidationUtils.isValidEmail(strEmailId.value!!)) {
-            return false
-        }else if (strPassword.value.isNullOrBlank()) {
-            return false
-        } else if (!ValidationUtils.isRequiredPasswordLengthForChangePassword(strPassword.value!!)) {
-            return false
-        } else {
-            return true
+    fun isValidLoginData(emailId: String, password: String): Boolean {
+        return when {
+            emailId.isBlank() -> {
+                false
+            }
+            password.isBlank() -> {
+                false
+            }
+            else -> ValidationUtils.isRequiredPasswordLengthForChangePassword(password)
         }
 
     }

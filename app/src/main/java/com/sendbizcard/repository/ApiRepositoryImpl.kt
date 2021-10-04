@@ -23,4 +23,29 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.register(url,registerRequestModel)
     }
 
+    override suspend fun forgotPassword(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
+        val url = "http://xapi.sendbusinesscard.com/api/forgot/password"
+        return apiService.forgotPassword(url,registerRequestModel)
+    }
+
+    override suspend fun changePassword(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
+        val url = "http://xapi.sendbusinesscard.com/api/change/password"
+        return apiService.changePassword(url,registerRequestModel)
+    }
+
+    override suspend fun verifyForgotPasswordOTP(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
+        val url = "http://xapi.sendbusinesscard.com/api/verify/forgotPassword/otp"
+        return apiService.verifyForgotPasswordOTP(url,registerRequestModel)
+    }
+
+    override suspend fun verifyOtp(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
+        val url = "http://xapi.sendbusinesscard.com/api/otp/verify"
+        return apiService.verifyOtps(url,registerRequestModel)
+    }
+
+    override suspend fun logoutUser(): NetworkResponse<SavedCards, ErrorsListResponse> {
+        val url = "http://xapi.sendbusinesscard.com/api/otp/verify"
+        return apiService.logoutUser(url)
+    }
+
 }

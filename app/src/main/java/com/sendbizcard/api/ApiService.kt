@@ -18,4 +18,24 @@ interface ApiService {
     @POST
     fun register(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
+    @POST
+    fun logoutUser(@Url url: String) : NetworkResponse<SavedCards, ErrorsListResponse>
+
+
+    @POST
+    fun forgotPassword(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+
+
+    @POST
+    fun changePassword(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+
+
+    @POST
+    fun verifyForgotPasswordOTP(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+
+
+    @POST
+    fun verifyOtp(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+
+
 }

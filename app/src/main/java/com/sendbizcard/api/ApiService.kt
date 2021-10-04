@@ -4,6 +4,7 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.LoginRequestModel
+import com.sendbizcard.models.request.RegisterRequestModel
 import com.sendbizcard.models.response.LoginResponseModel
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -15,6 +16,6 @@ interface ApiService {
     suspend fun login(@Url url: String, @Body loginRequest: LoginRequestModel) : NetworkResponse<LoginResponseModel,ErrorsListResponse>
 
     @POST
-    fun register(@Url url: String) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun register(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 }

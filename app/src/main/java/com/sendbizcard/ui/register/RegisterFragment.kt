@@ -34,8 +34,20 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun initViews() {
         binding?.btnSave?.setOnClickListener {
-            if (registerViewModel.isValidAllValue()){
-                registerViewModel.registerUser()
+            val name = binding?.etName?.text.toString()
+            val emailId = binding?.etEmailID?.text.toString()
+            val mobileNo = binding?.etMobile?.text.toString()
+            val password = binding?.etPassword?.text.toString()
+            val confPassword = binding?.etConfirmPassword?.text.toString()
+            if (registerViewModel.isValidRegisterData(
+                    name,
+                    mobileNo,
+                    emailId,
+                    password,
+                    confPassword
+                )
+            ) {
+                registerViewModel.registerUser(name, mobileNo, emailId, password, confPassword)
             }
         }
     }

@@ -1,10 +1,15 @@
 package com.sendbizcard.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.sendbizcard.HomeActivity
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentLoginBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +28,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun setupObservers() {
-
+        loginViewModel.loginReponse.observe(viewLifecycleOwner, Observer {
+            var i = Intent(requireContext(),HomeActivity::class.java)
+            requireActivity().startActivity(i)
+        })
     }
 
     private fun initViews() {

@@ -1,47 +1,92 @@
 package com.sendbizcard.ui.register
 
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.sendbizcard.base.BaseViewModel
+import com.sendbizcard.models.request.RegisterRequestModel
+import com.sendbizcard.prefs.PreferenceSourceImpl
+import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.ValidationUtils
-import com.sendbizcard.utils.ValidationUtils.isValidEmail
-import com.sendbizcard.utils.ValidationUtils.isValidMobileNo
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RegisterViewModel : ViewModel() {
+@HiltViewModel
+class RegisterViewModel @Inject constructor(
+    private val apiRepositoryImpl: ApiRepositoryImpl,
+    private val preferenceSourceImpl: PreferenceSourceImpl
 
-    var strName = MutableLiveData<String>()
-    var strMobileNo = MutableLiveData<String>()
-    var strEmailId = MutableLiveData<String>()
-    var strPassword = MutableLiveData<String>()
-    var strConfirmPassword = MutableLiveData<String>()
+) : BaseViewModel(), LifecycleObserver {
 
-    fun registerUser() {
+    var registerReponse = MutableLiveData<Boolean>()
+
+
+    fun registerUser(
+        name: String,
+        mobileNo: String,
+        emailId: String,
+        password: String,
+        confPassword: String
+    ) {
+        val registerRequestModel =
+            RegisterRequestModel(password, mobileNo, name, emailId, confPassword)
+        jobList.add(launch {
+            val result = withContext(Dispatchers.IO) {
+                apiRepositoryImpl.register(registerRequestModel)
+            }
+            when (result) {
+                is NetworkResponse.Success -> {
+                    // registerReponse = result
+                }
+
+                is NetworkResponse.ServerError -> {
+
+                }
+
+                is NetworkResponse.NetworkError -> {
+
+                }
+
+                is NetworkResponse.UnknownError -> {
+
+                }
+            }
+        })
 
     }
 
-    fun isValidAllValue(): Boolean {
-        if (strName.value.isNullOrBlank()) {
-            return false
-        } else if (strMobileNo.value.isNullOrBlank()) {
-            return false
-        } else if (!isValidMobileNo(strMobileNo.value!!)) {
-            return false
-        } else if (strEmailId.value.isNullOrBlank()) {
-            return false
-        } else if (!isValidEmail(strEmailId.value!!)) {
-            return false
-        } else if (strPassword.value.isNullOrBlank()) {
-            return false
-        } else if (strConfirmPassword.value.isNullOrBlank()) {
-            return false
-        } else if (!ValidationUtils.isBothPasswordMatch(
-                strPassword.value!!,
-                strConfirmPassword.value!!
-            )
-        ) {
-            return false
-        } else {
-            return true
+
+    fun isValidRegisterData(
+        name: String,
+        mobileNo: String,
+        emailId: String,
+        password: String,
+        confPassword: String
+    ): Boolean {
+        return when {
+            name.isBlank() -> {
+                false
+            }
+            mobileNo.isBlank() -> {
+                false
+            }
+            emailId.isBlank() -> {
+                false
+            }
+            confPassword.isBlank() -> {
+                false
+            }
+            ValidationUtils.isRequiredPasswordLengthForLogin(password) -> {
+                false
+            }
+            ValidationUtils.isRequiredPasswordLengthForLogin(confPassword) -> {
+                false
+            }
+            else -> ValidationUtils.isRequiredPasswordLengthForChangePassword(password)
         }
 
     }
+
 }

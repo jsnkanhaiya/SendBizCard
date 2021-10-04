@@ -9,6 +9,7 @@ class PreferenceSourceImpl @Inject constructor(private val preferences: SharedPr
     private object PreferencesKeys {
         const val IS_USER_LOGGED_IN = "IS_USER_LOGGED_IN"
         const val USER_ID = "USER_ID"
+        const val USER_TOKEN = "USER_TOKEN"
     }
 
     override var isUserLoggedIn: Boolean
@@ -21,5 +22,11 @@ class PreferenceSourceImpl @Inject constructor(private val preferences: SharedPr
         get() = preferences.getString(PreferencesKeys.USER_ID,"") ?: ""
         set(value) {
             preferences.edit().putString(PreferencesKeys.USER_ID,value).apply()
+        }
+
+    override var userToken: String
+        get() = preferences.getString(PreferencesKeys.USER_TOKEN,"") ?: ""
+        set(value) {
+            preferences.edit().putString(PreferencesKeys.USER_TOKEN,value).apply()
         }
 }

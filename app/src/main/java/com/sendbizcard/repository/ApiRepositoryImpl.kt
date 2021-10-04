@@ -40,7 +40,7 @@ class ApiRepositoryImpl @Inject constructor(
 
     override suspend fun verifyOtp(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
         val url = "http://xapi.sendbusinesscard.com/api/otp/verify"
-        return apiService.verifyOtps(url,registerRequestModel)
+        return apiService.verifyOtp(url,registerRequestModel)
     }
 
     override suspend fun logoutUser(): NetworkResponse<SavedCards, ErrorsListResponse> {

@@ -1,13 +1,18 @@
 package com.sendbizcard.ui.forgotpassword
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.sendbizcard.HomeActivity
 import com.sendbizcard.databinding.*
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForgotPasswordFragment :Fragment() {
 
 
@@ -47,12 +52,17 @@ class ForgotPasswordFragment :Fragment() {
     }
 
     private fun setupObservers() {
+        forgotPasswordViewmodel.forgotPasswordReponse.observe(viewLifecycleOwner, Observer {
 
+        })
     }
 
     private fun initViews() {
         binding.btnSave.setOnClickListener {
-
+            val emailId = binding?.etEmailID?.text.toString()
+            if (forgotPasswordViewmodel.isValidData(emailId)){
+                forgotPasswordViewmodel.forgotPasswordUser(emailId)
+            }
         }
     }
 }

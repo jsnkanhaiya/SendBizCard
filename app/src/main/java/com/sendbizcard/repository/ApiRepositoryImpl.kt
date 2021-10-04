@@ -1,9 +1,10 @@
 package com.sendbizcard.repository
 
-import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.api.ApiService
 import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.home.SavedCards
+import com.sendbizcard.models.request.ChangePasswordRequestModel
+import com.sendbizcard.models.request.ForgotPasswordRequestModel
 import com.sendbizcard.models.request.LoginRequestModel
 import com.sendbizcard.models.request.RegisterRequestModel
 import com.sendbizcard.models.response.LoginResponseModel
@@ -23,14 +24,14 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.register(url,registerRequestModel)
     }
 
-    override suspend fun forgotPassword(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
+    override suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
         val url = "http://xapi.sendbusinesscard.com/api/forgot/password"
-        return apiService.forgotPassword(url,registerRequestModel)
+        return apiService.forgotPassword(url,forgotPasswordRequestModel)
     }
 
-    override suspend fun changePassword(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
+    override suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {
         val url = "http://xapi.sendbusinesscard.com/api/change/password"
-        return apiService.changePassword(url,registerRequestModel)
+        return apiService.changePassword(url,changePasswordRequestModel)
     }
 
     override suspend fun verifyForgotPasswordOTP(registerRequestModel: RegisterRequestModel): NetworkResponse<SavedCards, ErrorsListResponse> {

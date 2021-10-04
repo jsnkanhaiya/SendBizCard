@@ -38,7 +38,7 @@ class RegisterViewModel @Inject constructor(
             }
             when (result) {
                 is NetworkResponse.Success -> {
-                    // registerReponse = result
+                     registerReponse.value = true
                 }
 
                 is NetworkResponse.ServerError -> {

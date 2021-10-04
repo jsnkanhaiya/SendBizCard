@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.sendbizcard.databinding.FragmentCreateNewPasswordBinding
 
@@ -19,7 +20,7 @@ class CreateNewPasswordFragment : Fragment(){
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
+    var otp =""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,12 +48,18 @@ class CreateNewPasswordFragment : Fragment(){
     }
 
     private fun setupObservers() {
+        forgotPasswordViewmodel.changePasswordResponse.observe(viewLifecycleOwner, Observer {
 
+        })
     }
 
     private fun initViews() {
         binding.btnSave.setOnClickListener {
-
+            val password = binding.etNewPassword.text.toString()
+            val confpassword = binding.etConfirmPassword.text.toString()
+            if (forgotPasswordViewmodel.isValidChangePasswordData(otp,password,confpassword)){
+                forgotPasswordViewmodel.changePasswordUser(otp,password,confpassword)
+            }
         }
     }
 }

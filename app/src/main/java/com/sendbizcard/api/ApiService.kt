@@ -3,6 +3,8 @@ package com.sendbizcard.api
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.home.SavedCards
+import com.sendbizcard.models.request.ChangePasswordRequestModel
+import com.sendbizcard.models.request.ForgotPasswordRequestModel
 import com.sendbizcard.models.request.LoginRequestModel
 import com.sendbizcard.models.request.RegisterRequestModel
 import com.sendbizcard.models.response.LoginResponseModel
@@ -23,11 +25,11 @@ interface ApiService {
 
 
     @POST
-    fun forgotPassword(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun forgotPassword(@Url url: String, forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST
-    fun changePassword(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun changePassword(@Url url: String, changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST

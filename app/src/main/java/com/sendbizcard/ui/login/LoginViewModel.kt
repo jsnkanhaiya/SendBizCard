@@ -19,8 +19,7 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val apiRepositoryImpl: ApiRepositoryImpl,
     private val preferenceSourceImpl: PreferenceSourceImpl
-
-) : BaseViewModel(), LifecycleObserver {
+) : BaseViewModel() {
 
     var loginReponse = MutableLiveData<LoginResponseModel>()
    // var loginReponse = MutableLiveData<LoginResponseModel>()
@@ -34,7 +33,7 @@ class LoginViewModel @Inject constructor(
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
-                        loginReponse = result
+                        //loginReponse = result
                         preferenceSourceImpl.userToken= loginReponse.value?.token.toString()
                     }
 

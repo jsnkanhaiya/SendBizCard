@@ -1,6 +1,8 @@
 package com.sendbizcard.repository
 
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.api.ApiService
+import com.sendbizcard.firebaseRemoteConfig.RemoteConfigImpl
 import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.ChangePasswordRequestModel
@@ -11,11 +13,13 @@ import com.sendbizcard.models.response.LoginResponseModel
 import javax.inject.Inject
 
 class ApiRepositoryImpl @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val remoteConfigImpl: RemoteConfigImpl
 ) : ApiRepository {
 
     override suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, ErrorsListResponse> {
-        val url = "http://xapi.sendbusinesscard.com/api/login"
+        //val url = "http://xapi.sendbusinesscard.com/api/login"
+        val url = remoteConfigImpl.getLoginURL()
         return apiService.login(url,loginRequest)
     }
 

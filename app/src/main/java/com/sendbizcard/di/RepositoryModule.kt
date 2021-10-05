@@ -17,6 +17,7 @@
 package com.sendbizcard.di
 
 import com.sendbizcard.api.ApiService
+import com.sendbizcard.firebaseRemoteConfig.RemoteConfigImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.prefs.PreferenceSource
 import dagger.Module
@@ -33,8 +34,9 @@ object RepositoryModule {
   @Provides
   @ViewModelScoped
   fun provideApiRepository(
-    apiService: ApiService
+    apiService: ApiService,
+    remoteConfigImpl: RemoteConfigImpl
   ): ApiRepositoryImpl {
-    return ApiRepositoryImpl(apiService)
+    return ApiRepositoryImpl(apiService,remoteConfigImpl)
   }
 }

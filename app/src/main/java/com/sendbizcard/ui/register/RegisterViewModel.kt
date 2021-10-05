@@ -2,6 +2,7 @@ package com.sendbizcard.ui.register
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
 import com.sendbizcard.models.request.RegisterRequestModel
 import com.sendbizcard.prefs.PreferenceSourceImpl

@@ -1,5 +1,6 @@
 package com.sendbizcard.repository
 
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.ChangePasswordRequestModel
@@ -12,11 +13,11 @@ interface ApiRepository {
 
     suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, ErrorsListResponse>
 
-    suspend fun register(registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterRequestModel,ErrorsListResponse>
-    suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<RegisterRequestModel,ErrorsListResponse>
-    suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<RegisterRequestModel,ErrorsListResponse>
-    suspend fun verifyForgotPasswordOTP(registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterRequestModel,ErrorsListResponse>
-    suspend fun verifyOtp(registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterRequestModel,ErrorsListResponse>
-    suspend fun logoutUser() : NetworkResponse<RegisterRequestModel,ErrorsListResponse>
+    suspend fun register(registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards,ErrorsListResponse>
+    suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<SavedCards,ErrorsListResponse>
+    suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<SavedCards,ErrorsListResponse>
+    suspend fun verifyForgotPasswordOTP(registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards,ErrorsListResponse>
+    suspend fun verifyOtp(registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards,ErrorsListResponse>
+    suspend fun logoutUser() : NetworkResponse<SavedCards,ErrorsListResponse>
 
 }

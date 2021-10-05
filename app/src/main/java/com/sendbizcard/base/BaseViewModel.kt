@@ -1,6 +1,7 @@
 package com.sendbizcard.base
 
 import android.util.Log
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.sendbizcard.utils.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
@@ -8,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel : ViewModel() , CoroutineScope {
+abstract class BaseViewModel : ViewModel() , CoroutineScope , LifecycleObserver {
 
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 

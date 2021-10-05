@@ -3,6 +3,8 @@ package com.sendbizcard.di
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
 import com.sendbizcard.ui.home.adapter.SavedCardsAdapter
 import com.sendbizcard.prefs.PreferenceSource
 import com.sendbizcard.prefs.PreferenceSourceImpl
@@ -32,6 +34,21 @@ object AppModule  {
     @Singleton
     fun providesPreferencesSourceImpl(preferences: SharedPreferences): PreferenceSourceImpl {
         return PreferenceSourceImpl(preferences)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFireBaseConfig(): FirebaseRemoteConfig {
+        return FirebaseRemoteConfig.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideFireBaseSettings(): FirebaseRemoteConfigSettings {
+        return FirebaseRemoteConfigSettings.Builder()
+            .setMinimumFetchIntervalInSeconds(3600)
+            .build()
+
     }
 
 

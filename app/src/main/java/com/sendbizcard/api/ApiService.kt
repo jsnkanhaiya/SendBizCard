@@ -18,26 +18,26 @@ interface ApiService {
     suspend fun login(@Url url: String, @Body loginRequest: LoginRequestModel) : NetworkResponse<LoginResponseModel,ErrorsListResponse>
 
     @POST
-    fun register(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun register(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
     @POST
     fun logoutUser(@Url url: String) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST
-    fun forgotPassword(@Url url: String, forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun forgotPassword(@Url url: String, @Body forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST
-    fun changePassword(@Url url: String, changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun changePassword(@Url url: String, @Body changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST
-    fun verifyForgotPasswordOTP(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun verifyForgotPasswordOTP(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST
-    fun verifyOtp(@Url url: String, registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun verifyOtp(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
 }

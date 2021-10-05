@@ -3,6 +3,7 @@ package com.sendbizcard.ui.forgotpassword
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
 import com.sendbizcard.models.request.ChangePasswordRequestModel
 import com.sendbizcard.models.request.ForgotPasswordRequestModel

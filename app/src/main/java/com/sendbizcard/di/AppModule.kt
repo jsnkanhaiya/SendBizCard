@@ -38,13 +38,13 @@ object AppModule  {
 
     @Provides
     @Singleton
-    fun provideFireBaseConfig(): FirebaseRemoteConfig {
+    fun provideFirebaseRemoteConfig(): FirebaseRemoteConfig {
         return FirebaseRemoteConfig.getInstance()
     }
 
     @Provides
     @Singleton
-    fun provideFireBaseSettings(): FirebaseRemoteConfigSettings {
+    fun provideFirebaseRemoteConfigSettings(): FirebaseRemoteConfigSettings {
         return FirebaseRemoteConfigSettings.Builder()
             .setMinimumFetchIntervalInSeconds(3600)
             .build()

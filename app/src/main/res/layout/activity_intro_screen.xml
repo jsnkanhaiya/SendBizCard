@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.introScreen.IntroScreenActivity">
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/introViewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <com.rd.PageIndicatorView
+        android:id="@+id/indicatorViewPager"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:piv_animationType="none"
+        app:piv_count="4"
+        app:piv_dynamicCount="false"
+        app:piv_interactiveAnimation="false"
+        app:piv_padding="8dp"
+        app:piv_radius="5dp"
+        app:piv_selectedColor="@color/colorPrimaryDark"
+        app:piv_unselectedColor="@android:color/darker_gray"
+        app:piv_viewPager="@id/introViewPager" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

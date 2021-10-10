@@ -9,9 +9,11 @@ import com.sendbizcard.models.request.*
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
+import dagger.hilt.android.scopes.ViewModelScoped
 import com.sendbizcard.models.response.RegisterResponseModel
 import javax.inject.Inject
 
+@ViewModelScoped
 class ApiRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val remoteConfigImpl: RemoteConfigImpl

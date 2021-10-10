@@ -1,6 +1,5 @@
 package com.sendbizcard.base
 
-import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
 import com.sendbizcard.utils.SingleLiveEvent

@@ -29,9 +29,19 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun setupObservers() {
         loginViewModel.loginReponse.observe(viewLifecycleOwner, Observer {
-            var i = Intent(requireContext(),HomeActivity::class.java)
+            val i = Intent(requireContext(),HomeActivity::class.java)
             requireActivity().startActivity(i)
         })
+
+        loginViewModel.showNetworkError.observe(this, Observer {
+
+        })
+
+        loginViewModel.showUnknownError.observe(this, Observer {
+
+        })
+
+
     }
 
     private fun initViews() {

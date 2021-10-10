@@ -128,5 +128,7 @@ dependencies {
     implementation "com.github.haroldadmin:NetworkResponseAdapter:4.1.0"
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.1.1'
 
+    //Page IndicatorView
+    implementation 'com.romandanylyk:pageindicatorview:1.0.3'
 
 }

@@ -33,6 +33,15 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private fun setUpObservers() {
         registerViewModel.registerReponse.observe(viewLifecycleOwner, Observer {
                 findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp))
+
+        })
+
+        registerViewModel.showUnknownError.observe(this, Observer {
+
+        })
+
+        registerViewModel.showNetworkError.observe(this, Observer {
+
         })
     }
 

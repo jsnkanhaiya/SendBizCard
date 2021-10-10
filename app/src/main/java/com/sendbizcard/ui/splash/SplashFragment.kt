@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -29,30 +30,25 @@ class SplashFragment : BaseFragment<FragmentSplashBinding>() {
     private var binding: FragmentSplashBinding? = null
     private val splashViewModel: SplashViewModel by viewModels()
 
-
-    private fun setupObservers() {
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding = getViewBinding()
+        observeData()
+        splashViewModel.fetchAndActivateConfigParameters()
 
-        withDelayOnMain(3000){
-            if (splashViewModel.checkIfUserIsLoggedIn()){
-                val intent = Intent(requireContext(),HomeActivity::class.java)
-                startActivity(intent)
-            }else{
-                findNavController().navigate(R.id.nav_login)
-            }
-
-        }
     }
 
-
-    fun withDelayOnMain(delay: Long, block: () -> Unit) {
-        Handler(Looper.getMainLooper()).postDelayed(Runnable(block), delay)
+    private fun observeData() {
+        splashViewModel.isConfigParsed.observe(this, Observer { configParsed ->
+            if (configParsed) {
+                if (splashViewModel.checkIfUserIsLoggedIn()){
+                    val intent = Intent(requireContext(),HomeActivity::class.java)
+                    startActivity(intent)
+                }else{
+                    findNavController().navigate(R.id.nav_login)
+                }
+            }
+        })
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSplashBinding

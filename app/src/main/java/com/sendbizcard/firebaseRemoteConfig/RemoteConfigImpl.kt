@@ -2,7 +2,9 @@ package com.sendbizcard.firebaseRemoteConfig
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: FirebaseRemoteConfig) :  RemoteConfigProvider {
 
     companion object {

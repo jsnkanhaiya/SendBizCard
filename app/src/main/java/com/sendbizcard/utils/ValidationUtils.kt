@@ -18,6 +18,9 @@ object ValidationUtils {
   fun isValidOtp(otp: String): Boolean {
     return otp.length==6
   }
+  fun isValidForgotOtp(otp: String): Boolean {
+    return otp.length==5
+  }
 
   fun isValidMobileNo(mobileNo: String): Boolean {
     return mobileNo.length==10

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.sendbizcard.HomeActivity
 import com.sendbizcard.databinding.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,7 +54,7 @@ class ForgotPasswordFragment :Fragment() {
 
     private fun setupObservers() {
         forgotPasswordViewmodel.forgotPasswordReponse.observe(viewLifecycleOwner, Observer {
-
+           // findNavController().navigate(R.id.)
         })
     }
 

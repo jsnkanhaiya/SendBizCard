@@ -8,6 +8,8 @@ import com.sendbizcard.base.BaseViewModel
 import com.sendbizcard.models.request.ChangePasswordRequestModel
 import com.sendbizcard.models.request.ForgotPasswordRequestModel
 import com.sendbizcard.models.request.RegisterRequestModel
+import com.sendbizcard.models.response.BaseResponseModel
+import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.ValidationUtils
@@ -24,8 +26,8 @@ class ForgotPasswordViewModel @Inject constructor(
 
 ) : BaseViewModel(), LifecycleObserver {
 
-    var forgotPasswordReponse = MutableLiveData<Boolean>()
-    var changePasswordResponse = MutableLiveData<Boolean>()
+    var forgotPasswordReponse = MutableLiveData<ForgotPasswordResponse>()
+    var changePasswordResponse = MutableLiveData<BaseResponseModel>()
 
     fun forgotPasswordUser(
         emailId: String,
@@ -38,7 +40,7 @@ class ForgotPasswordViewModel @Inject constructor(
             }
             when (result) {
                 is NetworkResponse.Success -> {
-                    forgotPasswordReponse.value = true
+                    forgotPasswordReponse.value = result.body
                 }
 
                 is NetworkResponse.ServerError -> {
@@ -70,7 +72,7 @@ class ForgotPasswordViewModel @Inject constructor(
             }
             when (result) {
                 is NetworkResponse.Success -> {
-                    changePasswordResponse.value = true
+                    changePasswordResponse.value = result.body
                 }
 
                 is NetworkResponse.ServerError -> {

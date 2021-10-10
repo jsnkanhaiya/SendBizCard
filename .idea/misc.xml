@@ -5,22 +5,31 @@
       <map>
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_siginup.xml" value="0.16576086956521738" />
+        <entry key="app/src/main/res/drawable/dialog_background.xml" value="0.21388888888888888" />
+        <entry key="app/src/main/res/drawable/dialog_background_with_inset.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.2175925925925926" />
+        <entry key="app/src/main/res/drawable/ic_success_tick.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_thankyou_fragment.xml" value="0.12284701114488349" />
-        <entry key="app/src/main/res/layout/fragment_change_password_verification.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_change_password_verification.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_enter_social_media_links.xml" value="0.2346014492753623" />
+        <entry key="app/src/main/res/layout/fragment_feedback.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_feedback_thank_you.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2346014492753623" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.165" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_siginup.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_splash.xml" value="0.23097826086956522" />
+        <entry key="app/src/main/res/layout/fragment_succssesful_message.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/fragment_verify_forgot_password.xml" value="0.1897644927536232" />
+        <entry key="app/src/main/res/layout/layout_alert_dialog_with_image.xml" value="0.1897644927536232" />
         <entry key="app/src/main/res/layout/row_item_saved_card.xml" value="0.2346014492753623" />
       </map>
     </option>

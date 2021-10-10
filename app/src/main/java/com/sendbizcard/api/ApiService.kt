@@ -3,11 +3,11 @@ package com.sendbizcard.api
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.home.SavedCards
-import com.sendbizcard.models.request.ChangePasswordRequestModel
-import com.sendbizcard.models.request.ForgotPasswordRequestModel
-import com.sendbizcard.models.request.LoginRequestModel
-import com.sendbizcard.models.request.RegisterRequestModel
+import com.sendbizcard.models.request.*
+import com.sendbizcard.models.response.BaseResponseModel
+import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
+import com.sendbizcard.models.response.RegisterResponseModel
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Url
@@ -18,26 +18,26 @@ interface ApiService {
     suspend fun login(@Url url: String, @Body loginRequest: LoginRequestModel) : NetworkResponse<LoginResponseModel,ErrorsListResponse>
 
     @POST
-    fun register(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun register(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel, ErrorsListResponse>
 
     @POST
     fun logoutUser(@Url url: String) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST
-    fun forgotPassword(@Url url: String, @Body forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun forgotPassword(@Url url: String, @Body forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<ForgotPasswordResponse, ErrorsListResponse>
 
 
     @POST
-    fun changePassword(@Url url: String, @Body changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun changePassword(@Url url: String, @Body changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
 
 
     @POST
-    fun verifyForgotPasswordOTP(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun verifyForgotPasswordOTP(@Url url: String, @Body registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
 
 
     @POST
-    fun verifyOtp(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<SavedCards, ErrorsListResponse>
+    fun verifyOtp(@Url url: String, @Body registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
 
 
 }

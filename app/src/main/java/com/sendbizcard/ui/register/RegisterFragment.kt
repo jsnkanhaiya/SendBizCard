@@ -5,9 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.sendbizcard.HomeActivity
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentRegisterBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,14 +19,9 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
-    private lateinit var registerViewModel: RegisterViewModel
+    private  val registerViewModel: RegisterViewModel by viewModels()
     private var binding: FragmentRegisterBinding? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        registerViewModel =
-            ViewModelProvider(this).get(RegisterViewModel::class.java)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -33,7 +32,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun setUpObservers() {
         registerViewModel.registerReponse.observe(viewLifecycleOwner, Observer {
-          
+                findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp))
         })
     }
 

@@ -33,13 +33,26 @@
         android:id="@+id/nav_login"
         android:name="com.sendbizcard.ui.login.LoginFragment"
         android:label="@string/menu_my_login"
-        tools:layout="@layout/fragment_login" ></fragment>
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/actionLoginFragmentToForgotPasswordFragment"
+            app:destination="@id/nav_forgot_password"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_sign_up"
         android:name="com.sendbizcard.ui.register.RegisterFragment"
         android:label="@string/menu_my_Register"
         tools:layout="@layout/fragment_register" >
+
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
 
         <action
             android:id="@+id/actionSignUpFragmentToVerifyOtpFragment"
@@ -60,10 +73,73 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_forgot_password"
+        android:name="com.sendbizcard.ui.forgotpassword.ForgotPasswordFragment"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_forgot_password" >
+
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <action
+            android:id="@+id/actionForgotPasswordFragmentToVeriFyForgotPasswordFragment"
+            app:destination="@id/nav_sign_up"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_createNewpassword"
+        android:name="com.sendbizcard.ui.forgotpassword.CreateNewPasswordFragment"
+        android:label="@string/menu_my_verify_otp"
+        tools:layout="@layout/fragment_create_new_password" >
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/actionCreateNewFragmentToSuccessMessageFragment"
+            app:destination="@id/nav_success_message"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_verifyForgotOtp"
+        android:name="com.sendbizcard.ui.otp.VerifyOtpFragment"
+        android:label="@string/menu_my_verify_otp"
+        tools:layout="@layout/fragment_otp" >
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/actionVerifyOtpFragmentToChangePasswordFragment"
+            app:destination="@id/nav_sign_up"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_verifyOtp"
         android:name="com.sendbizcard.ui.otp.VerifyOtpFragment"
         android:label="@string/menu_my_verify_otp"
         tools:layout="@layout/fragment_otp" >
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
         <action
             android:id="@+id/actionVerifyOtpFragmentToHomeFragment"
             app:destination="@id/nav_sign_up"
@@ -71,6 +147,22 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_success_message"
+        android:name="com.sendbizcard.ui.forgotpassword.ChangePasswordSuccessFragment"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_succssesful_message" >
+
+        <action
+            android:id="@+id/actionSuccessMessageFragmentToSignInFragment"
+            app:destination="@id/nav_login"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
 
     <fragment

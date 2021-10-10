@@ -4,8 +4,11 @@
     <string name="enterpin">Enter PIN</string>
     <string name="change_password_verification">Change Password Verification</string>
     <string name="next">Next</string>
+    <string name="verification">Verification</string>
+    <string name="enter_verification">Enter the verification code we just\nsent you on your email address</string>
     <string name="verify">Verify</string>
     <string name="send">Send</string>
+    <string name="sendagain">Dont receive the mail in 2 minutes?\nsend again</string>
     <string name="resetpassword">Reset Password</string>
     <string name="resetpassword_successful">Password Reset successfully</string>
     <string name="card">Card</string>
@@ -14,7 +17,7 @@
     <string name="forgot_password">Forgot Password?</string>
     <string name="create_new_password">Create New Password</string>
     <string name="enterEmail">Enter your email address associated with your account</string>
-    <string name="verificationcode_on_email">Enter your verification code we just sent you on your email address</string>
+    <string name="verificationcode_on_email">We sent you OTP on your\nregistered Email ID</string>
     <string name="Submit">Submit</string>
     <string name="feedback_title">Help us improve</string>
     <string name="emailID">Enter Email ID</string>
@@ -66,6 +69,9 @@ Terms of Service and Privacy Policy</string>
     <string name="search">Search</string>
     <string name="our">Our</string>
     <string name="services">Services</string>
+    <string name="success_title">Success</string>
+    <string name="success_title_sub">OTP verified Successfully</string>
+    <string name="resentOtp">Dont receive the OTP? RESEND OTP</string>
 
 
 </resources>

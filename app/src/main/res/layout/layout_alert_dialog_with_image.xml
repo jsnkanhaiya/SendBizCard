@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:id="@+id/root"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content"
+  android:paddingTop="24dp"
+  android:layout_marginStart="16dp"
+  android:layout_marginEnd="16dp"
+  android:clipChildren="true"
+  android:clipToPadding="true"
+  android:background="@drawable/dialog_background_with_inset"
+  android:paddingBottom="24dp">
+
+  <ImageView
+    android:id="@+id/dialogIv"
+    android:layout_width="64dp"
+    android:layout_height="64dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <TextView
+    android:id="@+id/dialogTitleTv"
+    android:textSize="18sp"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="16dp"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/dialogIv" />
+
+  <TextView
+    android:id="@+id/dialogDescriptionTv"
+    android:layout_width="0dp"
+      android:textSize="17sp"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginTop="12dp"
+    android:textAlignment="center"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@id/dialogTitleTv"
+    app:layout_goneMarginEnd="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+

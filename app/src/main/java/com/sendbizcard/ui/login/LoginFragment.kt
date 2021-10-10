@@ -42,6 +42,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 loginViewModel.login(emailId,password)
             }
         }
+
+        binding?.tvForgotPassword?.setOnClickListener {
+            findNavController().navigate(R.id.nav_forgot_password)
+        }
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding

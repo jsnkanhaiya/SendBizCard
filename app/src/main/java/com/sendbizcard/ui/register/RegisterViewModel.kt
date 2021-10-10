@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
 import com.sendbizcard.models.request.RegisterRequestModel
+import com.sendbizcard.models.response.RegisterResponseModel
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.ValidationUtils
@@ -21,7 +22,7 @@ class RegisterViewModel @Inject constructor(
 
 ) : BaseViewModel(), LifecycleObserver {
 
-    var registerReponse = MutableLiveData<Boolean>()
+    var registerReponse = MutableLiveData<RegisterResponseModel>()
 
 
     fun registerUser(
@@ -39,7 +40,11 @@ class RegisterViewModel @Inject constructor(
             }
             when (result) {
                 is NetworkResponse.Success -> {
-                     registerReponse.value = true
+                    registerReponse.value = result.body
+                    preferenceSourceImpl.userToken= result.body.token.toString()
+                    preferenceSourceImpl.userName= result.body.data?.name.toString()
+                    preferenceSourceImpl.userEmail= result.body.data?.email.toString()
+                    preferenceSourceImpl.userMobileNO= result.body.data?.contact.toString()
                 }
 
                 is NetworkResponse.ServerError -> {

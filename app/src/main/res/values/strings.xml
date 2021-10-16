@@ -68,8 +68,6 @@ Terms of Service and Privacy Policy</string>
     <string name="enter_username">Enter Username</string>
     <string name="save">Save</string>
     <string name="search">Search</string>
-    <string name="our">Our</string>
-    <string name="services">Services</string>
     <string name="success_title">Success</string>
     <string name="success_title_sub">OTP verified Successfully</string>
     <string name="resentOtp">Dont receive the OTP? RESEND OTP</string>
@@ -88,8 +86,12 @@ Terms of Service and Privacy Policy</string>
     <string name="yes_confirmation">Yes</string>
     <string name="error">Error</string>
 
-    <!-- Others -->
+    <!-- Theme -->
     <string name="select_your_theme">Select Your Theme</string>
+
+    <!-- Our Services -->
+    <string name="our">Our</string>
+    <string name="services">Services</string>
 
 
 </resources>

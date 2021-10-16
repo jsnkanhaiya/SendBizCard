@@ -3,6 +3,8 @@ package com.sendbizcard.di
 import com.haroldadmin.cnradapter.NetworkResponseAdapterFactory
 import com.sendbizcard.api.ApiService
 import com.sendbizcard.BuildConfig
+import com.sendbizcard.api.SessionTokenInterceptor
+import com.sendbizcard.prefs.PreferenceSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -28,15 +30,15 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        sessionTokenInterceptor: SessionTokenInterceptor
     ): OkHttpClient {
-
-
         return OkHttpClient.Builder()
             .connectTimeout(CONNECT_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .addInterceptor(httpLoggingInterceptor)
+            .addInterceptor(sessionTokenInterceptor)
             .build()
     }
 
@@ -44,7 +46,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpLogger(): HttpLoggingInterceptor {
+    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         return if (BuildConfig.DEBUG) {
             val httpLoggingInterceptor = HttpLoggingInterceptor()
             httpLoggingInterceptor.apply {
@@ -57,6 +59,14 @@ object NetworkModule {
             }
         }
     }
+
+
+    @Provides
+    @Singleton
+    fun provideSessionTokenInterceptor(preferenceSourceImpl: PreferenceSourceImpl) : SessionTokenInterceptor {
+        return SessionTokenInterceptor(preferenceSourceImpl)
+    }
+
 
 
 

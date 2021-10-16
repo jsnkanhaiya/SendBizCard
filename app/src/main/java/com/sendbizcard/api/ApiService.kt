@@ -9,6 +9,7 @@ import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
 import com.sendbizcard.models.response.RegisterResponseModel
+import com.sendbizcard.models.response.theme.ThemeResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -44,6 +45,6 @@ interface ApiService {
     @GET
     suspend fun getThemeList(
         @Url url: String
-    )
+    ) : NetworkResponse<ThemeResponse,ErrorsListResponse>
 
 }

@@ -27,7 +27,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 val intent = if (splashViewModel.checkIfUserIsLoggedIn()) {
                     Intent(this@SplashActivity, HomeActivity::class.java)
                 } else {
-
                     Intent(this@SplashActivity, MainActivity::class.java)
                 }
                 startActivity(intent)

@@ -17,7 +17,7 @@ data class ThemeResponse(
 data class Data(
 
 	@field:SerializedName("list_theme")
-	val listTheme: List<ListThemeItem?>? = null
+	val listTheme: List<ListThemeItem>? = null
 )
 
 data class ListThemeItem(

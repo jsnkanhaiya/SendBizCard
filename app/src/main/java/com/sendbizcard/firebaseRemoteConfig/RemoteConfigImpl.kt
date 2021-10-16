@@ -63,7 +63,7 @@ class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: Fir
         return getBaseURL() + firebaseRemoteConfig.getString(LOGOUT_URL)
     }
 
-    override fun getThemeList(): String {
+    override fun getThemeListURL(): String {
         return getBaseURL() + firebaseRemoteConfig.getString(THEME_LIST_URL)
     }
 }

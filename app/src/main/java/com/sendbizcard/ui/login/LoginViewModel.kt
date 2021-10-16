@@ -36,9 +36,10 @@ class LoginViewModel @Inject constructor(
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
+
                         //loginReponse = result
                         preferenceSourceImpl.isUserLoggedIn=true
-                        preferenceSourceImpl.userToken= loginReponse.value?.token.toString()
+                        preferenceSourceImpl.userToken= result.body.token.toString()
                         loginReponse.value = result.body
                     }
 

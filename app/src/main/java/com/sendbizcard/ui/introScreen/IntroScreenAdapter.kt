@@ -5,13 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sendbizcard.R
-import com.sendbizcard.databinding.RowItemIntroBinding
+import com.sendbizcard.databinding.RowIntroItemBinding
 import javax.inject.Inject
 
 class IntroScreenAdapter @Inject constructor(): RecyclerView.Adapter<IntroScreenAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = RowItemIntroBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = RowIntroItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
@@ -23,7 +23,7 @@ class IntroScreenAdapter @Inject constructor(): RecyclerView.Adapter<IntroScreen
         return 4
     }
 
-    class ViewHolder(private val binding: RowItemIntroBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private val binding: RowIntroItemBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(position: Int) {
             when(position) {
                 0 -> {

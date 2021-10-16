@@ -9,6 +9,7 @@ import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
 import com.sendbizcard.models.response.RegisterResponseModel
+import com.sendbizcard.models.response.theme.ThemeResponse
 
 interface ApiRepository {
     suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, LoginErrorResponse>
@@ -18,4 +19,5 @@ interface ApiRepository {
     suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
     suspend fun verifyOtp(registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
     suspend fun logoutUser() : NetworkResponse<SavedCards,ErrorsListResponse>
+    suspend fun getThemeList() : NetworkResponse<ThemeResponse,ErrorsListResponse>
 }

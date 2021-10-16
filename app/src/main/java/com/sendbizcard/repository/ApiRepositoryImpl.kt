@@ -12,6 +12,7 @@ import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
 import dagger.hilt.android.scopes.ViewModelScoped
 import com.sendbizcard.models.response.RegisterResponseModel
+import com.sendbizcard.models.response.theme.ThemeResponse
 import javax.inject.Inject
 
 @ViewModelScoped
@@ -53,6 +54,11 @@ class ApiRepositoryImpl @Inject constructor(
     override suspend fun logoutUser(): NetworkResponse<SavedCards, ErrorsListResponse> {
         val url = remoteConfigImpl.getLogoutURL()
         return apiService.logoutUser(url)
+    }
+
+    override suspend fun getThemeList(): NetworkResponse<ThemeResponse, ErrorsListResponse> {
+        val url = remoteConfigImpl.getThemeListURL()
+        return apiService.getThemeList(url)
     }
 
 }

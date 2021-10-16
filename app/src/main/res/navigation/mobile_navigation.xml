@@ -64,7 +64,7 @@
 
         <action
             android:id="@+id/actionForgotPasswordFragmentToVeriFyForgotPasswordFragment"
-            app:destination="@id/nav_sign_up"
+            app:destination="@id/nav_verifyForgotOtp"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

@@ -83,5 +83,10 @@ Terms of Service and Privacy Policy</string>
     <string name="enter_location">Enter Location</string>
     <string name="our_services">Our Services</string>
 
+    <string name="no_confirmation">No</string>
+    <string name="ok_confirmation">OK</string>
+    <string name="yes_confirmation">Yes</string>
+    <string name="error">Error</string>
+
 
 </resources>

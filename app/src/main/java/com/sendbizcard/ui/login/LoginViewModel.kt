@@ -8,10 +8,13 @@ import com.sendbizcard.models.request.LoginRequestModel
 import com.sendbizcard.models.response.LoginResponseModel
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
+import com.sendbizcard.utils.AppConstants.ERROR_EMAIL
+import com.sendbizcard.utils.AppConstants.ERROR_PASSWORD
 import com.sendbizcard.utils.ValidationUtils
 import com.sendbizcard.utils.decodeNetworkError
 import com.sendbizcard.utils.decodeUnknownError
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -24,7 +27,7 @@ class LoginViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var loginReponse = MutableLiveData<LoginResponseModel>()
-   // var loginReponse = MutableLiveData<LoginResponseModel>()
+    var error = MutableLiveData<String>()
 
     fun login(emailId: String, password: String) {
         val loginRequest = LoginRequestModel(emailId,password)
@@ -60,12 +63,20 @@ class LoginViewModel @Inject constructor(
     fun isValidLoginData(emailId: String, password: String): Boolean {
         return when {
             emailId.isBlank() -> {
+                error.value = ERROR_EMAIL
                 false
             }
             password.isBlank() -> {
+                error.value = ERROR_PASSWORD
                 false
             }
-            else -> ValidationUtils.isRequiredPasswordLengthForChangePassword(password)
+            else -> {if (!ValidationUtils.isRequiredPasswordLengthForChangePassword(password)){
+                error.value = ERROR_PASSWORD
+                return false
+            }else{
+                return true
+            }
+            }
         }
 
     }

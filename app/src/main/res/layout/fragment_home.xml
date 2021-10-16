@@ -20,31 +20,36 @@
         android:id="@+id/img_edit"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/et_name"
         app:layout_constraintTop_toBottomOf="@+id/img_user"
+        app:layout_constraintStart_toEndOf="@+id/et_name"
+        android:layout_marginStart="50dp"
         android:layout_marginTop="12dp"
+        android:src="@drawable/ic_edit"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_name"
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_edit"
+        app:layout_constraintTop_toBottomOf="@+id/img_user"
         android:hint="@string/enter_name"
+        android:maxLength="20"
         android:layout_marginTop="12dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_designation"
-        android:layout_width="0dp"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_name"
         android:hint="@string/enter_designation"
+        android:maxLength="30"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="12dp"/>
@@ -53,6 +58,7 @@
         android:id="@+id/img_mobile_number"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:src="@drawable/ic_call"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_mobile_number"
         app:layout_constraintBottom_toBottomOf="@+id/et_mobile_number"
@@ -82,6 +88,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/et_email"
         app:layout_constraintTop_toBottomOf="@+id/et_mobile_number"
         android:layout_marginStart="12dp"
+        android:src="@drawable/ic_email"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -106,6 +113,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/et_website"
         app:layout_constraintTop_toBottomOf="@+id/et_email"
         android:layout_marginStart="12dp"
+        android:src="@drawable/ic_website"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -115,7 +123,7 @@
         app:layout_constraintStart_toEndOf="@+id/img_website"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email"
-        android:hint="@string/enter_designation"
+        android:hint="@string/enter_website"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
         android:layout_marginTop="12dp"
@@ -130,6 +138,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/et_location"
         app:layout_constraintTop_toBottomOf="@+id/et_website"
         android:layout_marginStart="12dp"
+        android:src="@drawable/ic_map"
         />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -163,7 +172,9 @@
             android:layout_height="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:src="@drawable/ic_services"
+            />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_our_services"

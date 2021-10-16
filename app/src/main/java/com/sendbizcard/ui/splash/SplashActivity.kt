@@ -1,16 +1,13 @@
 package com.sendbizcard.ui.splash
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.sendbizcard.HomeActivity
-import com.sendbizcard.R
+import com.sendbizcard.MainActivity
 import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.databinding.ActivitySplashBinding
-import com.sendbizcard.ui.introScreen.IntroScreenActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +27,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 val intent = if (splashViewModel.checkIfUserIsLoggedIn()) {
                     Intent(this@SplashActivity, HomeActivity::class.java)
                 } else {
-                    Intent(this@SplashActivity, HomeActivity::class.java)
+
+                    Intent(this@SplashActivity, MainActivity::class.java)
                 }
                 startActivity(intent)
                 finish()

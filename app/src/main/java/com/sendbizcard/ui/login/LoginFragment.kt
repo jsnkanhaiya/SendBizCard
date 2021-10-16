@@ -29,6 +29,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun setupObservers() {
         loginViewModel.loginReponse.observe(viewLifecycleOwner, Observer {
+
             val i = Intent(requireContext(),HomeActivity::class.java)
             requireActivity().startActivity(i)
         })

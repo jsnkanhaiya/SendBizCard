@@ -36,7 +36,9 @@ class LoginViewModel @Inject constructor(
                 when(result) {
                     is NetworkResponse.Success -> {
                         //loginReponse = result
+                        preferenceSourceImpl.isUserLoggedIn=true
                         preferenceSourceImpl.userToken= loginReponse.value?.token.toString()
+                        loginReponse.value = result.body
                     }
 
                     is NetworkResponse.ServerError -> {
@@ -54,8 +56,6 @@ class LoginViewModel @Inject constructor(
             }
         )
     }
-
-
 
     fun isValidLoginData(emailId: String, password: String): Boolean {
         return when {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_our_services">
+    app:startDestination="@+id/nav_login">
 
 
     <fragment
@@ -11,6 +11,7 @@
         android:name="com.sendbizcard.ui.login.LoginFragment"
         android:label="@string/menu_my_login"
         tools:layout="@layout/fragment_login" >
+
         <action
             android:id="@+id/actionLoginFragmentToForgotPasswordFragment"
             app:destination="@id/nav_forgot_password"
@@ -18,6 +19,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+
     </fragment>
 
     <fragment
@@ -141,53 +143,5 @@
             app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
-
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="com.sendbizcard.ui.home.HomeFragment"
-        android:label="@string/menu_logout"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_my_profile"
-        android:name="com.sendbizcard.ui.home.HomeFragment"
-        android:label="@string/menu_my_profile"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_saved_cards"
-        android:name="com.sendbizcard.ui.gallery.GalleryFragment"
-        android:label="@string/menu_saved_cards"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_feedback"
-        android:name="com.sendbizcard.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_feedback"
-        tools:layout="@layout/fragment_slideshow" />
-    <fragment
-        android:id="@+id/nav_select_theme"
-        android:name="com.sendbizcard.ui.home.HomeFragment"
-        android:label="@string/menu_select_theme"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_share_app"
-        android:name="com.sendbizcard.ui.gallery.GalleryFragment"
-        android:label="@string/menu_share_app"
-        tools:layout="@layout/fragment_gallery" />
-
-    <fragment
-        android:id="@+id/nav_logout"
-        android:name="com.sendbizcard.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_logout"
-        tools:layout="@layout/fragment_slideshow" />
-
-    <fragment
-        android:id="@+id/nav_our_services"
-        android:name="com.sendbizcard.ui.ourServices.OurServicesFragment"
-        android:label="@string/menu_our_services"
-        tools:layout="@layout/fragment_our_services" />
-
 
 </navigation>

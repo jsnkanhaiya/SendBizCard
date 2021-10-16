@@ -146,6 +146,7 @@
         android:padding="8dp"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ourServicesCL"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
@@ -174,7 +175,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:padding="8dp"
             android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"/>
+            android:layout_marginEnd="12dp"
+            android:text="@string/our_services"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_arrow"

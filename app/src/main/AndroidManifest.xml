@@ -38,10 +38,7 @@
             android:label="@string/title_activity_home"
             android:theme="@style/Theme.SendBizCard.NoActionBar"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".ui.introScreen.IntroScreenActivity"
-            android:exported="true"
-            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

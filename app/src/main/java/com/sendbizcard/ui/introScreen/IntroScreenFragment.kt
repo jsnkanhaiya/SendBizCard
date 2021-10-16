@@ -3,26 +3,28 @@ package com.sendbizcard.ui.introScreen
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.viewpager2.widget.ViewPager2
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseActivity
-import com.sendbizcard.databinding.ActivityIntroScreenBinding
+import com.sendbizcard.base.BaseFragment
+import com.sendbizcard.databinding.FragmentIntroScreenBinding
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class IntroScreenActivity : BaseActivity<ActivityIntroScreenBinding>() {
+class IntroScreenFragment : BaseFragment<FragmentIntroScreenBinding>() {
 
     @Inject
     lateinit var introScreenAdapter: IntroScreenAdapter
 
-    private lateinit var binding: ActivityIntroScreenBinding
+    private lateinit var binding: FragmentIntroScreenBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
         setUpAdapter()
-
     }
 
     private fun setUpAdapter() {
@@ -44,6 +46,8 @@ class IntroScreenActivity : BaseActivity<ActivityIntroScreenBinding>() {
         super.onDestroy()
     }
 
-    override val bindingInflater: (LayoutInflater) -> ActivityIntroScreenBinding
-        get() = ActivityIntroScreenBinding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentIntroScreenBinding
+        get() = FragmentIntroScreenBinding::inflate
+
+
 }

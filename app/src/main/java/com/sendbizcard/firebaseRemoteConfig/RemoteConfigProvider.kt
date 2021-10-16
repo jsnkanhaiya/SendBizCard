@@ -12,5 +12,6 @@ interface RemoteConfigProvider  {
     fun getAddCardURL(): String
     fun getFeedbackURL(): String
     fun getLogoutURL(): String
+    fun getThemeList(): String
 
 }

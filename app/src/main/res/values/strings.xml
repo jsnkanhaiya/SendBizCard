@@ -74,7 +74,7 @@ Terms of Service and Privacy Policy</string>
     <string name="success_title_sub">OTP verified Successfully</string>
     <string name="resentOtp">Dont receive the OTP? RESEND OTP</string>
 
-
+    <!-- Home -->
     <string name="enter_name">Enter Name</string>
     <string name="enter_designation">Enter Designation</string>
     <string name="enter_mobile_number">Enter Mobile Number</string>
@@ -82,6 +82,9 @@ Terms of Service and Privacy Policy</string>
     <string name="enter_website">Enter Website</string>
     <string name="enter_location">Enter Location</string>
     <string name="our_services">Our Services</string>
+
+    <!-- Others -->
+    <string name="select_your_theme">Select Your Theme</string>
 
 
 </resources>

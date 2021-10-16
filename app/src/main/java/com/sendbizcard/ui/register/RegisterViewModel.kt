@@ -43,10 +43,10 @@ class RegisterViewModel @Inject constructor(
             when (result) {
                 is NetworkResponse.Success -> {
                     registerReponse.value = result.body
-                    preferenceSourceImpl.userToken= result.body.token.toString()
-                    preferenceSourceImpl.userName= result.body.data?.name.toString()
-                    preferenceSourceImpl.userEmail= result.body.data?.email.toString()
-                    preferenceSourceImpl.userMobileNO= result.body.data?.contact.toString()
+                    preferenceSourceImpl.userToken = result.body.token.toString()
+                    preferenceSourceImpl.userName = result.body.data?.name.toString()
+                    preferenceSourceImpl.userEmail = result.body.data?.email.toString()
+                    preferenceSourceImpl.userMobileNO = result.body.data?.contact.toString()
                 }
 
                 is NetworkResponse.ServerError -> {

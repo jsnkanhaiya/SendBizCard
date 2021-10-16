@@ -9,5 +9,5 @@ import java.io.Serializable
  */
 
 data class ErrorsListResponse(
-    @SerializedName("errors") val errors: MutableList<ErrorBody>? = null
+    @SerializedName("message") val errors: ErrorBody? = null
 ) : Serializable

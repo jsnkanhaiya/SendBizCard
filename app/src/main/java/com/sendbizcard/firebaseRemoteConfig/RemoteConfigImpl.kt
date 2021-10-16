@@ -19,6 +19,7 @@ class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: Fir
         private const val ADD_CARD_URL = "add_card_url"
         private const val FEEDBACK_URL = "feedback_url"
         private const val LOGOUT_URL = "logout_url"
+        private const val THEME_LIST_URL = "theme_list_url"
 
     }
 
@@ -60,5 +61,9 @@ class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: Fir
 
     override fun getLogoutURL(): String {
         return getBaseURL() + firebaseRemoteConfig.getString(LOGOUT_URL)
+    }
+
+    override fun getThemeList(): String {
+        return getBaseURL() + firebaseRemoteConfig.getString(THEME_LIST_URL)
     }
 }

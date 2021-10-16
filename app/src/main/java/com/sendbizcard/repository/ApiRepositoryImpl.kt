@@ -30,7 +30,7 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.register(url,registerRequestModel)
     }
 
-    override suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel): NetworkResponse<ForgotPasswordResponse, ErrorsListResponse> {
+    override suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel): NetworkResponse<ForgotPasswordResponse, LoginErrorResponse> {
         val url = remoteConfigImpl.getForgotPasswordURL()
         return apiService.forgotPassword(url,forgotPasswordRequestModel)
     }

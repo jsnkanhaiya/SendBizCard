@@ -27,7 +27,7 @@
     <string name="conf_password">Confirm Password</string>
     <string name="mobileno">Enter Mobile Number</string>
     <string name="sendOtpText">We ve sent you OTP on your \nregistered Email ID</string>
-    <string name="alreadyAccount">Already have an account? Sign In</string>
+    <string name="alreadyAccount">Already have an account? </string>
     <string name="password_reset_successfully">Your password has been reset successfully</string>
     <string name="newpasswordHint">Your new password must be diffrent from previous used password.</string>
     <string name="dontAccpunt">Dont have an account? Create New Account</string>

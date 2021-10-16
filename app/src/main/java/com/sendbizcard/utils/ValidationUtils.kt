@@ -2,6 +2,8 @@ package com.sendbizcard.utils
 
 import android.text.TextUtils
 import android.util.Patterns
+import com.sendbizcard.utils.AppConstants.EMAIL_ADDRESS_PATTERN
+import java.util.regex.Pattern
 
 
 object ValidationUtils {
@@ -39,9 +41,17 @@ object ValidationUtils {
   fun isBothPasswordMatch(password: String, confirmPassword: String): Boolean {
     return password == confirmPassword
   }
+  fun isValidEmailChar(target: CharSequence?): Boolean {
+    return if (TextUtils.isEmpty(target)) {
+      false
+    } else {
+      true
+     /// EMAIL_ADDRESS_PATTERN.matcher(target).matches()
+    }
+  }
 
    fun isValidEmail(email: String): Boolean {
-    return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    return (!TextUtils.isEmpty(email)) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
   }
 
 }

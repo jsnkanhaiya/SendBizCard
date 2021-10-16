@@ -94,7 +94,7 @@
 
     <fragment
         android:id="@+id/nav_verifyForgotOtp"
-        android:name="com.sendbizcard.ui.otp.VerifyOtpFragment"
+        android:name="com.sendbizcard.ui.otp.VerifyForgotPasswordOtpFragment"
         android:label="@string/menu_my_verify_otp"
         tools:layout="@layout/fragment_otp" >
         <argument

@@ -102,7 +102,7 @@ class ForgotPasswordViewModel @Inject constructor(
             emailId.isBlank() -> {
                 false
             }
-            else -> ValidationUtils.isValidEmail(emailId)
+            else -> ValidationUtils.isValidEmailChar(emailId)
         }
 
     }

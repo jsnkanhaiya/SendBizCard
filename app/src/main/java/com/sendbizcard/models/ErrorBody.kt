@@ -6,4 +6,5 @@ import java.io.Serializable
 data class ErrorBody(
     @SerializedName("status") val httpStatus: Int? = null,
     @SerializedName("username") val title: String? = null,
+    @SerializedName("message") val message: String? = null,
 ) : Serializable

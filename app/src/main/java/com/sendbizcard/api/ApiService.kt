@@ -20,26 +20,26 @@ interface ApiService {
     suspend fun login(@Url url: String, @Body loginRequest: LoginRequestModel) : NetworkResponse<LoginResponseModel, LoginErrorResponse>
 
     @POST
-    fun register(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel, ErrorsListResponse>
+    suspend fun register(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel, ErrorsListResponse>
 
     @POST
-    fun logoutUser(@Url url: String) : NetworkResponse<SavedCards, ErrorsListResponse>
-
-
-    @POST
-    fun forgotPassword(@Url url: String, @Body forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<ForgotPasswordResponse, ErrorsListResponse>
+    suspend fun logoutUser(@Url url: String) : NetworkResponse<SavedCards, ErrorsListResponse>
 
 
     @POST
-    fun changePassword(@Url url: String, @Body changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
+    suspend fun forgotPassword(@Url url: String, @Body forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<ForgotPasswordResponse, LoginErrorResponse>
 
 
     @POST
-    fun verifyForgotPasswordOTP(@Url url: String, @Body registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
+    suspend fun changePassword(@Url url: String, @Body changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
 
 
     @POST
-    fun verifyOtp(@Url url: String, @Body registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
+    suspend fun verifyForgotPasswordOTP(@Url url: String, @Body registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
+
+
+    @POST
+    suspend fun verifyOtp(@Url url: String, @Body registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
 
     @GET
     suspend fun getThemeList(

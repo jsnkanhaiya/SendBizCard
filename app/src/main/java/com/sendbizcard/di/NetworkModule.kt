@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,6 +30,8 @@ object NetworkModule {
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
+
+
         return OkHttpClient.Builder()
             .connectTimeout(CONNECT_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
             .readTimeout(READ_TIMEOUT_SECONDS.toLong(), TimeUnit.SECONDS)
@@ -54,6 +57,8 @@ object NetworkModule {
             }
         }
     }
+
+
 
 
 

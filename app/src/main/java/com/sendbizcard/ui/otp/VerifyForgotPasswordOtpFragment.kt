@@ -1,5 +1,6 @@
 package com.sendbizcard.ui.otp
 
+import android.R.attr
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +20,12 @@ import com.sendbizcard.databinding.FragmentForgotPasswordBinding
 import com.sendbizcard.databinding.FragmentVerifyForgotPasswordBinding
 import com.sendbizcard.utils.AlertDialogWithImageView
 import dagger.hilt.android.AndroidEntryPoint
+import android.R.attr.defaultValue
+
+import android.R.attr.key
+import android.text.Editable
+import android.widget.Toast
+
 
 @AndroidEntryPoint
 class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswordBinding>() {
@@ -40,9 +47,18 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+      // WeightFragmentArgs.fromBundle(requireArguments()).weightRecordingTaskId
+
+
         _binding = getViewBinding()
         initViews()
         setupObservers()
+        val bundle = this.arguments
+        if (bundle != null) {
+             otp = bundle.getString("otp").toString()
+            //binding.otpPinView.text=
+            Toast.makeText(context,"Otp is "+otp ,Toast.LENGTH_LONG).show()
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -55,7 +71,7 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
     private fun initViews() {
         binding.btnSave.setOnClickListener {
              otp = binding.otpPinView.text.toString()
-            if (verifyOtpViewModel.isValidForgotOtpData(otp,)){
+            if (verifyOtpViewModel.isValidForgotOtpData(otp)){
                 verifyOtpViewModel.verifyForGotOtp(otp,email)
             }
         }

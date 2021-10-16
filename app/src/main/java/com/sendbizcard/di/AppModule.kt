@@ -22,10 +22,6 @@ object AppModule  {
 
     @Provides
     @Singleton
-    fun provideSavedCardsAdapter() : SavedCardsAdapter = SavedCardsAdapter()
-
-    @Provides
-    @Singleton
     fun provideSharedPreference(@ApplicationContext context: Context) : SharedPreferences {
         return context.getSharedPreferences(APPLICATION_PREFERENCE_NAME, Context.MODE_PRIVATE)
     }

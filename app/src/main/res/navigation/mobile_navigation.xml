@@ -3,31 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_Splash">
+    app:startDestination="@+id/nav_our_services">
 
-    <fragment
-        android:id="@+id/nav_Splash"
-        android:name="com.sendbizcard.ui.splash.SplashFragment"
-        android:label="@string/menu_logout"
-        tools:layout="@layout/fragment_splash">
-
-        <action
-            android:id="@+id/actionSplashFragmentToSignInFragment"
-            app:destination="@id/nav_login"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-
-        <action
-            android:id="@+id/actionSplashFragmentToRegisterFragment"
-            app:destination="@id/nav_sign_up"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-
-    </fragment>
 
     <fragment
         android:id="@+id/nav_login"
@@ -166,6 +143,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_home"
+        android:name="com.sendbizcard.ui.home.HomeFragment"
+        android:label="@string/menu_logout"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
         android:id="@+id/nav_my_profile"
         android:name="com.sendbizcard.ui.home.HomeFragment"
         android:label="@string/menu_my_profile"
@@ -199,6 +182,12 @@
         android:name="com.sendbizcard.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_logout"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_our_services"
+        android:name="com.sendbizcard.ui.ourServices.OurServicesFragment"
+        android:label="@string/menu_our_services"
+        tools:layout="@layout/fragment_our_services" />
 
 
 </navigation>

@@ -60,6 +60,7 @@ Terms of Service and Privacy Policy</string>
     <string name="menu_select_theme">Select Theme</string>
     <string name="menu_share_app">Share App</string>
     <string name="menu_logout">Logout</string>
+    <string name="menu_our_services">Our Services</string>
 
 
     <string name="enter_your">Enter Your</string>
@@ -72,6 +73,15 @@ Terms of Service and Privacy Policy</string>
     <string name="success_title">Success</string>
     <string name="success_title_sub">OTP verified Successfully</string>
     <string name="resentOtp">Dont receive the OTP? RESEND OTP</string>
+
+
+    <string name="enter_name">Enter Name</string>
+    <string name="enter_designation">Enter Designation</string>
+    <string name="enter_mobile_number">Enter Mobile Number</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_website">Enter Website</string>
+    <string name="enter_location">Enter Location</string>
+    <string name="our_services">Our Services</string>
 
 
 </resources>

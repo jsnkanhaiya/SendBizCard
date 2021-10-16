@@ -7,7 +7,7 @@ import com.sendbizcard.base.BaseAdapter
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.ui.home.viewHolder.SavedCardsViewHolder
 
-class SavedCardsAdapter : BaseAdapter<SavedCards,SavedCardsViewHolder>() {
+class SavedCardsAdapter {/*: BaseAdapter<SavedCards,SavedCardsViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SavedCardsViewHolder {
         val itemView = LayoutInflater.from(parent.context)
@@ -21,5 +21,5 @@ class SavedCardsAdapter : BaseAdapter<SavedCards,SavedCardsViewHolder>() {
 
     override fun getItemCount(): Int {
         return listSize
-    }
+    }*/
 }

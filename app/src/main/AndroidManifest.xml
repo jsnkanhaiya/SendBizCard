@@ -3,7 +3,6 @@
     package="com.sendbizcard">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -16,24 +15,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SendBizCard">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
-        <activity
-            android:name=".HomeActivity"
+            android:name=".ui.splash.SplashActivity"
             android:exported="true"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.SendBizCard.NoActionBar"/>
-        <activity
-            android:name=".ui.introScreen.IntroScreenActivity"
-            android:exported="true">
+            android:theme="@style/SplashTheme"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.SendBizCard.NoActionBar"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".ui.introScreen.IntroScreenActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

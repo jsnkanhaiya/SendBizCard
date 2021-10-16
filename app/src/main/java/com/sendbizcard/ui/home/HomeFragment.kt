@@ -16,29 +16,23 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
-    @Inject
-    lateinit var savedCardsAdapter: SavedCardsAdapter
-
     private val homeViewModel: HomeViewModel by viewModels()
 
-    private var binding: FragmentHomeBinding? = null
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        setUpObservers()
-        homeViewModel.getListOfSavedCards()
+        initOnClicks()
+        observeData()
     }
 
-    private fun setUpObservers() {
-        homeViewModel.listOfSavedCards.observe(viewLifecycleOwner, Observer { listOfSavedCards ->
-            setUpAdapterWithUI(listOfSavedCards)
-        })
+    private fun observeData() {
+
     }
 
-    private fun setUpAdapterWithUI(listOfSavedCards: ArrayList<SavedCards>) {
-        savedCardsAdapter.addAll(listOfSavedCards)
-        binding?.rvSavedCards?.adapter = savedCardsAdapter
+    private fun initOnClicks() {
+
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding

@@ -24,28 +24,26 @@ class SplashViewModel @Inject constructor(
     private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel() {
 
-    val isConfigParsed: SingleLiveEvent<Boolean> by lazy { SingleLiveEvent() }
+    val configParsed: SingleLiveEvent<Boolean> by lazy { SingleLiveEvent() }
 
     fun fetchAndActivateConfigParameters() {
         viewModelScope.launch(Dispatchers.IO) {
             firebaseRemoteConfig.setConfigSettingsAsync(firebaseRemoteConfigSettings)
             firebaseRemoteConfig.fetchAndActivate().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    isConfigParsed.postValue(true)
+                    configParsed.postValue(true)
                 } else {
-                    isConfigParsed.postValue(false)
+                    configParsed.postValue(false)
                 }
             }
             firebaseRemoteConfig.fetchAndActivate().addOnFailureListener {
-                isConfigParsed.postValue(false)
+                configParsed.postValue(false)
             }
         }
     }
 
 
-    fun checkIfUserIsLoggedIn() : Boolean {
-        return preferenceSourceImpl.isUserLoggedIn
-    }
+    fun checkIfUserIsLoggedIn() = preferenceSourceImpl.isUserLoggedIn
 
 
 

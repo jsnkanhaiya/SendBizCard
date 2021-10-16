@@ -2,8 +2,9 @@ package com.sendbizcard.base
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 
-abstract class BaseViewHolder<T>(itemView: View) : RecyclerView.ViewHolder(itemView) {
+abstract class BaseViewHolder<T>(binding: ViewBinding) : RecyclerView.ViewHolder(binding.root) {
 
     var itemClickCallback: ItemClickedCallback<T>? = null
     var positionCallback: ItemClickedPositionCallback? = null

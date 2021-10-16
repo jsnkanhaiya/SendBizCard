@@ -1,115 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTitle"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/create_account"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@color/textcolour"
-        android:textStyle="bold"
-        android:layout_marginTop="63dp"
-        />
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/tvTitleImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/create_account"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/ic_sign_in"
-        />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="63dp"
+            android:gravity="center"
+            android:text="@string/create_account"
+            android:textColor="@color/textcolour"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleImage"
-        android:layout_marginTop="30dp"
-        android:hint="@string/fullname"
-        android:layout_margin="30dp"
-        />
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etMobile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/etName"
-        android:layout_marginTop="30dp"
-        android:hint="@string/mobileno"
-        android:layout_margin="30dp"
-        android:maxLength="10"
-        android:inputType="number"
-        />
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etEmailID"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/etMobile"
-        android:layout_marginTop="30dp"
-        android:hint="@string/emailID"
-        android:layout_margin="30dp"
-        />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/tvTitleImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/ic_sign_in"
+            android:gravity="center"
+            android:text="@string/create_account"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/etEmailID"
-        android:layout_marginTop="30dp"
-        android:hint="@string/password"
-        android:inputType="textVisiblePassword"
-        android:layout_margin="30dp"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/fullname"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitleImage" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/etConfirmPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
-        android:layout_marginTop="30dp"
-        android:inputType="textVisiblePassword"
-        android:hint="@string/conf_password"
-        android:layout_margin="30dp"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etMobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/mobileno"
+            android:inputType="number"
+            android:maxLength="10"
+            app:layout_constraintTop_toBottomOf="@+id/etName" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSave"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="35sp"
-        android:paddingRight="35sp"
-        android:textSize="16sp"
-        android:textColor="@color/white"
-        android:background="@drawable/button_rectangle"
-        android:hint="@string/create_account"
-        android:layout_margin="30dp"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etEmailID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/emailID"
+            app:layout_constraintTop_toBottomOf="@+id/etMobile" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAlreadyAccount"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/btnSave"
-        android:text="@string/alreadyAccount"
-        android:gravity="center"
-        android:textSize="18sp"
-        android:textColor="@color/textcolour"
-        android:layout_marginTop="34dp"
-        />
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/password"
+            android:inputType="textVisiblePassword"
+            app:layout_constraintTop_toBottomOf="@+id/etEmailID" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:hint="@string/conf_password"
+            android:inputType="textVisiblePassword"
+            app:layout_constraintTop_toBottomOf="@+id/etPassword" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="30dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_rectangle"
+            android:hint="@string/create_account"
+            android:paddingLeft="35sp"
+            android:paddingRight="35sp"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etConfirmPassword" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAlreadyAccount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="34dp"
+            android:paddingBottom="34dp"
+            android:gravity="center"
+            android:text="@string/alreadyAccount"
+            android:textColor="@color/textcolour"
+            android:textSize="18sp"
+            app:layout_constraintTop_toBottomOf="@+id/btnSave" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

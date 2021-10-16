@@ -4,6 +4,7 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.api.ApiService
 import com.sendbizcard.firebaseRemoteConfig.RemoteConfigImpl
 import com.sendbizcard.models.ErrorsListResponse
+import com.sendbizcard.models.LoginErrorResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.*
 import com.sendbizcard.models.response.BaseResponseModel
@@ -19,7 +20,7 @@ class ApiRepositoryImpl @Inject constructor(
     private val remoteConfigImpl: RemoteConfigImpl
 ) : ApiRepository {
 
-    override suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, ErrorsListResponse> {
+    override suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, LoginErrorResponse> {
         val url = remoteConfigImpl.getLoginURL()
         return apiService.login(url,loginRequest)
     }

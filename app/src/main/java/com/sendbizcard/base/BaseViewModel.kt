@@ -2,6 +2,7 @@ package com.sendbizcard.base
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
+import com.sendbizcard.models.ServerError
 import com.sendbizcard.utils.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,7 @@ abstract class BaseViewModel : ViewModel() , CoroutineScope , LifecycleObserver 
     override val coroutineContext: CoroutineContext = Dispatchers.Main
 
     val jobList = mutableListOf<Job>()
-    //val showServerError = SingleLiveEvent<ServerError>()
+    val showServerError = SingleLiveEvent<String>()
     val showNetworkError = SingleLiveEvent<String>()
     val showUnknownError = SingleLiveEvent<String>()
 

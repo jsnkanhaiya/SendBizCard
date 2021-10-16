@@ -70,6 +70,7 @@ android {
 dependencies {
 
 
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def kotlin_version = "1.4.32"
     def retrofit_version = '2.9.0'
     def hiltCoreVersion = '2.38.1'
@@ -130,5 +131,8 @@ dependencies {
 
     //Page IndicatorView
     implementation 'com.romandanylyk:pageindicatorview:1.0.3'
+
+    // Span Text
+    implementation 'me.gujun.android:span:1.7'
 
 }

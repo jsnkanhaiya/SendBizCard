@@ -8,11 +8,9 @@ import com.sendbizcard.models.request.LoginRequestModel
 import com.sendbizcard.models.response.LoginResponseModel
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
+import com.sendbizcard.utils.*
 import com.sendbizcard.utils.AppConstants.ERROR_EMAIL
 import com.sendbizcard.utils.AppConstants.ERROR_PASSWORD
-import com.sendbizcard.utils.ValidationUtils
-import com.sendbizcard.utils.decodeNetworkError
-import com.sendbizcard.utils.decodeUnknownError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
@@ -26,7 +24,7 @@ class LoginViewModel @Inject constructor(
     private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel() {
 
-    var loginReponse = MutableLiveData<LoginResponseModel>()
+    var loginReponse = SingleLiveEvent<LoginResponseModel>()
     var error = MutableLiveData<String>()
 
     fun login(emailId: String, password: String) {
@@ -45,7 +43,7 @@ class LoginViewModel @Inject constructor(
                     }
 
                     is NetworkResponse.ServerError -> {
-
+                        showServerError.value = decodeServerError(result.body)
                     }
 
                     is NetworkResponse.NetworkError -> {

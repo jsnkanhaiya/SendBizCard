@@ -32,11 +32,14 @@ interface ApiService {
 
 
     @POST
-    suspend fun changePassword(@Url url: String, @Body changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
+    suspend fun changePassword(@Url url: String, @Body changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel, LoginErrorResponse>
 
 
     @POST
-    suspend fun verifyForgotPasswordOTP(@Url url: String, @Body registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
+    suspend fun verifyForgotPasswordOTP(@Url url: String, @Body registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel, LoginErrorResponse>
+
+    @POST
+    suspend fun resendOTP(@Url url: String) : NetworkResponse<ForgotPasswordResponse, LoginErrorResponse>
 
 
     @POST

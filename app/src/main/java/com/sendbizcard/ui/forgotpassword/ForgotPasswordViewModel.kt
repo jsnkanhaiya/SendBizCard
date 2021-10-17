@@ -13,6 +13,9 @@ import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.ValidationUtils
+import com.sendbizcard.utils.decodeNetworkError
+import com.sendbizcard.utils.decodeServerError
+import com.sendbizcard.utils.decodeUnknownError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,15 +47,15 @@ class ForgotPasswordViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.ServerError -> {
-
+                    showServerError.value = decodeServerError(result.body)
                 }
 
                 is NetworkResponse.NetworkError -> {
-
+                    showNetworkError.value = decodeNetworkError(result.error)
                 }
 
                 is NetworkResponse.UnknownError -> {
-
+                    showUnknownError.value = decodeUnknownError(result.error)
                 }
             }
         })
@@ -76,15 +79,15 @@ class ForgotPasswordViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.ServerError -> {
-
+                    showServerError.value = decodeServerError(result.body)
                 }
 
                 is NetworkResponse.NetworkError -> {
-
+                    showNetworkError.value = decodeNetworkError(result.error)
                 }
 
                 is NetworkResponse.UnknownError -> {
-
+                    showUnknownError.value = decodeUnknownError(result.error)
                 }
             }
         })
@@ -123,15 +126,15 @@ class ForgotPasswordViewModel @Inject constructor(
             confPassword.isBlank() -> {
                 false
             }
-            ValidationUtils.isRequiredPasswordLengthForLogin(password) -> {
+            /*ValidationUtils.isRequiredPasswordLengthForLogin(password) -> {
                 false
             }
             ValidationUtils.isRequiredPasswordLengthForLogin(confPassword) -> {
                 false
-            }
-            ValidationUtils.isRequiredPasswordLengthForChangePassword(password) -> {
+            }*/
+            /*ValidationUtils.isRequiredPasswordLengthForChangePassword(password) -> {
                 false
-            }
+            }*/
             else ->ValidationUtils.isBothPasswordMatch(password,confPassword)
         }
 

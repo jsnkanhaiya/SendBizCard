@@ -27,6 +27,7 @@ class LoginViewModel @Inject constructor(
     var loginReponse = SingleLiveEvent<LoginResponseModel>()
     var error = MutableLiveData<String>()
 
+
     fun login(emailId: String, password: String) {
         val loginRequest = LoginRequestModel(emailId,password)
         jobList.add(
@@ -36,7 +37,6 @@ class LoginViewModel @Inject constructor(
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
-
                         //loginReponse = result
                         preferenceSourceImpl.isUserLoggedIn=true
                         preferenceSourceImpl.userToken= result.body.token.toString()

@@ -1,5 +1,6 @@
 package com.sendbizcard.ui.login
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -17,6 +19,7 @@ import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentLoginBinding
 import com.sendbizcard.dialog.ConfirmationDialogFragment
 import com.sendbizcard.utils.getDefaultNavigationAnimation
+import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -57,25 +60,29 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun setupObservers() {
         loginViewModel.loginReponse.observe(viewLifecycleOwner, Observer {
-
+            binding.progressBarContainer.visibility = View.GONE
             val i = Intent(requireContext(), HomeActivity::class.java)
             requireActivity().startActivity(i)
         })
 
         loginViewModel.showNetworkError.observe(this, Observer {
-            showlogoutDialog(it)
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
         })
 
         loginViewModel.showUnknownError.observe(this, Observer {
-            showlogoutDialog(it)
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
 
         loginViewModel.error.observe(viewLifecycleOwner, Observer {
-            showlogoutDialog(it)
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
         loginViewModel.showServerError.observe(this ) { errorMessage ->
+            binding.progressBarContainer.visibility = View.GONE
             Log.d("Login Error",errorMessage)
         }
 
@@ -83,10 +90,12 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun initViews() {
+        binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
             val emailId = binding.etEmailID.text.toString()
             val password = binding.etPassword.text.toString()
             if (loginViewModel.isValidLoginData(emailId, password)) {
+                binding.progressBarContainer.visibility = View.VISIBLE
                 loginViewModel.login(emailId, password)
             }
         }
@@ -100,34 +109,5 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         get() = FragmentLoginBinding::inflate
 
 
-    private fun showlogoutDialog(message:String) {
-        val confirmationDialogFragment = ConfirmationDialogFragment.Builder()
-            .setAcceptButton(
-                context?.resources?.getString(R.string.ok_confirmation)!!
-            )
-            .setTitle(
-                context?.resources?.getString(R.string.error)!!
-            )
-            .setMessage(
-                message
-            )
-            .setMessageTextColor(requireContext().resources.getColor(R.color.textcolour))
-            .build()
-        confirmationDialogFragment.show(
-            requireActivity().supportFragmentManager,
-            ConfirmationDialogFragment.TAG
-        )
-
-        confirmationDialogFragment.setButtonClickListener(object :
-            ConfirmationDialogFragment.OnButtonClickListener {
-            override fun onAcceptClick() {
-                confirmationDialogFragment.dismiss()
-            }
-
-            override fun onRejectClick() {
-            }
-        })
-
-    }
 
 }

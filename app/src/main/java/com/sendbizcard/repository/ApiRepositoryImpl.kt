@@ -36,14 +36,19 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.forgotPassword(url,forgotPasswordRequestModel)
     }
 
-    override suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel): NetworkResponse<BaseResponseModel, ErrorsListResponse> {
+    override suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
         val url = remoteConfigImpl.getChangePasswordURL()
         return apiService.changePassword(url,changePasswordRequestModel)
     }
 
-    override suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest): NetworkResponse<BaseResponseModel, ErrorsListResponse> {
+    override suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
         val url = remoteConfigImpl.getVerifyOTPURL()
         return apiService.verifyForgotPasswordOTP(url,registerRequestModel)
+    }
+
+    override suspend fun resendOTP(): NetworkResponse<ForgotPasswordResponse, LoginErrorResponse> {
+        val url = remoteConfigImpl.getResendOTPURL()
+        return apiService.resendOTP(url)
     }
 
     override suspend fun verifyOtp(registerRequestModel: VerifyOtpRequest): NetworkResponse<BaseResponseModel, ErrorsListResponse> {

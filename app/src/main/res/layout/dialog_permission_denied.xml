@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_background"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivErrorAlert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:lineSpacingExtra="-4sp"
+            android:maxWidth="64dp"
+            android:maxHeight="64dp"
+            android:src="@drawable/ic_error_alert"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/text_go_out_of_chat_title" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvErrorAlertHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:lineSpacingExtra="-4sp"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivErrorAlert"
+            android:text="@string/permission_denied_alert" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvErrorAlertDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="4sp"
+            android:textColor="@color/greyscaleSubheader"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorAlertHeader"
+            android:text="@string/permission_denied_description" />
+
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/tvErrorAcknowledge"
+            style="@style/BioButton"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_margin="16dp"
+            android:background="@color/colorPrimary"
+            android:enabled="true"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvErrorAlertDescription"
+            android:text="@string/ok_confirmation" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+

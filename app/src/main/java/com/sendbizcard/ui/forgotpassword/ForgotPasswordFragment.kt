@@ -2,6 +2,7 @@ package com.sendbizcard.ui.forgotpassword
 
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.*
 import com.sendbizcard.utils.getDefaultNavigationAnimation
+import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -72,18 +74,37 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
 
     private fun setupObservers() {
         forgotPasswordViewmodel.forgotPasswordReponse.observe(viewLifecycleOwner, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+
             findNavController().navigate(
                 R.id.nav_verifyForgotOtp,
                 bundleOf("otp" to it.otp.toString()),
                getDefaultNavigationAnimation()
             )
         })
+        forgotPasswordViewmodel.showNetworkError.observe(this, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
+        })
+
+        forgotPasswordViewmodel.showUnknownError.observe(this, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        })
+
+        forgotPasswordViewmodel.showServerError.observe(this ) { errorMessage ->
+            binding.progressBarContainer.visibility = View.GONE
+            Log.d("Login Error",errorMessage)
+        }
+
     }
 
     private fun initViews() {
+        binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
             val emailId = binding?.etEmailID?.text.toString()
             if (forgotPasswordViewmodel.isValidData(emailId)) {
+                binding.progressBarContainer.visibility = View.VISIBLE
                 forgotPasswordViewmodel.forgotPasswordUser(emailId)
             }
         }

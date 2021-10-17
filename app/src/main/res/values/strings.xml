@@ -70,6 +70,7 @@ Terms of Service and Privacy Policy</string>
     <string name="search">Search</string>
     <string name="success_title">Success</string>
     <string name="success_title_sub">OTP verified Successfully</string>
+    <string name="success_title_change_password">Password changed Successfully</string>
     <string name="resentOtp">Dont receive the OTP? RESEND OTP</string>
 
     <!-- Home -->
@@ -92,6 +93,20 @@ Terms of Service and Privacy Policy</string>
     <!-- Our Services -->
     <string name="our">Our</string>
     <string name="services">Services</string>
+    <string name="documents">Documents</string>
+    <string name="gallery">Gallery</string>
+    <string name="camera">Camera</string>
+
+    <string name="text_go_out_of_chat_title">Confirm Exit</string>
+    <string name="text_going_out_of_chat_alert">Do you want to exit without attaching\nthe selected file?</string>
+    <string name="tex_exit">Exit</string>
+    <string name="tex_cancel">Cancel</string>
+    <string name="permission_denied_alert">Permission denied</string>
+    <string name="permission_denied_description">You won’t be able to use the upload\nand download functions.Please grant\npermission to enable them.</string>
+    <string name="permission_needed_alert">Permission needed</string>
+    <string name="permission_needed_description">In the following screen, grant\npermission to access photos, media\nand files on this device.</string>
+    <string name="mandatory_permission_need_alert">Allow access to photos, media, and\nfiles on your device</string>
+    <string name="mandatory_permission_need_description">Since access was denied, you’ll need\nto grant access manually.</string>
 
 
 </resources>

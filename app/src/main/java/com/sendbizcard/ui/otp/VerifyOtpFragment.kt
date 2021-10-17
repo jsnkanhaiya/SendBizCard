@@ -3,6 +3,7 @@ package com.sendbizcard.ui.otp
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentChangePasswordVerificationBinding
 import com.sendbizcard.utils.AlertDialogWithImageView
+import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,13 +51,30 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setupObservers() {
         verifyOtpViewModel.otpResponseModel.observe(viewLifecycleOwner, Observer {
+            binding.progressBarContainer.visibility = View.GONE
             showSuccessDialog()
         })
+        verifyOtpViewModel.showNetworkError.observe(this, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
+        })
+
+        verifyOtpViewModel.showUnknownError.observe(this, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        })
+
+        verifyOtpViewModel.showServerError.observe(this ) { errorMessage ->
+            binding.progressBarContainer.visibility = View.GONE
+            Log.d("Login Error",errorMessage)
+        }
     }
 
     private fun initViews() {
+        binding.progressBarContainer.visibility = View.GONE
         binding.btnverify.setOnClickListener {
             if (verifyOtpViewModel.isValidOtpData(otp)){
+                binding.progressBarContainer.visibility = View.VISIBLE
                 verifyOtpViewModel.verifyOtp(otp)
             }
         }

@@ -9,10 +9,14 @@ import com.sendbizcard.models.request.RegisterRequestModel
 import com.sendbizcard.models.request.VerifyForgotPasswordRequest
 import com.sendbizcard.models.request.VerifyOtpRequest
 import com.sendbizcard.models.response.BaseResponseModel
+import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.RegisterResponseModel
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.ValidationUtils
+import com.sendbizcard.utils.decodeNetworkError
+import com.sendbizcard.utils.decodeServerError
+import com.sendbizcard.utils.decodeUnknownError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +31,7 @@ class VerifyOtpViewModel @Inject constructor(
 ) : BaseViewModel(), LifecycleObserver {
 
     var otpResponseModel = MutableLiveData<BaseResponseModel>()
+    var otpResponseresendModel = MutableLiveData<ForgotPasswordResponse>()
 
 
     fun isValidOtpData(otp: String): Boolean {
@@ -64,15 +69,43 @@ class VerifyOtpViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.ServerError -> {
-
+                    showServerError.value = decodeServerError(result.body)
                 }
 
                 is NetworkResponse.NetworkError -> {
-
+                    showNetworkError.value = decodeNetworkError(result.error)
                 }
 
                 is NetworkResponse.UnknownError -> {
+                    showUnknownError.value = decodeUnknownError(result.error)
+                }
+            }
+        })
 
+    }
+
+
+    fun resendOTP() {
+
+        jobList.add(launch {
+            val result = withContext(Dispatchers.IO) {
+                apiRepositoryImpl.resendOTP()
+            }
+            when (result) {
+                is NetworkResponse.Success -> {
+                    otpResponseresendModel.value=result.body
+                }
+
+                is NetworkResponse.ServerError -> {
+                    showServerError.value = decodeServerError(result.body)
+                }
+
+                is NetworkResponse.NetworkError -> {
+                    showNetworkError.value = decodeNetworkError(result.error)
+                }
+
+                is NetworkResponse.UnknownError -> {
+                    showUnknownError.value = decodeUnknownError(result.error)
                 }
             }
         })

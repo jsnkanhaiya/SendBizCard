@@ -26,7 +26,6 @@ object NetworkModule {
     private val WRITE_TIMEOUT_SECONDS = 60
     private val CONNECT_TIMEOUT_SECONDS = 10
 
-
     @Provides
     @Singleton
     fun provideOkHttpClient(
@@ -41,8 +40,6 @@ object NetworkModule {
             .addInterceptor(sessionTokenInterceptor)
             .build()
     }
-
-
 
     @Provides
     @Singleton
@@ -66,11 +63,6 @@ object NetworkModule {
     fun provideSessionTokenInterceptor(preferenceSourceImpl: PreferenceSourceImpl) : SessionTokenInterceptor {
         return SessionTokenInterceptor(preferenceSourceImpl)
     }
-
-
-
-
-
 
     @Provides
     @Singleton

@@ -15,9 +15,10 @@ interface ApiRepository {
     suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, LoginErrorResponse>
     suspend fun register(registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel,ErrorsListResponse>
     suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<ForgotPasswordResponse,LoginErrorResponse>
-    suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
-    suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
+    suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
+    suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
     suspend fun verifyOtp(registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
+    suspend fun resendOTP() : NetworkResponse<ForgotPasswordResponse,LoginErrorResponse>
     suspend fun logoutUser() : NetworkResponse<SavedCards,ErrorsListResponse>
     suspend fun getThemeList() : NetworkResponse<ThemeResponse,ErrorsListResponse>
 }

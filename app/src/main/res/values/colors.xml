@@ -12,5 +12,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="red">#ff2900</color>
     <color name="beige">#cdc8c8</color>
+    <color name="pale_grey_two_alpha">#44f1f6fc</color>
+    <color name="tasks_not_current_date_color">#ebebeb</color>
+    <color name="greyscaleSubheader">#777777</color>
 
 </resources>

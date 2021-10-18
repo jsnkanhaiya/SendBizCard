@@ -13,7 +13,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/resetpassword_successful"
+        android:text="@string/reset_password_successful"
         android:gravity="center"
         android:textSize="18sp"
         android:textColor="@color/textcolour"
@@ -48,8 +48,7 @@
         android:textColor="@color/white"
         android:textAllCaps="false"
         android:background="@drawable/button_rectangle"
-        android:hint="@string/signin"
-        android:text="@string/signin"
+        android:text="@string/sign_in"
         />
 
     <androidx.appcompat.widget.AppCompatTextView

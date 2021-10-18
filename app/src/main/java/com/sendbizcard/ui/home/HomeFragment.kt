@@ -72,6 +72,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.imgUser.setOnClickListener {
             checkpermissionForCameraGallery()
         }
+
+        binding.btnSave.setOnClickListener {
+            homeViewModel.addCardRequest()
+        }
+
+
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding

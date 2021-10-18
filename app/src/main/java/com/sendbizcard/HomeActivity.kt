@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.databinding.ActivityHomeBinding
+import com.sendbizcard.utils.UserSessionManager
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Retrofit
 import javax.inject.Inject
@@ -36,17 +37,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_our_services
+                R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_home
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.home, menu)
-        return true
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -56,4 +51,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     override val bindingInflater: (LayoutInflater) -> ActivityHomeBinding
         get() = ActivityHomeBinding::inflate
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        UserSessionManager.clearServiceList()
+    }
 }

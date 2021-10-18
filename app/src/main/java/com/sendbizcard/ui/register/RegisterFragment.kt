@@ -9,10 +9,7 @@ import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentRegisterBinding
@@ -24,9 +21,8 @@ import me.gujun.android.span.span
 @AndroidEntryPoint
 class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
-    private  val registerViewModel: RegisterViewModel by viewModels()
-    private var binding: FragmentRegisterBinding? = null
-
+    private val registerViewModel: RegisterViewModel by viewModels()
+    private lateinit var binding: FragmentRegisterBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,12 +33,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     }
 
     private fun initSpanUI() {
-        binding?.tvAlreadyAccount?.movementMethod =
+        binding.tvAlreadyAccount.movementMethod =
             LinkMovementMethod.getInstance() // without LinkMovementMethod, click will not work
-        binding?.tvAlreadyAccount?.text = span {
-            +resources.getString(R.string.alreadyAccount)
+        binding.tvAlreadyAccount.text = span {
+            +resources.getString(R.string.already_have_account)
             span {
-                text = " "+ resources.getString(R.string.signin)
+                text = " " + resources.getString(R.string.sign_in)
                 textColor = ResourcesCompat.getColor(
                     requireContext().resources,
                     R.color.colorPrimary3,
@@ -50,7 +46,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 )
                 onClick = {
                     //on click
-                    findNavController().navigate(R.id.nav_login,null,
+                    findNavController().navigate(
+                        R.id.nav_login, null,
                         getDefaultNavigationAnimation()
                     )
                 }
@@ -59,31 +56,31 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     }
 
     private fun setUpObservers() {
-        registerViewModel.registerReponse.observe(viewLifecycleOwner, Observer {
-                findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp))
+        registerViewModel.registerReponse.observe(viewLifecycleOwner, {
+            findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp))
 
         })
 
-        registerViewModel.showUnknownError.observe(this, Observer {
+        registerViewModel.showUnknownError.observe(this, {
             showlogoutDialog(it)
         })
 
-        registerViewModel.showNetworkError.observe(this, Observer {
+        registerViewModel.showNetworkError.observe(this, {
             showlogoutDialog(it)
         })
 
-        registerViewModel.showServerError.observe(this, Observer {
+        registerViewModel.showServerError.observe(this, {
             showlogoutDialog(it)
         })
     }
 
     private fun initViews() {
-        binding?.btnSave?.setOnClickListener {
-            val name = binding?.etName?.text.toString()
-            val emailId = binding?.etEmailID?.text.toString()
-            val mobileNo = binding?.etMobile?.text.toString()
-            val password = binding?.etPassword?.text.toString()
-            val confPassword = binding?.etConfirmPassword?.text.toString()
+        binding.btnSave.setOnClickListener {
+            val name = binding.etName.text.toString()
+            val emailId = binding.etEmailID.text.toString()
+            val mobileNo = binding.etMobile.text.toString()
+            val password = binding.etPassword.text.toString()
+            val confPassword = binding.etConfirmPassword.text.toString()
             if (registerViewModel.isValidRegisterData(
                     name,
                     mobileNo,
@@ -101,7 +98,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
         get() = FragmentRegisterBinding::inflate
 
 
-    private fun showlogoutDialog(message:String) {
+    private fun showlogoutDialog(message: String) {
         val confirmationDialogFragment = ConfirmationDialogFragment.Builder()
             .setAcceptButton(
                 context?.resources?.getString(R.string.ok_confirmation)!!
@@ -130,6 +127,4 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
         })
 
     }
-
-
 }

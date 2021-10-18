@@ -7,6 +7,7 @@ import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.LoginErrorResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.*
+import com.sendbizcard.models.request.addCard.AddCardRequest
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
@@ -64,6 +65,11 @@ class ApiRepositoryImpl @Inject constructor(
     override suspend fun getThemeList(): NetworkResponse<ThemeResponse, ErrorsListResponse> {
         val url = remoteConfigImpl.getThemeListURL()
         return apiService.getThemeList(url)
+    }
+
+    override suspend fun addCardRequest(addCardRequest: AddCardRequest): NetworkResponse<ThemeResponse, ErrorsListResponse> {
+        val url = remoteConfigImpl.getAddCardURL()
+        return apiService.addCardRequest(url,addCardRequest)
     }
 
 }

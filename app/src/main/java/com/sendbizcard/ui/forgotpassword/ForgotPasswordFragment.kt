@@ -25,38 +25,24 @@ import me.gujun.android.span.span
 @AndroidEntryPoint
 class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
 
-
-    private val TAG = "CreateNewPasswordFragment"
-
-      val forgotPasswordViewmodel: ForgotPasswordViewModel by viewModels()
-    private var _binding: FragmentForgotPasswordBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
+    private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
+    private lateinit var binding: FragmentForgotPasswordBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = getViewBinding()
+        binding = getViewBinding()
         initViews()
         setupObservers()
         initSpanUI()
     }
 
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     private fun initSpanUI() {
-        binding?.tvAlreadyAccount?.movementMethod =
+        binding.tvAlreadyAccount.movementMethod =
             LinkMovementMethod.getInstance() // without LinkMovementMethod, click will not work
-        binding?.tvAlreadyAccount?.text = span {
-            +resources.getString(R.string.alreadyAccount)
+        binding.tvAlreadyAccount.text = span {
+            +resources.getString(R.string.already_have_account)
             span {
-                text = " "+ resources.getString(R.string.signin)
+                text = " "+ resources.getString(R.string.sign_in)
                 textColor = ResourcesCompat.getColor(
                     requireContext().resources,
                     R.color.colorPrimary3,
@@ -73,26 +59,25 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
     }
 
     private fun setupObservers() {
-        forgotPasswordViewmodel.forgotPasswordReponse.observe(viewLifecycleOwner, Observer {
+        forgotPasswordViewModel.forgotPasswordReponse.observe(viewLifecycleOwner, {
             binding.progressBarContainer.visibility = View.GONE
-
             findNavController().navigate(
                 R.id.nav_verifyForgotOtp,
                 bundleOf("otp" to it.otp.toString()),
                getDefaultNavigationAnimation()
             )
         })
-        forgotPasswordViewmodel.showNetworkError.observe(this, Observer {
+        forgotPasswordViewModel.showNetworkError.observe(this, Observer {
             binding.progressBarContainer.visibility = View.GONE
             context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
         })
 
-        forgotPasswordViewmodel.showUnknownError.observe(this, Observer {
+        forgotPasswordViewModel.showUnknownError.observe(this, Observer {
             binding.progressBarContainer.visibility = View.GONE
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
-        forgotPasswordViewmodel.showServerError.observe(this ) { errorMessage ->
+        forgotPasswordViewModel.showServerError.observe(this ) { errorMessage ->
             binding.progressBarContainer.visibility = View.GONE
             Log.d("Login Error",errorMessage)
         }
@@ -102,10 +87,10 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
     private fun initViews() {
         binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
-            val emailId = binding?.etEmailID?.text.toString()
-            if (forgotPasswordViewmodel.isValidData(emailId)) {
+            val emailId = binding.etEmailID.text.toString()
+            if (forgotPasswordViewModel.isValidData(emailId)) {
                 binding.progressBarContainer.visibility = View.VISIBLE
-                forgotPasswordViewmodel.forgotPasswordUser(emailId)
+                forgotPasswordViewModel.forgotPasswordUser(emailId)
             }
         }
     }

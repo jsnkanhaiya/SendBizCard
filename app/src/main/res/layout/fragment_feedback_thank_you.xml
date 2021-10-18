@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/tvthankyou"
+        android:text="@string/thank_you"
         app:layout_constraintTop_toBottomOf="@+id/tvThankyouImage"
         android:gravity="center"
         android:textSize="16sp"

@@ -32,7 +32,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        initViews()
+        initOnClicks()
         initSpanUI()
         setupObservers()
     }
@@ -89,15 +89,32 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     }
 
-    private fun initViews() {
+    private fun initOnClicks() {
         binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
+
             val emailId = binding.etEmailID.text.toString()
             val password = binding.etPassword.text.toString()
-            if (loginViewModel.isValidLoginData(emailId, password)) {
+
+            when {
+                emailId.isEmpty() -> {
+                    showErrorDialog("Enter Email Id", requireActivity(), requireContext())
+                    return@setOnClickListener
+                }
+                password.isEmpty() -> {
+                    showErrorDialog("Enter Password", requireActivity(), requireContext())
+                    return@setOnClickListener
+                }
+                else -> {
+                    binding.progressBarContainer.visibility = View.VISIBLE
+                    loginViewModel.login(emailId, password)
+                }
+            }
+
+            /*if (loginViewModel.isValidLoginData(emailId, password)) {
                 binding.progressBarContainer.visibility = View.VISIBLE
                 loginViewModel.login(emailId, password)
-            }
+            }*/
         }
 
         binding.tvForgotPassword.setOnClickListener {

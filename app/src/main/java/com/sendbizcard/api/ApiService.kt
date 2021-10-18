@@ -5,6 +5,7 @@ import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.LoginErrorResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.*
+import com.sendbizcard.models.request.addCard.AddCardRequest
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
@@ -46,8 +47,8 @@ interface ApiService {
     suspend fun verifyOtp(@Url url: String, @Body registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
 
     @GET
-    suspend fun getThemeList(
-        @Url url: String
-    ) : NetworkResponse<ThemeResponse,ErrorsListResponse>
+    suspend fun getThemeList(@Url url: String) : NetworkResponse<ThemeResponse,ErrorsListResponse>
 
+    @POST
+    suspend fun addCardRequest(@Url url: String, @Body addCardRequest: AddCardRequest) : NetworkResponse<ThemeResponse,ErrorsListResponse>
 }

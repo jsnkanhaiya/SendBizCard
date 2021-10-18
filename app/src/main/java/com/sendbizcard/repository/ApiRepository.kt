@@ -5,6 +5,7 @@ import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.LoginErrorResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.*
+import com.sendbizcard.models.request.addCard.AddCardRequest
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.ForgotPasswordResponse
 import com.sendbizcard.models.response.LoginResponseModel
@@ -21,4 +22,5 @@ interface ApiRepository {
     suspend fun resendOTP() : NetworkResponse<ForgotPasswordResponse,LoginErrorResponse>
     suspend fun logoutUser() : NetworkResponse<SavedCards,ErrorsListResponse>
     suspend fun getThemeList() : NetworkResponse<ThemeResponse,ErrorsListResponse>
+    suspend fun addCardRequest(addCardRequest: AddCardRequest) : NetworkResponse<ThemeResponse,ErrorsListResponse>
 }

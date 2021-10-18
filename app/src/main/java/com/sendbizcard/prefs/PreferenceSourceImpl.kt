@@ -13,12 +13,19 @@ class PreferenceSourceImpl @Inject constructor(private val preferences: SharedPr
         const val USER_NAME = "USER_NAME"
         const val USER_EMAIL = "USER_EMAIL"
         const val USER_MOBILE_NO = "USER_MOBILE_NO"
+        const val IS_FIRST_TIME_USER = "IS_FIRST_TIME_USER"
     }
 
     override var isUserLoggedIn: Boolean
         get() = preferences.getBoolean(IS_USER_LOGGED_IN,false) ?: false
         set(value) {
             preferences.edit().putBoolean(IS_USER_LOGGED_IN,value).apply()
+        }
+
+    override var isFirstTimeUser: Boolean
+        get() = preferences.getBoolean(IS_FIRST_TIME_USER,true) ?: true
+        set(value) {
+            preferences.edit().putBoolean(IS_FIRST_TIME_USER,value).apply()
         }
 
     override var userId: String

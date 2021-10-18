@@ -47,7 +47,7 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewBinding()
         initViews()
-        initSpanUI()
+        //initSpanUI()
         setupObservers()
         val bundle = this.arguments
         if (bundle != null) {

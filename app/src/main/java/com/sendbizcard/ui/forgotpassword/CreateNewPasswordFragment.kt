@@ -9,36 +9,32 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentCreateNewPasswordBinding
-import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.utils.AlertDialogWithImageView
+import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>(){
+class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>() {
 
 
     private val TAG = "CreateNewPasswordFragment"
 
-    private  val forgotPasswordViewmodel: ForgotPasswordViewModel by viewModels()
+    private val forgotPasswordViewmodel: ForgotPasswordViewModel by viewModels()
     private var _binding: FragmentCreateNewPasswordBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    var otp =""
-
+    var otp = ""
+    var isChangePassword = false
 
 
     override fun onDestroyView() {
@@ -63,7 +59,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
 
         forgotPasswordViewmodel.showNetworkError.observe(this, Observer {
             binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
         forgotPasswordViewmodel.showUnknownError.observe(this, Observer {
@@ -71,9 +67,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
-        forgotPasswordViewmodel.showServerError.observe(this ) { errorMessage ->
+        forgotPasswordViewmodel.showServerError.observe(this) { errorMessage ->
             binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
+            Log.d("Login Error", errorMessage)
         }
 
     }
@@ -84,15 +80,25 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         if (bundle != null) {
             otp = bundle.getString("otp").toString()
             //binding.otpPinView.text=
-            Toast.makeText(context,"Otp is "+otp , Toast.LENGTH_LONG).show()
+            Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
+        }
+        if (bundle != null) {
+            isChangePassword = bundle.getBoolean("isChangepassword")
+            //binding.otpPinView.text=
+            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG)
+                .show()
+        }
+
+        if (isChangePassword) {
+            binding.tvTitle.text = resources.getString(R.string.create_new_password)
         }
 
         binding.btnSave.setOnClickListener {
             val password = binding.etNewPassword.text.toString()
             val confpassword = binding.etConfirmPassword.text.toString()
-            if (forgotPasswordViewmodel.isValidChangePasswordData(otp,password,confpassword)){
+            if (forgotPasswordViewmodel.isValidChangePasswordData(otp, password, confpassword)) {
                 binding.progressBarContainer.visibility = View.VISIBLE
-                forgotPasswordViewmodel.changePasswordUser(otp,password,confpassword)
+                forgotPasswordViewmodel.changePasswordUser(otp, password, confpassword)
             }
         }
     }
@@ -102,16 +108,23 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         AlertDialogWithImageView.showDialog(
             requireFragmentManager().beginTransaction(),
             requireContext(),
-            requireContext().resources.getString(R.string.success_title)
+            requireContext().resources.getString(R.string.success_title),
+            if (isChangePassword){
+                requireContext().resources.getString(R.string.success_title_new_password)
+            }else{
+                requireContext().resources.getString(R.string.success_title_change_password)
+            }
             ,
-            requireContext().resources.getString(R.string.success_title_change_password),
-            R.drawable.ic_success_tick,
+            R.drawable.ic_success,
             onDismiss = {
-                if(fragmentManager!= null) {
-                    var intent= Intent(requireContext(), HomeActivity::class.java)
-                    startActivity(intent)
-
-                // findNavController().navigate(R.id.nav_createNewpassword, bundleOf("otp" to otp))
+                if (fragmentManager != null) {
+                    if (isChangePassword){
+                        var intent = Intent(requireContext(), HomeActivity::class.java)
+                        startActivity(intent)
+                    }else{
+                        findNavController().navigate(R.id.nav_login,null,
+                            getDefaultNavigationAnimation())
+                    }
                 }
             }
         )

@@ -32,6 +32,7 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
     private var _binding: FragmentVerifyForgotPasswordBinding? = null
     private var otp = ""
     private var email = ""
+    var isChangePassword=false
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -104,13 +105,25 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun initViews() {
+
+        val bundle = this.arguments
+        if (bundle != null) {
+             isChangePassword = bundle.getBoolean("isChangepassword")
+            //binding.otpPinView.text=
+            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
+        }
+
+        if (isChangePassword){
+            binding.tvTitle.text = resources.getString(R.string.create_new_password_verfication)
+        }
+
         binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
             otp = binding.otpPinView.text.toString()
             if (verifyOtpViewModel.isValidForgotOtpData(otp)) {
-                // verifyOtpViewModel.verifyForGotOtp(otp,email)
                 binding.progressBarContainer.visibility = View.VISIBLE
-                showSuccessDialog()
+                 verifyOtpViewModel.verifyForGotOtp(otp,email)
+               // showSuccessDialog()
             }
         }
     }
@@ -123,7 +136,7 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
             requireContext(),
             requireContext().resources.getString(R.string.success_title),
             requireContext().resources.getString(R.string.success_title_sub),
-            R.drawable.ic_success_tick,
+            R.drawable.ic_success,
             onDismiss = {
                 if (fragmentManager != null) {
                     findNavController().navigate(R.id.nav_createNewpassword, bundleOf("otp" to otp))

@@ -6,10 +6,7 @@ import com.sendbizcard.models.LoginErrorResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.*
 import com.sendbizcard.models.request.addCard.AddCardRequest
-import com.sendbizcard.models.response.BaseResponseModel
-import com.sendbizcard.models.response.ForgotPasswordResponse
-import com.sendbizcard.models.response.LoginResponseModel
-import com.sendbizcard.models.response.RegisterResponseModel
+import com.sendbizcard.models.response.*
 import com.sendbizcard.models.response.theme.ThemeResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -20,6 +17,10 @@ interface ApiService {
 
     @POST
     suspend fun login(@Url url: String, @Body loginRequest: LoginRequestModel) : NetworkResponse<LoginResponseModel, LoginErrorResponse>
+
+    @POST
+    suspend fun updateUserProfile(@Url url: String, @Body updateProfileRequest : UpdateProfileRequest) : NetworkResponse<BaseResponseModel, LoginErrorResponse>
+
 
     @POST
     suspend fun register(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel, ErrorsListResponse>
@@ -42,12 +43,19 @@ interface ApiService {
     @POST
     suspend fun resendOTP(@Url url: String) : NetworkResponse<ForgotPasswordResponse, LoginErrorResponse>
 
+    @POST
+    suspend fun sendFeedBack(@Url url: String,@Body feedback:FeedBackRequestModel) : NetworkResponse<BaseResponseModel, LoginErrorResponse>
+
 
     @POST
     suspend fun verifyOtp(@Url url: String, @Body registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel, ErrorsListResponse>
 
     @GET
     suspend fun getThemeList(@Url url: String) : NetworkResponse<ThemeResponse,ErrorsListResponse>
+
+    @GET
+    suspend fun getUserProfileData(@Url url: String) : NetworkResponse<UserProfileResponse,LoginErrorResponse>
+
 
     @POST
     suspend fun addCardRequest(@Url url: String, @Body addCardRequest: AddCardRequest) : NetworkResponse<ThemeResponse,ErrorsListResponse>

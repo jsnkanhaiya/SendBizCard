@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -28,6 +29,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
     private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
     private lateinit var binding: FragmentForgotPasswordBinding
 
+    private var isChangePassword = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
@@ -85,6 +87,19 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
     }
 
     private fun initViews() {
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            isChangePassword = bundle.getBoolean("isChangepassword")
+            //binding.otpPinView.text=
+            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
+        }
+
+        if (isChangePassword){
+            binding.tvTitle.text = resources.getString(R.string.Change_Password)
+            binding.tvTitleImage.setBackgroundDrawable(resources.getDrawable(R.drawable.ic_change_password))
+        }
+
         binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
             val emailId = binding.etEmailID.text.toString()

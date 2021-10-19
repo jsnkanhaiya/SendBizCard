@@ -8,11 +8,8 @@ import com.sendbizcard.models.LoginErrorResponse
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.*
 import com.sendbizcard.models.request.addCard.AddCardRequest
-import com.sendbizcard.models.response.BaseResponseModel
-import com.sendbizcard.models.response.ForgotPasswordResponse
-import com.sendbizcard.models.response.LoginResponseModel
+import com.sendbizcard.models.response.*
 import dagger.hilt.android.scopes.ViewModelScoped
-import com.sendbizcard.models.response.RegisterResponseModel
 import com.sendbizcard.models.response.theme.ThemeResponse
 import javax.inject.Inject
 
@@ -25,6 +22,11 @@ class ApiRepositoryImpl @Inject constructor(
     override suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, LoginErrorResponse> {
         val url = remoteConfigImpl.getLoginURL()
         return apiService.login(url,loginRequest)
+    }
+
+    override suspend fun updateUserProfile(updateProfileRequest : UpdateProfileRequest): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
+        val url = remoteConfigImpl.getLoginURL()//updateUser Profile url pending
+        return apiService.updateUserProfile(url,updateProfileRequest)
     }
 
     override suspend fun register(registerRequestModel: RegisterRequestModel): NetworkResponse<RegisterResponseModel, ErrorsListResponse> {
@@ -65,6 +67,17 @@ class ApiRepositoryImpl @Inject constructor(
     override suspend fun getThemeList(): NetworkResponse<ThemeResponse, ErrorsListResponse> {
         val url = remoteConfigImpl.getThemeListURL()
         return apiService.getThemeList(url)
+    }
+
+    override suspend fun getUserProfileData(): NetworkResponse<UserProfileResponse, LoginErrorResponse> {
+        val url = remoteConfigImpl.getFeedbackURL()//add Profile url
+        return apiService.getUserProfileData(url)
+    }
+
+
+    override suspend fun sendFeedBack(feedback:FeedBackRequestModel): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
+        val url = remoteConfigImpl.getFeedbackURL()
+        return apiService.sendFeedBack(url,feedback)
     }
 
     override suspend fun addCardRequest(addCardRequest: AddCardRequest): NetworkResponse<ThemeResponse, ErrorsListResponse> {

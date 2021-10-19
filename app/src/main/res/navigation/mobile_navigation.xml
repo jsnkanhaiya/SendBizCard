@@ -62,6 +62,11 @@
             android:defaultValue=""
             app:argType="string" />
 
+        <argument
+            android:name="isChangepassword"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
         <action
             android:id="@+id/actionForgotPasswordFragmentToVeriFyForgotPasswordFragment"
             app:destination="@id/nav_verifyForgotOtp"
@@ -82,6 +87,11 @@
             android:name="otp"
             android:defaultValue=""
             app:argType="string" />
+
+        <argument
+            android:name="isChangepassword"
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/actionCreateNewFragmentToSuccessMessageFragment"
             app:destination="@id/nav_success_message"
@@ -101,6 +111,12 @@
             android:name="otp"
             android:defaultValue=""
             app:argType="string" />
+
+        <argument
+            android:name="isChangepassword"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
         <action
             android:id="@+id/actionVerifyOtpFragmentToChangePasswordFragment"
             app:destination="@id/nav_sign_up"

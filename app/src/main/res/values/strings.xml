@@ -63,6 +63,7 @@ Terms of Service and Privacy Policy</string>
     <string name="menu_saved_cards">Saved Cards</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_select_theme">Select Theme</string>
+    <string name="menu_home">Home</string>
     <string name="menu_share_app">Share App</string>
     <string name="menu_logout">Logout</string>
     <string name="menu_our_services">Our Services</string>
@@ -115,6 +116,8 @@ Terms of Service and Privacy Policy</string>
     <string name="permission_needed_description">In the following screen, grant\npermission to access photos, media\nand files on this device.</string>
     <string name="mandatory_permission_need_alert">Allow access to photos, media, and\nfiles on your device</string>
     <string name="mandatory_permission_need_description">Since access was denied, you’ll need\nto grant access manually.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

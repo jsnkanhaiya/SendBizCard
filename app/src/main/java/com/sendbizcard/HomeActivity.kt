@@ -6,12 +6,11 @@ import android.view.Menu
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
+import androidx.navigation.Navigation
+import androidx.navigation.ui.*
 import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.databinding.ActivityHomeBinding
 import com.sendbizcard.utils.UserSessionManager
@@ -25,28 +24,39 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
 
+    private val navController by lazy {
+        Navigation.findNavController(this, R.id.nav_host_fragment_content_home)
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
         setSupportActionBar(binding.appBarHome.toolbar)
-        val drawerLayout: DrawerLayout = binding.drawerLayout
-        val navView: NavigationView = binding.navView
-        val navController = findNavController(R.id.nav_host_fragment_content_home)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_home
-            ), drawerLayout
+                R.id.nav_home,R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_select_theme
+            ), binding.drawerLayout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
+        setUpDrawerLayout()
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_home)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun setUpDrawerLayout() {
+        binding.navView.setupWithNavController(navController)
+        setupActionBarWithNavController(navController, appBarConfiguration)
+    }
+
+    override fun onBackPressed() {
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        } else {
+            super.onBackPressed()
+        }
     }
 
     override val bindingInflater: (LayoutInflater) -> ActivityHomeBinding

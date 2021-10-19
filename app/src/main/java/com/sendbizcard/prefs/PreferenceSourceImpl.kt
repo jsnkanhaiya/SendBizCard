@@ -17,13 +17,13 @@ class PreferenceSourceImpl @Inject constructor(private val preferences: SharedPr
     }
 
     override var isUserLoggedIn: Boolean
-        get() = preferences.getBoolean(IS_USER_LOGGED_IN,false) ?: false
+        get() = preferences.getBoolean(IS_USER_LOGGED_IN,false)
         set(value) {
             preferences.edit().putBoolean(IS_USER_LOGGED_IN,value).apply()
         }
 
     override var isFirstTimeUser: Boolean
-        get() = preferences.getBoolean(IS_FIRST_TIME_USER,true) ?: true
+        get() = preferences.getBoolean(IS_FIRST_TIME_USER,true)
         set(value) {
             preferences.edit().putBoolean(IS_FIRST_TIME_USER,value).apply()
         }

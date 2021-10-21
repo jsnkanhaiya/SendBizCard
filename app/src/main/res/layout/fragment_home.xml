@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,17 +9,53 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="24dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_create_your"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/create_your"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="20sp"
+            android:fontFamily="@font/gilroy_regular"
+            android:textColor="@color/textcolour"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_digital_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/digital_card"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_create_your"
+            android:textSize="20sp"
+            android:fontFamily="@font/gilroy_bold"
+            android:textColor="@color/textcolour"/>
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="0dp"
+            android:layout_height="124dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_digital_card"
+            android:background="@color/colorPrimary"
+
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_user"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="64dp"
             android:background="@drawable/ic_user_img"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_digital_card" />
 
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -28,7 +65,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/img_user"
             app:layout_constraintEnd_toEndOf="@+id/img_user"
             app:layout_constraintStart_toEndOf="@+id/img_user"
-            app:layout_constraintTop_toTopOf="@+id/img_user" />
+            app:layout_constraintTop_toTopOf="@+id/img_user"
+            />
 
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -196,14 +234,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_our_services"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:background="@null"
-                android:cursorVisible="false"
                 android:fontFamily="@font/gilroy_regular"
                 android:padding="8dp"
                 android:text="@string/our_services"
@@ -318,7 +354,8 @@
             android:src="@drawable/ic_save_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_company_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_preview"
@@ -329,7 +366,8 @@
             android:src="@drawable/ic_preview"
             app:layout_constraintEnd_toStartOf="@+id/img_save"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_company_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_share"
@@ -340,7 +378,8 @@
             android:src="@drawable/ic_share"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_save"
-            app:layout_constraintTop_toBottomOf="@+id/tv_company_name" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

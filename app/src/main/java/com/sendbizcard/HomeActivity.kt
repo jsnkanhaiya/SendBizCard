@@ -66,6 +66,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     override fun onDestroy() {
         super.onDestroy()
-        UserSessionManager.clearServiceList()
+        UserSessionManager.clearList()
     }
 }

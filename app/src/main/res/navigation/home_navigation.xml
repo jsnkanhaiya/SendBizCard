@@ -48,4 +48,10 @@
         android:label="@string/menu_our_services"
         tools:layout="@layout/fragment_view_card" />
 
+    <fragment
+        android:id="@+id/nav_social_media_links"
+        android:name="com.sendbizcard.ui.socialMediaLinks.SocialMediaLinksFragment"
+        android:label="@string/social_media_links"
+        tools:layout="@layout/fragment_enter_social_media_links" />
+
 </navigation>

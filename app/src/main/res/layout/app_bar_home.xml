@@ -10,6 +10,8 @@
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:elevation="0dp"
+        android:elevation="0dp"
         android:theme="@style/Theme.SendBizCard.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
@@ -17,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
+            android:elevation="0dp"
             app:popupTheme="@style/Theme.SendBizCard.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>

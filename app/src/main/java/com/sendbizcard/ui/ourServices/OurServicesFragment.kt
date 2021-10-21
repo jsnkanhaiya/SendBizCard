@@ -26,19 +26,10 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-
-        initViews()
         initOnClicks()
         setUpAdapter()
     }
 
-    private fun initViews() {
-        binding.tvToolBar.tvBack.visible()
-        binding.tvToolBar.tvTitle.gone()
-        binding.tvToolBar.tvBack.setOnClickListener {
-            findNavController().popBackStack()
-        }
-    }
 
     private fun initOnClicks() {
         binding.btnAdd.setOnClickListener {
@@ -59,7 +50,7 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
     }
 
     private fun setUpAdapter() {
-        val ourServicesList = UserSessionManager.getDatFromServiceList()
+        val ourServicesList = UserSessionManager.getDataFromServiceList()
         ourServicesAdapter.addAll(ourServicesList)
         binding.rvOurServices.adapter = ourServicesAdapter
     }

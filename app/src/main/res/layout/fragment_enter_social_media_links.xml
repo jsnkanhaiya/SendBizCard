@@ -8,36 +8,39 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_enter_your"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="@string/enter_your"
-        android:gravity="center"
         android:layout_marginTop="10dp"
-        />
+        android:textSize="19sp"
+        android:textColor="@color/textcolour"
+        android:fontFamily="@font/gilroy_regular"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_social_media_links"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_enter_your"
         android:text="@string/social_media_links"
-        android:gravity="center"
+        android:textSize="19sp"
+        android:textColor="@color/textcolour"
+        android:fontFamily="@font/gilroy_bold"
         />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_fb"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         app:layout_constraintEnd_toStartOf="@+id/et_fb_username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_fb_username"
         app:layout_constraintBottom_toBottomOf="@+id/et_fb_username"
-        />
+        app:srcCompat="@drawable/ic_facebook"/>
 
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -50,17 +53,20 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/enter_username"/>
+        android:hint="@string/enter_username"
+        android:textColor="@color/colorUsername"
+        android:textSize="14sp"
+        android:fontFamily="@font/gilroy_regular"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_insta"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         app:layout_constraintEnd_toStartOf="@+id/et_insta_username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_insta_username"
         app:layout_constraintBottom_toBottomOf="@+id/et_insta_username"
-        />
+        app:srcCompat="@drawable/ic_instagram"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_insta_username"
@@ -72,17 +78,20 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/enter_username"/>
+        android:hint="@string/enter_username"
+        android:textColor="@color/colorUsername"
+        android:textSize="14sp"
+        android:fontFamily="@font/gilroy_regular"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_twitter"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         app:layout_constraintEnd_toStartOf="@+id/et_twitter_username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_twitter_username"
         app:layout_constraintBottom_toBottomOf="@+id/et_twitter_username"
-        />
+        app:srcCompat="@drawable/ic_facebook"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_twitter_username"
@@ -94,17 +103,20 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/enter_username"/>
+        android:hint="@string/enter_username"
+        android:textColor="@color/colorUsername"
+        android:textSize="14sp"
+        android:fontFamily="@font/gilroy_regular"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_linkedIn"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
         app:layout_constraintEnd_toStartOf="@+id/et_linkedIn_username"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/et_linkedIn_username"
         app:layout_constraintBottom_toBottomOf="@+id/et_linkedIn_username"
-        />
+        app:srcCompat="@drawable/ic_linkedin"/>
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_linkedIn_username"
@@ -116,7 +128,10 @@
         android:layout_marginTop="32dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="0dp"
-        android:text="@string/enter_username"/>
+        android:hint="@string/enter_username"
+        android:textColor="@color/colorUsername"
+        android:textSize="14sp"
+        android:fontFamily="@font/gilroy_regular"/>
 
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -129,8 +144,10 @@
         android:text="@string/save"
         android:paddingStart="48dp"
         android:paddingEnd="48dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
+        android:textSize="18sp"
+        android:fontFamily="@font/gilroy_regular"
         android:textColor="@color/colorWhite"
         android:background="@drawable/button_rectangle"
         app:layout_constraintTop_toBottomOf="@+id/et_linkedIn_username"/>

@@ -91,6 +91,8 @@ Terms of Service and Privacy Policy</string>
     <string name="enter_location">Enter Location</string>
     <string name="our_services">Our Services</string>
     <string name="company_logo">Company Logo</string>
+    <string name="create_your">Create Your</string>
+    <string name="digital_card">Digital Card</string>
     
 
     <string name="no_confirmation">No</string>
@@ -102,8 +104,8 @@ Terms of Service and Privacy Policy</string>
     <string name="select_your_theme">Select Your Theme</string>
 
     <!-- Our Services -->
-    <string name="our">Our</string>
-    <string name="services">Services</string>
+    <string name="enter">Enter</string>
+    <string name="your_services">Your Services</string>
     <string name="add_services">Add Services</string>
     <string name="documents">Documents</string>
     <string name="gallery">Gallery</string>

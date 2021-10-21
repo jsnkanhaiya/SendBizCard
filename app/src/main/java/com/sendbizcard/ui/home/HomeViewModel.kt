@@ -35,8 +35,8 @@ class HomeViewModel @Inject constructor(
             website = mWebsite
             location = mLocation
             companyLogo = ""
-            companyName = "Brijesh"
-            services = UserSessionManager.getDatFromServiceList()
+            companyName = "ABC"
+            services = UserSessionManager.getDataFromServiceList()
             socialLinks = null
         }
         jobList.add(

@@ -71,8 +71,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initOnClicks() {
-        binding.ourServicesCL.setOnClickListener {
+        binding.imgArrow.setOnClickListener {
             findNavController().navigate(R.id.nav_our_services)
+        }
+
+        binding.imgArrowIcon.setOnClickListener {
+            findNavController().navigate(R.id.nav_social_media_links)
         }
 
         binding.imgUser.setOnClickListener {
@@ -92,16 +96,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 name.isEmpty() -> {
                     return@setOnClickListener
                 }
-                designation.isEmpty() -> {
-                    return@setOnClickListener
-                }
                 mobileNumber.isEmpty() -> {
                     return@setOnClickListener
                 }
                 emailId.isEmpty() -> {
-                    return@setOnClickListener
-                }
-                website.isEmpty() -> {
                     return@setOnClickListener
                 }
                 location.isEmpty() -> {
@@ -375,8 +373,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
             }
-
-
         }
     }
 

@@ -27,16 +27,16 @@ class IntroScreenAdapter @Inject constructor(): RecyclerView.Adapter<IntroScreen
         fun bind(position: Int) {
             when(position) {
                 0 -> {
-                    binding.imgIntro.setImageResource(R.drawable.ic_splash_screen)
+                    binding.imgIntro.setImageResource(R.drawable.theme1)
                 }
                 1 -> {
-                    binding.imgIntro.setImageResource(R.drawable.ic_splash_screen)
+                    binding.imgIntro.setImageResource(R.drawable.theme2)
                 }
                 2 -> {
-                    binding.imgIntro.setImageResource(R.drawable.ic_splash_screen)
+                    binding.imgIntro.setImageResource(R.drawable.theme3)
                 }
                 3 -> {
-                    binding.imgIntro.setImageResource(R.drawable.ic_splash_screen)
+                    binding.imgIntro.setImageResource(R.drawable.theme4)
                 }
             }
         }

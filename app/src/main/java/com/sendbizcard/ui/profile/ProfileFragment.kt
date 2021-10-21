@@ -93,11 +93,26 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
     }
 
     private fun setUserData(userProfileResponse: UserProfileResponse) {
-         binding.etName.text=userProfileResponse.user.name
-         binding.etDesignation.text=userProfileResponse.user.designation
-         binding.etEmail.text=userProfileResponse.user.email
-         binding.etMobileNumber.text=userProfileResponse.user.contact
-         binding.etWebsite.text=userProfileResponse.user.website
+         binding.etName.text.apply {
+             userProfileResponse.user?.name
+         }
+
+        binding.etMobileNumber.text.apply {
+            userProfileResponse.user?.contact
+        }
+
+        binding.etWebsite.text.apply {
+            userProfileResponse.user?.website
+        }
+
+        binding.etDesignation.text.apply {
+            userProfileResponse.user?.designation
+        }
+
+        binding.etEmail.text.apply {
+            userProfileResponse.user?.email
+        }
+
     }
 
 

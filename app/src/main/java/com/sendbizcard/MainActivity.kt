@@ -28,11 +28,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
         val host = findNavController(R.id.fragment_nav_host)
-        if (preferenceSourceImpl.isFirstTimeUser) {
+        /*if (preferenceSourceImpl.isFirstTimeUser) {
             host.navigate(R.id.nav_intro)
         } else {
             host.navigate(R.id.nav_login)
-        }
+        }*/
     }
 
 }

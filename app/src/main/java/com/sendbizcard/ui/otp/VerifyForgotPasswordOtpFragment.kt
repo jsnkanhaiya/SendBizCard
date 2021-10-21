@@ -20,6 +20,7 @@ import com.sendbizcard.databinding.FragmentVerifyForgotPasswordBinding
 import com.sendbizcard.utils.AlertDialogWithImageView
 import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.showErrorDialog
+import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -48,7 +49,7 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
         super.onViewCreated(view, savedInstanceState)
         _binding = getViewBinding()
         initViews()
-        //initSpanUI()
+        initSpanUI()
         setupObservers()
         val bundle = this.arguments
         if (bundle != null) {
@@ -60,19 +61,20 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
 
 
     private fun initSpanUI() {
-        binding.tvAlreadyAccount.movementMethod =
+        binding.tvSendOtp.movementMethod =
             LinkMovementMethod.getInstance() // without LinkMovementMethod, click will not work
-        binding.tvAlreadyAccount.text = span {
-            +"Don't have an account? "
+        binding.tvSendOtp.text = span {
+            +resources.getString(R.string.dont_receive_email)
             span {
-                text = "Create New Account"
+                text =" "+ "Send again"
                 textColor = ResourcesCompat.getColor(
                     requireContext().resources,
                     R.color.colorPrimary3,
                     null
                 )
                 onClick = {
-                    //on click api call resend
+                    binding.progressBarContainer.visible()
+                    verifyOtpViewModel.resendOTP()
 
                 }
             }
@@ -84,6 +86,11 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
         verifyOtpViewModel.otpResponseModel.observe(viewLifecycleOwner, Observer {
             binding.progressBarContainer.visibility = View.GONE
             showSuccessDialog()
+        })
+
+        verifyOtpViewModel.otpResponseReSendModel.observe(viewLifecycleOwner, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+           /// showSuccessDialog()
         })
 
         verifyOtpViewModel.showNetworkError.observe(this, Observer {
@@ -146,6 +153,8 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
 
 
     }
+
+
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentVerifyForgotPasswordBinding
         get() = FragmentVerifyForgotPasswordBinding::inflate

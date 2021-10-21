@@ -31,7 +31,7 @@ class VerifyOtpViewModel @Inject constructor(
 ) : BaseViewModel(), LifecycleObserver {
 
     var otpResponseModel = MutableLiveData<BaseResponseModel>()
-    var otpResponseresendModel = MutableLiveData<ForgotPasswordResponse>()
+    var otpResponseReSendModel = MutableLiveData<ForgotPasswordResponse>()
 
 
     fun isValidOtpData(otp: String): Boolean {
@@ -93,7 +93,7 @@ class VerifyOtpViewModel @Inject constructor(
             }
             when (result) {
                 is NetworkResponse.Success -> {
-                    otpResponseresendModel.value=result.body
+                    otpResponseReSendModel.value=result.body
                 }
 
                 is NetworkResponse.ServerError -> {

@@ -9,15 +9,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
-import com.sendbizcard.databinding.*
+import com.sendbizcard.databinding.FragmentForgotPasswordBinding
 import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,6 +30,18 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+        val bundle = this.arguments
+        if (bundle != null) {
+            isChangePassword = bundle.getBoolean("isChangepassword")
+            //binding.otpPinView.text=
+            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG)
+                .show()
+        }
+
+        if (isChangePassword) {
+            binding.tvTitle.text = resources.getString(R.string.Change_Password)
+            binding.tvTitleImage.setBackgroundDrawable(resources.getDrawable(R.drawable.ic_change_password))
+        }
         initViews()
         setupObservers()
         initSpanUI()
@@ -44,7 +53,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
         binding.tvAlreadyAccount.text = span {
             +resources.getString(R.string.already_have_account)
             span {
-                text = " "+ resources.getString(R.string.sign_in)
+                text = " " + resources.getString(R.string.sign_in)
                 textColor = ResourcesCompat.getColor(
                     requireContext().resources,
                     R.color.colorPrimary3,
@@ -52,7 +61,8 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
                 )
                 onClick = {
                     //on click
-                    findNavController().navigate(R.id.nav_login,null,
+                    findNavController().navigate(
+                        R.id.nav_login, null,
                         getDefaultNavigationAnimation()
                     )
                 }
@@ -66,12 +76,12 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
             findNavController().navigate(
                 R.id.nav_verifyForgotOtp,
                 bundleOf("otp" to it.otp.toString()),
-               getDefaultNavigationAnimation()
+                getDefaultNavigationAnimation()
             )
         })
         forgotPasswordViewModel.showNetworkError.observe(this, Observer {
             binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
         forgotPasswordViewModel.showUnknownError.observe(this, Observer {
@@ -79,26 +89,15 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
-        forgotPasswordViewModel.showServerError.observe(this ) { errorMessage ->
+        forgotPasswordViewModel.showServerError.observe(this) { errorMessage ->
             binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
+            Log.d("Login Error", errorMessage)
         }
 
     }
 
     private fun initViews() {
 
-        val bundle = this.arguments
-        if (bundle != null) {
-            isChangePassword = bundle.getBoolean("isChangepassword")
-            //binding.otpPinView.text=
-            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
-        }
-
-        if (isChangePassword){
-            binding.tvTitle.text = resources.getString(R.string.Change_Password)
-            binding.tvTitleImage.setBackgroundDrawable(resources.getDrawable(R.drawable.ic_change_password))
-        }
 
         binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {

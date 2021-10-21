@@ -12,10 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="63dp"
         android:gravity="center"
+        style="@style/gilroy_bold_23"
         android:text="@string/feedback_title"
         android:textColor="@color/textcolour"
-        android:textSize="23sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatEditText
@@ -33,6 +32,7 @@
         android:lines="8"
         android:maxLines="10"
         android:minLines="6"
+        style="@style/gilroy_regular_13"
         android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@+id/tvAlreadyAccount" />
 
@@ -48,7 +48,7 @@
         android:paddingLeft="65sp"
         android:paddingRight="65sp"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        style="@style/gilroy_regular_16"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etFeedBack" />
@@ -60,10 +60,9 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="34dp"
         android:gravity="start"
+        style="@style/gilroy_semibold_14"
         android:text="@string/how_can_we_improve"
         android:textColor="@color/textcolour"
-        android:textSize="18sp"
-        android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/tvTitle"
         tools:text="How can we improve?" />
 

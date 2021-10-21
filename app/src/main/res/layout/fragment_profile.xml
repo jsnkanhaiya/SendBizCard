@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvTitle"
@@ -43,111 +43,113 @@
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_name"
+        style="@style/gilroy_regular_13"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgProfile"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="12dp"
+        android:gravity="center"
         android:hint="@string/enter_name"
         android:maxLength="20"
-        android:gravity="center"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgProfile" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_designation"
+        style="@style/gilroy_regular_13"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_name"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:gravity="center"
         android:hint="@string/enter_designation"
         android:maxLength="30"
-        android:gravity="center"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="12dp"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_mobile_number"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:src="@drawable/ic_call"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_mobile_number"
-        app:layout_constraintBottom_toBottomOf="@+id/et_mobile_number"
-        app:layout_constraintTop_toBottomOf="@+id/et_designation"
         android:layout_marginStart="12dp"
-        />
+        android:src="@drawable/ic_call"
+        app:layout_constraintBottom_toBottomOf="@+id/et_mobile_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_designation"
+        app:layout_constraintTop_toTopOf="@+id/et_mobile_number" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_mobile_number"
+        style="@style/gilroy_regular_13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/img_mobile_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_designation"
-        android:hint="@string/enter_mobile_number"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
         android:layout_marginTop="12dp"
-        android:padding="10dp"/>
+        android:layout_marginEnd="12dp"
+        android:hint="@string/enter_mobile_number"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_mobile_number"
+        app:layout_constraintTop_toBottomOf="@+id/et_designation" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_email"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_email"
-        app:layout_constraintBottom_toBottomOf="@+id/et_email"
-        app:layout_constraintTop_toBottomOf="@+id/et_mobile_number"
         android:layout_marginStart="12dp"
         android:src="@drawable/ic_email"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/et_email"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_mobile_number"
+        app:layout_constraintTop_toTopOf="@+id/et_email" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_email"
+        style="@style/gilroy_regular_13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/img_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_mobile_number"
-        android:hint="@string/enter_email"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
         android:layout_marginTop="12dp"
-        android:padding="10dp"/>
+        android:layout_marginEnd="12dp"
+        android:hint="@string/enter_email"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_mobile_number" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_website"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/et_website"
-        app:layout_constraintBottom_toBottomOf="@+id/et_website"
-        app:layout_constraintTop_toBottomOf="@+id/et_email"
         android:layout_marginStart="12dp"
         android:src="@drawable/ic_website"
-        />
+        app:layout_constraintBottom_toBottomOf="@+id/et_website"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_email"
+        app:layout_constraintTop_toTopOf="@+id/et_website" />
 
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_website"
+        style="@style/gilroy_regular_13"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/img_website"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email"
-        android:hint="@string/enter_website"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
         android:layout_marginTop="12dp"
-        android:padding="10dp"/>
-
+        android:layout_marginEnd="12dp"
+        android:hint="@string/enter_website"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/img_website"
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnChangePassword"
+        style="@style/gilroy_regular_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
@@ -165,6 +167,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSave"
+        style="@style/gilroy_regular_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"

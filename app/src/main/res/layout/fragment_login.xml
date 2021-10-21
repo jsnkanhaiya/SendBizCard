@@ -14,8 +14,7 @@
         android:gravity="center"
         android:text="@string/sign_in"
         android:textColor="@color/textcolour"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        style="@style/gilroy_bold_18"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -43,8 +42,10 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmailID"
+            android:background="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            style="@style/gilroy_regular_13"
             android:hint="@string/enter_emailID"
             android:inputType="textEmailAddress" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -61,6 +62,8 @@
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white"
+            style="@style/gilroy_regular_13"
             android:hint="@string/password"
             android:inputType="textVisiblePassword" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -71,9 +74,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
+        style="@style/gilroy_regular_13"
         android:text="@string/forgot_password"
         android:textColor="@color/textcolour"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputPassword" />
 
@@ -86,9 +89,9 @@
         android:paddingLeft="65sp"
         android:paddingRight="65sp"
         android:text="@string/next"
+        style="@style/gilroy_regular_16"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvForgotPassword" />
@@ -98,11 +101,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
-        android:fontFamily="@font/gilroy_semibold"
         android:gravity="center"
+        style="@style/gilroy_semibold_13"
         android:text="@string/dont_have_account"
         android:textColor="@color/textcolour"
-        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnSave" />

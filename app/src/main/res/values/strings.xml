@@ -44,7 +44,7 @@
     <string name="shareApp">Happy to Share App</string>
     <string name="improve">Help us to improve</string>
     <string name="dont_receive">Don\'t receive the OTP? RESEND OTP</string>
-    <string name="dont_receive_email">Dont receive mail in 2 minutes</string>
+    <string name="dont_receive_email">Dont receive mail in 2 minutes </string>
     <string name="thank_you">Thank you for sharing your thoughts. We appreciates your feedback!</string>
     <string name="accept_tnc">By creating an account you agree to our \n
 Terms of Service and Privacy Policy</string>

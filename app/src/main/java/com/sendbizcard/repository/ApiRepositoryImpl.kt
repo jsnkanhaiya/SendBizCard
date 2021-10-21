@@ -25,7 +25,7 @@ class ApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateUserProfile(updateProfileRequest : UpdateProfileRequest): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
-        val url = remoteConfigImpl.getLoginURL()//updateUser Profile url pending
+        val url = remoteConfigImpl.getUpdateUserDetailsURL()
         return apiService.updateUserProfile(url,updateProfileRequest)
     }
 
@@ -45,7 +45,7 @@ class ApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
-        val url = remoteConfigImpl.getVerifyOTPURL()
+        val url = remoteConfigImpl.getForgotVerifyOTPURL()
         return apiService.verifyForgotPasswordOTP(url,registerRequestModel)
     }
 
@@ -70,7 +70,7 @@ class ApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getUserProfileData(): NetworkResponse<UserProfileResponse, LoginErrorResponse> {
-        val url = remoteConfigImpl.getFeedbackURL()//add Profile url
+        val url = remoteConfigImpl.getUserDetailsURL()
         return apiService.getUserProfileData(url)
     }
 

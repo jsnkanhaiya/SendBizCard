@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.sendbizcard.HomeActivity
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentCardListBinding
 import com.sendbizcard.databinding.FragmentLoginBinding
@@ -16,6 +18,7 @@ import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.models.response.CardListResponseModel
 import com.sendbizcard.ui.ourServices.OurServicesAdapter
 import com.sendbizcard.utils.UserSessionManager
+import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -80,7 +83,9 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>(){
     }
 
     private fun initOnClicks() {
-        
+        binding.btnAdd.setOnClickListener {
+            findNavController().navigate(R.id.nav_home,null, getDefaultNavigationAnimation())
+        }
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCardListBinding

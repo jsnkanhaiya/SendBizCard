@@ -125,9 +125,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     ).show()
                     return@setOnClickListener
                 }
-                /*emailId.isEmpty() -> {
+                emailId.isEmpty() -> {
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.enter_email),
+                        Toast.LENGTH_LONG
+                    ).show()
                     return@setOnClickListener
-                }*/
+                }
                 /* website.isEmpty() -> {
                      return@setOnClickListener
                  }*/

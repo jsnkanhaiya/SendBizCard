@@ -113,6 +113,14 @@
         <item name="android:lineSpacingExtra">4sp</item>
     </style>
 
+    <style name="gilroy_bold_14">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:fontFamily">@font/gilroy_bold</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingExtra">4sp</item>
+    </style>
+
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
     </style>

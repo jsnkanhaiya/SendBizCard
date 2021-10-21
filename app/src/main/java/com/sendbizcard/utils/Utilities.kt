@@ -14,6 +14,12 @@ import com.sendbizcard.models.ServerError
 import java.io.EOFException
 import java.net.SocketTimeoutException
 import javax.net.ssl.SSLHandshakeException
+import androidx.core.content.ContextCompat.startActivity
+
+import android.content.Intent
+import androidx.core.content.ContextCompat
+import com.sendbizcard.BuildConfig
+
 
 fun decodeNetworkError(throwable: Throwable): String {
     return when (throwable) {
@@ -91,6 +97,18 @@ fun decodeServerError(errorResponse: LoginErrorResponse?): String {
         }
     })
 
+}
+
+
+fun shareApp(context: Context){
+    val sendIntent = Intent()
+    sendIntent.action = Intent.ACTION_SEND
+    sendIntent.putExtra(
+        Intent.EXTRA_TEXT,
+        "Hey check out my app at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+    )
+    sendIntent.type = "text/plain"
+    context.startActivity(sendIntent)
 }
 
 fun getHttpStatus(httpCode: Int): HttpStatus {

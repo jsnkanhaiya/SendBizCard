@@ -3,16 +3,19 @@ package com.sendbizcard
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
+import androidx.activity.viewModels
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.ui.*
 import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.databinding.ActivityHomeBinding
+import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.utils.UserSessionManager
 import dagger.hilt.android.AndroidEntryPoint
 import retrofit2.Retrofit
@@ -21,6 +24,7 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
+    private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
 
@@ -36,8 +40,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_select_theme
-            ), binding.drawerLayout
+                R.id.nav_home,R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_select_theme,R.id.nav_share_app,
+                R.id.nav_logout, ), binding.drawerLayout
         )
         setUpDrawerLayout()
     }

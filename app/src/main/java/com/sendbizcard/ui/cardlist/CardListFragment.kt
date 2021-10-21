@@ -34,6 +34,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+        binding.progressBarContainer.visibility = View.VISIBLE
         cardListViewModel.getCardList()
         initViews()
         initOnClicks()
@@ -58,6 +59,8 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>(){
     private fun setupObservers() {
         cardListViewModel.cardListResponse.observe(viewLifecycleOwner, Observer {
             binding.progressBarContainer.visibility = View.GONE
+            cardListAdapter.addAll(it.data?.cardDetails as List<CardDetailsItem>)
+            cardListAdapter.notifyDataSetChanged()
         })
 
         cardListViewModel.showNetworkError.observe(this, Observer {

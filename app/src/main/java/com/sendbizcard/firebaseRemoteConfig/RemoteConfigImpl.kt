@@ -1,6 +1,7 @@
 package com.sendbizcard.firebaseRemoteConfig
 
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.get
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,6 +21,10 @@ class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: Fir
         private const val FEEDBACK_URL = "feedback_url"
         private const val LOGOUT_URL = "logout_url"
         private const val THEME_LIST_URL = "theme_list_url"
+        private const val VERIFY_FORGOT_OTP_URL = "verify_forgot_otp_url"
+        private const val UPDATE_USER_DETAILS_URL = "update_user_details_url"
+        private const val GET_USER_DETAILS_URL = "api/user/detail"
+        private const val GET_CARD_SHARE_URL = "card_share_url"
 
     }
 
@@ -65,5 +70,21 @@ class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: Fir
 
     override fun getThemeListURL(): String {
         return getBaseURL() + firebaseRemoteConfig.getString(THEME_LIST_URL)
+    }
+
+    override fun getForgotVerifyOTPURL(): String {
+        return getBaseURL() + firebaseRemoteConfig.getString(VERIFY_FORGOT_OTP_URL)
+    }
+
+    override fun getUpdateUserDetailsURL(): String {
+        return getBaseURL() + firebaseRemoteConfig.getString(UPDATE_USER_DETAILS_URL)
+    }
+
+    override fun getUserDetailsURL(): String {
+        return getBaseURL() + firebaseRemoteConfig.getString(GET_USER_DETAILS_URL)
+    }
+
+    override fun getCardShareURL(): String {
+        return getBaseURL() + firebaseRemoteConfig.getString(GET_CARD_SHARE_URL)
     }
 }

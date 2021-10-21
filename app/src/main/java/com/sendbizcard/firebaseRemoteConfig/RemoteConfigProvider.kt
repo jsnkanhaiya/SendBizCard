@@ -13,5 +13,9 @@ interface RemoteConfigProvider  {
     fun getFeedbackURL(): String
     fun getLogoutURL(): String
     fun getThemeListURL(): String
+    fun getForgotVerifyOTPURL(): String
+    fun getUpdateUserDetailsURL(): String
+    fun getUserDetailsURL(): String
+    fun getCardShareURL(): String
 
 }

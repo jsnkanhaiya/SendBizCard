@@ -21,10 +21,7 @@ import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentHomeBinding
-import com.sendbizcard.utils.PermissionDeniedDialog
-import com.sendbizcard.utils.PermissionNeededDialog
-import com.sendbizcard.utils.printLog
-import com.sendbizcard.utils.showErrorDialog
+import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.File
 import java.io.IOException
@@ -58,7 +55,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding = getViewBinding()
         initOnClicks()
         observeData()
+        initViews()
     }
+
+    private fun initViews() {
+        binding.tvToolBar.tvBack.gone()
+        binding.tvToolBar.tvTitle.visible()
+        binding.tvToolBar.tvTitle.text = resources.getString(R.string.menu_home)
+
+    }
+
 
     private fun observeData() {
 

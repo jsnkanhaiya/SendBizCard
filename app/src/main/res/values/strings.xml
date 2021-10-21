@@ -16,6 +16,7 @@
     <string name="card">Card</string>
     <string name="designation">Designation</string>
     <string name="sign_in">Sign In</string>
+    <string name="tv_back">Back</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="create_new_password_verfication">Change Password Verification</string>
     <string name="create_new_password">Create New Password</string>

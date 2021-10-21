@@ -59,4 +59,16 @@ interface ApiService {
 
     @POST
     suspend fun addCardRequest(@Url url: String, @Body addCardRequest: AddCardRequest) : NetworkResponse<ThemeResponse,ErrorsListResponse>
+
+    @POST
+    suspend fun getCradUrl(@Url url: String, @Body viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse, LoginErrorResponse>
+
+    @POST
+    suspend fun getCardListSearch(@Url url: String, @Body cardListRequestModel: CardListRequestModel) : NetworkResponse<CardListResponseModel, LoginErrorResponse>
+
+    @POST
+    suspend fun getCardList(@Url url: String) : NetworkResponse<CardListResponseModel, LoginErrorResponse>
+
+
+
 }

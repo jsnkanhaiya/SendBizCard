@@ -47,6 +47,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     }
 
     private fun setUpDrawerLayout() {
+
         binding.navView.setupWithNavController(navController)
         setupActionBarWithNavController(navController, appBarConfiguration)
     }

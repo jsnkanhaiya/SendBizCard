@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentOurServicesBinding
 import com.sendbizcard.dialog.AddServicesDialog
 import com.sendbizcard.models.request.addCard.ServicesItem
 import com.sendbizcard.utils.UserSessionManager
+import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -23,8 +26,18 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+
+        initViews()
         initOnClicks()
         setUpAdapter()
+    }
+
+    private fun initViews() {
+        binding.tvToolBar.tvBack.visible()
+        binding.tvToolBar.tvTitle.gone()
+        binding.tvToolBar.tvBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun initOnClicks() {

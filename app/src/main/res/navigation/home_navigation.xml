@@ -42,6 +42,10 @@
         android:label="@string/menu_our_services"
         tools:layout="@layout/fragment_our_services" />
 
-
+    <fragment
+        android:id="@+id/nav_card_share"
+        android:name="com.sendbizcard.ui.sharecard.ViewCardFragment"
+        android:label="@string/menu_our_services"
+        tools:layout="@layout/fragment_view_card" />
 
 </navigation>

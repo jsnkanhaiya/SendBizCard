@@ -23,4 +23,7 @@ interface ApiRepository {
     suspend fun getUserProfileData() : NetworkResponse<UserProfileResponse,LoginErrorResponse>
     suspend fun sendFeedBack(feedback:FeedBackRequestModel) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
     suspend fun addCardRequest(addCardRequest: AddCardRequest) : NetworkResponse<ThemeResponse,ErrorsListResponse>
+    suspend fun getCradUrl(viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse,LoginErrorResponse>
+    suspend fun getCardListSearch(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,LoginErrorResponse>
+    suspend fun getCardList() : NetworkResponse<CardListResponseModel,LoginErrorResponse>
 }

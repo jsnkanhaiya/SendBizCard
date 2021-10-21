@@ -5,40 +5,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.sendbizcard.R
+import com.sendbizcard.base.BaseAdapter
 import com.sendbizcard.databinding.RowIntroItemBinding
 import javax.inject.Inject
 
-class IntroScreenAdapter @Inject constructor(): RecyclerView.Adapter<IntroScreenAdapter.ViewHolder>() {
+class IntroScreenAdapter @Inject constructor(): BaseAdapter<Int,IntroScreenViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IntroScreenViewHolder {
         val binding = RowIntroItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding)
+        return IntroScreenViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(position)
+    override fun onBindViewHolder(holder: IntroScreenViewHolder, position: Int) {
+        holder.loadData(list[position],position)
     }
 
     override fun getItemCount(): Int {
-        return 4
+        return listSize
     }
 
-    class ViewHolder(private val binding: RowIntroItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(position: Int) {
-            when(position) {
-                0 -> {
-                    binding.imgIntro.setImageResource(R.drawable.theme1)
-                }
-                1 -> {
-                    binding.imgIntro.setImageResource(R.drawable.theme2)
-                }
-                2 -> {
-                    binding.imgIntro.setImageResource(R.drawable.theme3)
-                }
-                3 -> {
-                    binding.imgIntro.setImageResource(R.drawable.theme4)
-                }
-            }
-        }
-    }
+
 }

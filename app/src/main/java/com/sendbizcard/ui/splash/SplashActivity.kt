@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.activity.viewModels
 import com.sendbizcard.HomeActivity
-import com.sendbizcard.MainActivity
+import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.databinding.ActivitySplashBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +27,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
                 val intent = if (splashViewModel.checkIfUserIsLoggedIn()) {
                     Intent(this@SplashActivity, HomeActivity::class.java)
                 } else {
-                    Intent(this@SplashActivity, MainActivity::class.java)
+                    Intent(this@SplashActivity, HomeActivity::class.java)
                 }
                 startActivity(intent)
                 finish()

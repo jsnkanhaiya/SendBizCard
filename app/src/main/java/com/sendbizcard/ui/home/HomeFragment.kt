@@ -59,9 +59,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initViews() {
-        binding.tvToolBar.tvBack.gone()
+        /*binding.tvToolBar.tvBack.gone()
         binding.tvToolBar.tvTitle.visible()
-        binding.tvToolBar.tvTitle.text = resources.getString(R.string.menu_home)
+        binding.tvToolBar.tvTitle.text = resources.getString(R.string.menu_home)*/
 
     }
 
@@ -79,8 +79,36 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             checkpermissionForCameraGallery()
         }
 
-        binding.btnSave.setOnClickListener {
-            homeViewModel.addCardRequest()
+        binding.imgSave.setOnClickListener {
+            val name = binding.etName.text.toString()
+            val designation = binding.etDesignation.text.toString()
+            val mobileNumber = binding.etMobileNumber.text.toString()
+            val emailId = binding.etEmail.text.toString()
+            val website = binding.etWebsite.text.toString()
+            val location = binding.etLocation.text.toString()
+
+
+            when {
+                name.isEmpty() -> {
+                    return@setOnClickListener
+                }
+                designation.isEmpty() -> {
+                    return@setOnClickListener
+                }
+                mobileNumber.isEmpty() -> {
+                    return@setOnClickListener
+                }
+                emailId.isEmpty() -> {
+                    return@setOnClickListener
+                }
+                website.isEmpty() -> {
+                    return@setOnClickListener
+                }
+                location.isEmpty() -> {
+                    return@setOnClickListener
+                }
+                else -> homeViewModel.addCardRequest(name,designation,mobileNumber,emailId,website,location)
+            }
         }
 
 

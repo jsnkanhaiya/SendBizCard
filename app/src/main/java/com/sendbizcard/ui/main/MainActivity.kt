@@ -1,12 +1,11 @@
-package com.sendbizcard
+package com.sendbizcard.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
+import androidx.activity.viewModels
 import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseActivity
-import com.sendbizcard.databinding.ActivityHomeBinding
 import com.sendbizcard.databinding.ActivityMainBinding
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,8 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
 
     private lateinit var binding: ActivityMainBinding
 
-    @Inject
-    lateinit var preferenceSourceImpl: PreferenceSourceImpl
+    private val mainViewModel : MainViewModel by viewModels()
 
     override val bindingInflater: (LayoutInflater) -> ActivityMainBinding
         get() = ActivityMainBinding::inflate
@@ -28,11 +26,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>() {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
         val host = findNavController(R.id.fragment_nav_host)
-        /*if (preferenceSourceImpl.isFirstTimeUser) {
+        if (mainViewModel.checkIfFirstTimeUser()) {
             host.navigate(R.id.nav_intro)
         } else {
             host.navigate(R.id.nav_login)
-        }*/
+        }
     }
-
 }

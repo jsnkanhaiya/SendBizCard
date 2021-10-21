@@ -23,8 +23,9 @@ class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: Fir
         private const val THEME_LIST_URL = "theme_list_url"
         private const val VERIFY_FORGOT_OTP_URL = "verify_forgot_otp_url"
         private const val UPDATE_USER_DETAILS_URL = "update_user_details_url"
-        private const val GET_USER_DETAILS_URL = "api/user/detail"
+        private const val GET_USER_DETAILS_URL = "user_detail_url"
         private const val GET_CARD_SHARE_URL = "card_share_url"
+        private const val GET_CARD_LIST_URL = "saved_cards_url"
 
     }
 
@@ -86,5 +87,9 @@ class RemoteConfigImpl @Inject constructor(private val firebaseRemoteConfig: Fir
 
     override fun getCardShareURL(): String {
         return getBaseURL() + firebaseRemoteConfig.getString(GET_CARD_SHARE_URL)
+    }
+
+    override fun getCardListURL(): String {
+        return getBaseURL() + firebaseRemoteConfig.getString(GET_CARD_LIST_URL)
     }
 }

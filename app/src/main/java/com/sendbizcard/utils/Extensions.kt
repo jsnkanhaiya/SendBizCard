@@ -6,6 +6,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.TextUtils
 import android.util.Patterns
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.DialogFragment

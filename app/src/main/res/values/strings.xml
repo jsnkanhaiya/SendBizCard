@@ -90,6 +90,8 @@ Terms of Service and Privacy Policy</string>
     <string name="enter_website">Enter Website</string>
     <string name="enter_location">Enter Location</string>
     <string name="our_services">Our Services</string>
+    <string name="company_logo">Company Logo</string>
+    
 
     <string name="no_confirmation">No</string>
     <string name="ok_confirmation">OK</string>
@@ -117,8 +119,12 @@ Terms of Service and Privacy Policy</string>
     <string name="permission_needed_description">In the following screen, grant\npermission to access photos, media\nand files on this device.</string>
     <string name="mandatory_permission_need_alert">Allow access to photos, media, and\nfiles on your device</string>
     <string name="mandatory_permission_need_description">Since access was denied, you’ll need\nto grant access manually.</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Intro Screen -->
+    <string name="skip">Skip</string>
+    <string name="get_started">Get Started</string>
 
 
 </resources>

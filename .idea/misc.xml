@@ -74,6 +74,7 @@
         <entry key="app/src/main/res/layout/fragment_siginup.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_succssesful_message.xml" value="0.12335359675785208" />
         <entry key="app/src/main/res/layout/fragment_verify_forgot_password.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_view_card.xml" value="0.18885869565217392" />
         <entry key="app/src/main/res/layout/row_item_saved_card.xml" value="0.2346014492753623" />
       </map>
     </option>

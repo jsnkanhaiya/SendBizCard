@@ -43,7 +43,7 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@android:drawable/ic_menu_camera"
+        android:src="@drawable/ic_camera"
         app:layout_constraintBottom_toBottomOf="@+id/img_user"
         app:layout_constraintEnd_toEndOf="@+id/img_user"
         app:layout_constraintStart_toEndOf="@+id/img_user"

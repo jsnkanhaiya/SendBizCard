@@ -2,6 +2,7 @@ package com.sendbizcard.ui.home
 
 import android.Manifest
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -12,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -27,6 +29,14 @@ import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.location.LocationManager
+
+import com.sendbizcard.utils.LocationGetter
+
+import androidx.core.content.ContextCompat.getSystemService
+
+
+
 
 
 @AndroidEntryPoint
@@ -37,6 +47,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     var permissionDeniedDialog: PermissionDeniedDialog? = null
     var permissionNeededDialog: PermissionNeededDialog? = null
     private lateinit var binding: FragmentHomeBinding
+    val REQUEST_LOCATION =0
 
     companion object {
         private const val REQUEST_CODE_CAMERA = 0x1001
@@ -56,6 +67,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         initOnClicks()
         observeData()
         initViews()
+
+
     }
 
     private fun initViews() {
@@ -94,22 +107,52 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             when {
                 name.isEmpty() -> {
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.enter_name),
+                        Toast.LENGTH_LONG
+                    ).show()
                     return@setOnClickListener
                 }
+                /*designation.isEmpty() -> {
+                    return@setOnClickListener
+                }*/
                 mobileNumber.isEmpty() -> {
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.enter_mobile_number),
+                        Toast.LENGTH_LONG
+                    ).show()
                     return@setOnClickListener
                 }
-                emailId.isEmpty() -> {
+                /*emailId.isEmpty() -> {
                     return@setOnClickListener
-                }
+                }*/
+                /* website.isEmpty() -> {
+                     return@setOnClickListener
+                 }*/
                 location.isEmpty() -> {
+                    Toast.makeText(
+                        requireContext(),
+                        resources.getString(R.string.enter_location),
+                        Toast.LENGTH_LONG
+                    ).show()
                     return@setOnClickListener
                 }
-                else -> homeViewModel.addCardRequest(name,designation,mobileNumber,emailId,website,location)
+                else -> homeViewModel.addCardRequest(
+                    name,
+                    designation,
+                    mobileNumber,
+                    emailId,
+                    website,
+                    location
+                )
             }
         }
 
-
+        binding.imgLocation.setOnClickListener {
+            getTheUserPermission()
+        }
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeBinding
@@ -331,7 +374,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         startActivityForResult(galleryIntent, REQUEST_CODE_GALLERY)
     }
 
-
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -373,8 +415,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
             }
+
         }
     }
+
+    private fun getTheUserPermission() {
+        var addresses=""
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+            REQUEST_LOCATION
+        )
+       var locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
+        val locationGetter =
+            LocationGetter(requireActivity(), REQUEST_LOCATION, locationManager)
+        if (!locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationGetter.OnGPS()
+        } else {
+            addresses =  locationGetter.getLocation()
+
+            binding.etLocation.text.apply {
+                addresses
+            }
+        }
+    }
+
+
 
 
 }

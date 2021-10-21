@@ -26,7 +26,7 @@ interface ApiService {
     suspend fun register(@Url url: String, @Body registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel, ErrorsListResponse>
 
     @POST
-    suspend fun logoutUser(@Url url: String) : NetworkResponse<SavedCards, ErrorsListResponse>
+    suspend fun logoutUser(@Url url: String) : NetworkResponse<BaseResponseModel, LoginErrorResponse>
 
 
     @POST

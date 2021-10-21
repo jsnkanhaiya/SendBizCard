@@ -59,7 +59,7 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.verifyOtp(url,registerRequestModel)
     }
 
-    override suspend fun logoutUser(): NetworkResponse<SavedCards, ErrorsListResponse> {
+    override suspend fun logoutUser(): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
         val url = remoteConfigImpl.getLogoutURL()
         return apiService.logoutUser(url)
     }

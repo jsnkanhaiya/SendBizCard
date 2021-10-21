@@ -22,18 +22,18 @@ class HomeViewModel @Inject constructor(
     private val apiRepositoryImpl: ApiRepositoryImpl
 ) : BaseViewModel() {
 
-    fun addCardRequest() {
+    fun addCardRequest(mName: String, mDesignation: String, mMobileNumber: String, mEmailId: String, mWebsite: String, mLocation: String) {
         val addCardRequest = AddCardRequest().apply {
             themeId = "3"
             themeColor = "#748484"
-            name = "Brijesh Dubey"
+            name = mName
             userImg = ""
-            designation = "Software Engineer"
+            designation = mDesignation
             contactPrefix = "+91"
-            contactNo = "9594116610"
-            email = "brijesh@gmail.com"
-            website = "https://brijesh.com"
-            location = "2220, 22nd floor, A&O building, near fish market, borivali east, mumbai 400066"
+            contactNo = mMobileNumber
+            email = mEmailId
+            website = mWebsite
+            location = mLocation
             companyLogo = ""
             companyName = "Brijesh"
             services = UserSessionManager.getDatFromServiceList()

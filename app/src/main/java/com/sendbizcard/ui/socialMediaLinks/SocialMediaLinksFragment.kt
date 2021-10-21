@@ -1,14 +1,21 @@
 package com.sendbizcard.ui.socialMediaLinks
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentEnterSocialMediaLinksBinding
 import com.sendbizcard.models.request.addCard.SocialLinksItem
+import com.sendbizcard.utils.AlertDialogWithImageView
 import com.sendbizcard.utils.SocialMediaLinksEnum
 import com.sendbizcard.utils.UserSessionManager
+import com.sendbizcard.utils.getDefaultNavigationAnimation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +25,7 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
 
     private val socialMediaLinksList: ArrayList<SocialLinksItem> by lazy { ArrayList() }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
@@ -31,30 +39,24 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
             list.forEach { socialMediaItem ->
                 when (socialMediaItem.name) {
                     SocialMediaLinksEnum.FACEBOOK.socialMediaName -> {
-                        binding.etFbUsername.text.apply {
-                            socialMediaItem.link
-                        }
+                        binding.etFbUsername.setText(socialMediaItem.link)
                     }
                     SocialMediaLinksEnum.INSTAGRAM.socialMediaName -> {
-                        binding.etInstaUsername.text.apply {
-                            socialMediaItem.link
-                        }
+                        binding.etInstaUsername.setText( socialMediaItem.link)
+
                     }
                     SocialMediaLinksEnum.TWITTER.socialMediaName -> {
-                        binding.etTwitterUsername.text.apply {
-                            socialMediaItem.link
-                        }
+                        binding.etTwitterUsername.setText( socialMediaItem.link)
                     }
                     SocialMediaLinksEnum.LINKEDIN.socialMediaName -> {
-                        binding.etTwitterUsername.text.apply {
-                            socialMediaItem.link
-                        }
+                        binding.etLinkedInUsername.setText( socialMediaItem.link)
                     }
                 }
             }
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun initOnClicks() {
         binding.btnSave.setOnClickListener {
             val fbUserName = binding.etFbUsername.text.toString()
@@ -100,8 +102,30 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
             }
 
             UserSessionManager.addDataInSocialMediaList(socialMediaLinksList)
+            showSuccessDialog()
         }
     }
+
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun showSuccessDialog() {
+      // binding.progressBarContainer.visibility = View.GONE
+        AlertDialogWithImageView.showDialog(
+            requireFragmentManager().beginTransaction(),
+            requireContext(),
+            requireContext().resources.getString(R.string.success_title),
+            requireContext().resources.getString(R.string.saved_successfully),
+            R.drawable.ic_success,
+            onDismiss = {
+
+                    findNavController().popBackStack()
+
+            }
+        )
+
+
+    }
+
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEnterSocialMediaLinksBinding
         get() = FragmentEnterSocialMediaLinksBinding::inflate

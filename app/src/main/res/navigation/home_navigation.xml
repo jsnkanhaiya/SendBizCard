@@ -15,13 +15,34 @@
         android:id="@+id/nav_my_profile"
         android:name="com.sendbizcard.ui.profile.ProfileFragment"
         android:label="@string/menu_my_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+
+
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="isChangepassword"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <action
+            android:id="@+id/actionProfileFragmentToForgotPasswordFragment"
+            app:destination="@id/nav_forgot_password"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_saved_cards"
-        android:name="com.sendbizcard.ui.gallery.GalleryFragment"
+        android:name="com.sendbizcard.ui.cardlist.CardListFragment"
         android:label="@string/menu_saved_cards"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_card_list" />
 
     <fragment
         android:id="@+id/nav_feedback"
@@ -53,5 +74,102 @@
         android:name="com.sendbizcard.ui.socialMediaLinks.SocialMediaLinksFragment"
         android:label="@string/social_media_links"
         tools:layout="@layout/fragment_enter_social_media_links" />
+
+
+
+    <fragment
+        android:id="@+id/nav_forgot_password"
+        android:name="com.sendbizcard.ui.forgotpassword.ForgotPasswordFragment"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_forgot_password" >
+
+        <argument
+            android:name="emailID"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="isChangepassword"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <action
+            android:id="@+id/actionForgotPasswordFragmentToVeriFyForgotPasswordFragment"
+            app:destination="@id/nav_verifyForgotOtp"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_createNewpassword"
+        android:name="com.sendbizcard.ui.forgotpassword.CreateNewPasswordFragment"
+        android:label="@string/menu_my_verify_otp"
+        tools:layout="@layout/fragment_create_new_password" >
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="isChangepassword"
+            android:defaultValue="false"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/actionCreateNewFragmentToSuccessMessageFragment"
+            app:destination="@id/nav_success_message"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/nav_verifyForgotOtp"
+        android:name="com.sendbizcard.ui.otp.VerifyForgotPasswordOtpFragment"
+        android:label="@string/menu_my_verify_otp"
+        tools:layout="@layout/fragment_otp" >
+
+        <argument
+            android:name="emailID"
+            android:defaultValue=""
+            app:argType="string" />
+
+
+        <argument
+            android:name="otp"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <argument
+            android:name="isChangepassword"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <action
+            android:id="@+id/actionVerifyOtpFragmentToChangePasswordFragment"
+            app:destination="@id/nav_sign_up"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/actionVerifyOtpFragmentToForgotPasswordFragment"
+            app:destination="@id/nav_forgot_password"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
 </navigation>

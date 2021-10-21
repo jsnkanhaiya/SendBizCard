@@ -1,14 +1,18 @@
 package com.sendbizcard.ui.ourServices
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentOurServicesBinding
 import com.sendbizcard.dialog.AddServicesDialog
 import com.sendbizcard.models.request.addCard.ServicesItem
+import com.sendbizcard.utils.AlertDialogWithImageView
 import com.sendbizcard.utils.UserSessionManager
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
@@ -23,6 +27,7 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
 
     lateinit var binding: FragmentOurServicesBinding
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
@@ -31,6 +36,7 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun initOnClicks() {
         binding.btnAdd.setOnClickListener {
             val dialog = AddServicesDialog.newInstance()
@@ -46,6 +52,7 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
         binding.btnSave.setOnClickListener {
             val ourServicesList = ourServicesAdapter.list
             UserSessionManager.addDataInServiceList(ourServicesList)
+            showSuccessDialog()
         }
     }
 
@@ -54,6 +61,26 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
         ourServicesAdapter.addAll(ourServicesList)
         binding.rvOurServices.adapter = ourServicesAdapter
     }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun showSuccessDialog() {
+        // binding.progressBarContainer.visibility = View.GONE
+        AlertDialogWithImageView.showDialog(
+            requireFragmentManager().beginTransaction(),
+            requireContext(),
+            requireContext().resources.getString(R.string.success_title),
+            requireContext().resources.getString(R.string.saved_successfully),
+            R.drawable.ic_success,
+            onDismiss = {
+
+                findNavController().popBackStack()
+
+            }
+        )
+
+
+    }
+
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentOurServicesBinding
         get() = FragmentOurServicesBinding::inflate

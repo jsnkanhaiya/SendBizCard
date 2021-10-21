@@ -128,11 +128,10 @@
             android:layout_marginTop="24dp"
             android:layout_marginEnd="64dp"
             android:background="@null"
-            android:fontFamily="@font/gilroy_regular"
+            style="@style/gilroy_regular_13"
             android:hint="@string/enter_mobile_number"
             android:padding="8dp"
             android:textColor="@color/colorGray"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_mobile_number"
             app:layout_constraintTop_toBottomOf="@+id/et_designation" />
@@ -156,11 +155,10 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="64dp"
             android:background="@null"
-            android:fontFamily="@font/gilroy_regular"
+            style="@style/gilroy_regular_13"
             android:hint="@string/enter_email"
             android:padding="8dp"
             android:textColor="@color/colorGray"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_email"
             app:layout_constraintTop_toBottomOf="@+id/et_mobile_number" />
@@ -184,11 +182,10 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="64dp"
             android:background="@null"
-            android:fontFamily="@font/gilroy_regular"
             android:hint="@string/enter_website"
             android:padding="8dp"
+            style="@style/gilroy_regular_13"
             android:textColor="@color/colorGray"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_website"
             app:layout_constraintTop_toBottomOf="@+id/et_email" />
@@ -212,11 +209,10 @@
             android:layout_marginTop="12dp"
             android:layout_marginEnd="64dp"
             android:background="@null"
-            android:fontFamily="@font/gilroy_regular"
             android:hint="@string/enter_location"
             android:padding="8dp"
+            style="@style/gilroy_regular_13"
             android:textColor="@color/colorGray"
-            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_location"
             app:layout_constraintTop_toBottomOf="@+id/et_website" />
@@ -248,11 +244,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginEnd="12dp"
-                android:fontFamily="@font/gilroy_regular"
                 android:padding="8dp"
                 android:text="@string/our_services"
                 android:textColor="@color/colorGray"
-                android:textSize="14sp"
+                style="@style/gilroy_regular_13"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/img_arrow"
                 app:layout_constraintStart_toEndOf="@+id/img_our_services"
@@ -260,8 +255,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/img_arrow"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
                 android:src="@drawable/ic_play"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -312,8 +307,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_arrow_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="64dp"
             android:src="@drawable/ic_play"
@@ -344,15 +339,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_company_logo" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/tv_company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/gilroy_medium"
             android:text="ABC Private Limited"
             android:textColor="@color/textcolour"
             android:textSize="12sp"
+            android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_company_logo" />
@@ -361,9 +357,10 @@
             android:id="@+id/img_save"
             android:layout_width="36dp"
             android:layout_height="36dp"
+            android:layout_marginStart="64dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_save_card"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/img_preview"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
             />
@@ -372,10 +369,9 @@
             android:id="@+id/img_preview"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginStart="64dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_preview"
-            app:layout_constraintEnd_toStartOf="@+id/img_save"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
             />
@@ -388,9 +384,29 @@
             android:layout_marginEnd="64dp"
             android:src="@drawable/ic_share"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_save"
+            app:layout_constraintStart_toEndOf="@+id/img_preview"
             app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
             />
+
+        <RelativeLayout
+            android:id="@+id/progressBarContainer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="visible">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

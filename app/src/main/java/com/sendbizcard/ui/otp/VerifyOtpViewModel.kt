@@ -57,7 +57,7 @@ class VerifyOtpViewModel @Inject constructor(
         email: String
     ) {
         val verifyOtpRequest =
-            VerifyForgotPasswordRequest(otp)
+            VerifyForgotPasswordRequest(otp,email)
         jobList.add(launch {
             val result = withContext(Dispatchers.IO) {
                 apiRepositoryImpl.verifyForgotPasswordOTP(verifyOtpRequest)
@@ -128,15 +128,15 @@ class VerifyOtpViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.ServerError -> {
-
+                   // showServerError.value = decodeServerError(result.body)
                 }
 
                 is NetworkResponse.NetworkError -> {
-
+                    showNetworkError.value = decodeNetworkError(result.error)
                 }
 
                 is NetworkResponse.UnknownError -> {
-
+                    showUnknownError.value = decodeUnknownError(result.error)
                 }
             }
         })

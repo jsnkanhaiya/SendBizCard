@@ -11,6 +11,6 @@ class CardListViewHolder(private val binding: RowSavedCardItemBinding) : BaseVie
     override fun loadData(receivedData: CardDetailsItem, position: Int) {
         binding.tvName.text = receivedData.name
         binding.tvDesignation.text = receivedData.designation
-        binding.tvName.text = receivedData.name
+        //binding.tvName.text = receivedData.name
     }
 }

@@ -26,6 +26,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
     private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
     private lateinit var binding: FragmentForgotPasswordBinding
 
+
     private var isChangePassword = false
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -34,8 +35,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
         if (bundle != null) {
             isChangePassword = bundle.getBoolean("isChangepassword")
             //binding.otpPinView.text=
-            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG)
-                .show()
+            //Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
         }
 
         if (isChangePassword) {
@@ -75,7 +75,7 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
             binding.progressBarContainer.visibility = View.GONE
             findNavController().navigate(
                 R.id.nav_verifyForgotOtp,
-                bundleOf("otp" to it.otp.toString()),
+                bundleOf("otp" to it.otp.toString(),"emailID" to binding.etEmailID.text.toString(),"isChangepassword" to isChangePassword),
                 getDefaultNavigationAnimation()
             )
         })

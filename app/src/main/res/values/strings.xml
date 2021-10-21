@@ -77,6 +77,8 @@ Terms of Service and Privacy Policy</string>
     <string name="search">Search</string>
     <string name="success_title">Success</string>
     <string name="success_title_sub">OTP verified Successfully</string>
+    <string name="saved_successfully">Saved Successfully</string>
+    <string name="card_saved_successfully">Card Saved Successfully</string>
     <string name="update_profile_successfully">Profile updated Successfully</string>
     <string name="success_title_change_password">Password changed Successfully</string>
     <string name="success_title_new_password">New Password created Successfully</string>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.sendbizcard.R
@@ -24,12 +25,15 @@ class IntroScreenFragment : BaseFragment<FragmentIntroScreenBinding>() {
 
     private lateinit var binding: FragmentIntroScreenBinding
 
+    private val introScreenViewModel : IntroScreenViewModel by viewModels()
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
         setUpAdapter()
         initOnClicks()
+        introScreenViewModel.setFirstTimeUser(false)
     }
 
     private fun initOnClicks() {

@@ -51,12 +51,6 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
         initViews()
         initSpanUI()
         setupObservers()
-        val bundle = this.arguments
-        if (bundle != null) {
-            otp = bundle.getString("otp").toString()
-            //binding.otpPinView.text=
-            Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
-        }
     }
 
 
@@ -116,9 +110,13 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
         val bundle = this.arguments
         if (bundle != null) {
              isChangePassword = bundle.getBoolean("isChangepassword")
-            //binding.otpPinView.text=
-            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
+            email = bundle.getString("emailID","")
+            otp = bundle.getString("otp").toString()
+            Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
+           // Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
+           // Toast.makeText(context, "email id  is " + email, Toast.LENGTH_LONG).show()
         }
+
 
         if (isChangePassword){
             binding.tvTitle.text = resources.getString(R.string.create_new_password_verfication)
@@ -130,6 +128,7 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
             if (verifyOtpViewModel.isValidForgotOtpData(otp)) {
                 binding.progressBarContainer.visibility = View.VISIBLE
                  verifyOtpViewModel.verifyForGotOtp(otp,email)
+              //  Toast.makeText(context, "email id  is " + email  +"otp is "+ otp, Toast.LENGTH_LONG).show()
                // showSuccessDialog()
             }
         }
@@ -146,7 +145,8 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
             R.drawable.ic_success,
             onDismiss = {
                 if (fragmentManager != null) {
-                    findNavController().navigate(R.id.nav_createNewpassword, bundleOf("otp" to otp))
+                    findNavController().navigate(R.id.nav_createNewpassword, bundleOf("otp" to otp,"isChangepassword" to isChangePassword),
+                        getDefaultNavigationAnimation())
                 }
             }
         )

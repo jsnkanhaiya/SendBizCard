@@ -39,10 +39,10 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>(){
         initViews()
         initOnClicks()
         setupObservers()
-        setUpAdapter()
+       // setUpAdapter()
     }
 
-    private fun setUpAdapter() {
+   /* private fun setUpAdapter() {
         //val ourServicesList = UserSessionManager.getDatFromServiceList()
        // cardList?.data?.cardDetails.let {
             if (!cardList?.data?.cardDetails.isNullOrEmpty()){
@@ -50,7 +50,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>(){
                 binding.rvCardList.adapter = cardListAdapter
             }
        // }
-    }
+    }*/
 
     private fun initViews() {
 
@@ -60,7 +60,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>(){
         cardListViewModel.cardListResponse.observe(viewLifecycleOwner, Observer {
             binding.progressBarContainer.visibility = View.GONE
             cardListAdapter.addAll(it.data?.cardDetails as List<CardDetailsItem>)
-            cardListAdapter.notifyDataSetChanged()
+            binding.rvCardList.adapter = cardListAdapter
         })
 
         cardListViewModel.showNetworkError.observe(this, Observer {

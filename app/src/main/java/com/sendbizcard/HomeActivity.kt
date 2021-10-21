@@ -37,10 +37,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
         setSupportActionBar(binding.appBarHome.toolbar)
-
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home,R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_select_theme,R.id.nav_share_app,
+                R.id.nav_home,R.id.nav_my_profile, R.id.nav_saved_cards, R.id.nav_feedback,R.id.nav_select_theme,
+                R.id.nav_share_app,
                 R.id.nav_logout, ), binding.drawerLayout
         )
         setUpDrawerLayout()
@@ -63,6 +63,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             super.onBackPressed()
         }
     }
+
+
 
     override val bindingInflater: (LayoutInflater) -> ActivityHomeBinding
         get() = ActivityHomeBinding::inflate

@@ -17,10 +17,12 @@
             android:title="@string/menu_feedback" />
         <item
             android:id="@+id/nav_select_theme"
+            android:iconTint="@color/white"
             android:icon="@drawable/ic_theme_white"
             android:title="@string/menu_select_theme" />
         <item
             android:id="@+id/nav_share_app"
+            android:iconTint="@color/white"
             android:icon="@drawable/ic_share_white"
             android:title="@string/menu_share_app" />
         <item
@@ -29,6 +31,7 @@
             android:title="@string/menu_logout" />
         <item
             android:id="@+id/nav_our_services"
+            android:iconTint="@color/white"
             android:icon="@drawable/ic_services"
             android:title="@string/menu_our_services" />
 

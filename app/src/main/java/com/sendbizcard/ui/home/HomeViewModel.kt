@@ -11,10 +11,7 @@ import com.sendbizcard.models.request.addCard.AddCardRequest
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.repository.ApiRepository
 import com.sendbizcard.repository.ApiRepositoryImpl
-import com.sendbizcard.utils.UserSessionManager
-import com.sendbizcard.utils.decodeNetworkError
-import com.sendbizcard.utils.decodeServerError
-import com.sendbizcard.utils.decodeUnknownError
+import com.sendbizcard.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,6 +24,7 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var logoutResponse = MutableLiveData<BaseResponseModel>()
+    var saveCradResponse = SingleLiveEvent<BaseResponseModel>()
 
     fun addCardRequest(mName: String, mDesignation: String, mMobileNumber: String, mEmailId: String, mWebsite: String, mLocation: String) {
         val addCardRequest = AddCardRequest().apply {
@@ -52,7 +50,7 @@ class HomeViewModel @Inject constructor(
                 }
                 when (result) {
                     is NetworkResponse.Success -> {
-
+                        saveCradResponse.value=result.body
                     }
 
                     is NetworkResponse.ServerError -> {

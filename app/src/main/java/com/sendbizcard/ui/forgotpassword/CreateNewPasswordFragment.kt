@@ -80,13 +80,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         if (bundle != null) {
             otp = bundle.getString("otp").toString()
             //binding.otpPinView.text=
-            Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
+          // Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
         }
         if (bundle != null) {
             isChangePassword = bundle.getBoolean("isChangepassword")
             //binding.otpPinView.text=
-            Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG)
-                .show()
+          //  Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
         }
 
         if (isChangePassword) {
@@ -121,6 +120,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
                     if (isChangePassword){
                         var intent = Intent(requireContext(), HomeActivity::class.java)
                         startActivity(intent)
+
                     }else{
                         findNavController().navigate(R.id.nav_login,null,
                             getDefaultNavigationAnimation())

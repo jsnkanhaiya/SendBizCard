@@ -80,7 +80,7 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.sendFeedBack(url,feedback)
     }
 
-    override suspend fun addCardRequest(addCardRequest: AddCardRequest): NetworkResponse<ThemeResponse, ErrorsListResponse> {
+    override suspend fun addCardRequest(addCardRequest: AddCardRequest): NetworkResponse<BaseResponseModel, ErrorsListResponse> {
         val url = remoteConfigImpl.getAddCardURL()
         return apiService.addCardRequest(url,addCardRequest)
     }
@@ -96,7 +96,7 @@ class ApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCardList(): NetworkResponse<CardListResponseModel, LoginErrorResponse> {
-        val url = remoteConfigImpl.getCardShareURL()
+        val url = remoteConfigImpl.getCardListURL()
         return apiService.getCardList(url)
     }
 

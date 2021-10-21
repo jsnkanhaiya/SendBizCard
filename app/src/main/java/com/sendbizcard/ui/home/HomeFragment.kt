@@ -30,6 +30,9 @@ import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import android.location.LocationManager
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 
 import com.sendbizcard.utils.LocationGetter
 
@@ -61,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     lateinit var currentPhotoPath: String
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
@@ -79,8 +83,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun observeData() {
 
+        homeViewModel.saveCradResponse.observe(this){
+            binding.progressBarContainer.gone()
+            showSuccessDialog()
+        }
+
+        homeViewModel.showNetworkError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
+        })
+
+        homeViewModel.showUnknownError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        })
+
+        homeViewModel.showServerError.observe(this ) { errorMessage ->
+            binding.progressBarContainer.visibility = View.GONE
+            Log.d("Login Error",errorMessage)
+        }
     }
 
     private fun initOnClicks() {
@@ -144,14 +168,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     ).show()
                     return@setOnClickListener
                 }
-                else -> homeViewModel.addCardRequest(
+                else -> {
+                    binding.progressBarContainer.visible()
+                    homeViewModel.addCardRequest(
                     name,
                     designation,
                     mobileNumber,
                     emailId,
                     website,
                     location
-                )
+                )}
             }
         }
 
@@ -445,7 +471,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private fun showSuccessDialog() {
+        // binding.progressBarContainer.visibility = View.GONE
+        AlertDialogWithImageView.showDialog(
+            requireFragmentManager().beginTransaction(),
+            requireContext(),
+            requireContext().resources.getString(R.string.success_title),
+            requireContext().resources.getString(R.string.card_saved_successfully),
+            R.drawable.ic_success,
+            onDismiss = {
 
+                findNavController().popBackStack()
+
+            }
+        )
+
+
+    }
 
 
 }

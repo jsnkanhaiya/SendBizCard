@@ -27,7 +27,7 @@ class CardListViewModel@Inject constructor(
     var cardListResponse = SingleLiveEvent<CardListResponseModel>()
 
     fun getCardList() {
-        val cardListRequestModel = CardListRequestModel("",0,10,null,"")
+     //   val cardListRequestModel = CardListRequestModel("",0,10,null,"")
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {

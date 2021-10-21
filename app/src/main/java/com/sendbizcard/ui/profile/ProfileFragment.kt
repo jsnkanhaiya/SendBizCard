@@ -77,11 +77,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
 
         binding.btnSave.setOnClickListener {
 
-            var name = binding.etName.text.toString()
-            var designation = binding.etDesignation.text.toString()
-            var email = binding.etEmail.text.toString()
-            var mobile = binding.etMobileNumber.text.toString()
-            var website = binding.etWebsite.text.toString()
+            val name = binding.etName.text.toString()
+            val designation = binding.etDesignation.text.toString()
+            val email = binding.etEmail.text.toString()
+            val mobile = binding.etMobileNumber.text.toString()
+            val website = binding.etWebsite.text.toString()
 
             if (profileViewModel.isValidUserProfileData(name,mobile,email,website,designation)){
                 binding.progressBarContainer.visibility = View.VISIBLE
@@ -90,31 +90,24 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
 
         }
 
+
+        binding.imgEdit.setOnClickListener {
+            binding.etEmail.isEnabled =true
+            binding.etDesignation.isEnabled =true
+            binding.etName.isEnabled =true
+            binding.etMobileNumber.isEnabled =true
+            binding.etWebsite.isEnabled =true
+        }
+
     }
 
     private fun setUserData(userProfileResponse: UserProfileResponse) {
-         binding.etName.text.apply {
-             userProfileResponse.user?.name
-         }
-
-        binding.etMobileNumber.text.apply {
-            userProfileResponse.user?.contact
-        }
-
-        binding.etWebsite.text.apply {
-            userProfileResponse.user?.website
-        }
-
-        binding.etDesignation.text.apply {
-            userProfileResponse.user?.designation
-        }
-
-        binding.etEmail.text.apply {
-            userProfileResponse.user?.email
-        }
-
+         binding.etName.setText(userProfileResponse.user?.name)
+         binding.etMobileNumber.setText(userProfileResponse.user?.contact)
+         binding.etWebsite.setText(userProfileResponse.user?.website)
+         binding.etDesignation.setText(userProfileResponse.user?.designation)
+         binding.etEmail.setText(userProfileResponse.user?.email)
     }
-
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showSuccessDialog() {

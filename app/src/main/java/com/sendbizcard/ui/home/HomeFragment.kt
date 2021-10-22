@@ -55,10 +55,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val REQUEST_CODE_LOCATION = 0x1005
     private val IMAGE_MIME_TYPE = "image/*"
 
-
-
     lateinit var currentPhotoPath: String
-
 
     /**
      * Provides the entry point to the Fused Location Provider API.
@@ -110,6 +107,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initOnClicks() {
+
+        binding.ourServicesCL.setOnClickListener {
+            findNavController().navigate(R.id.nav_our_services)
+        }
+
+        binding.socialMediaCL.setOnClickListener {
+            findNavController().navigate(R.id.nav_social_media_links)
+        }
+
+        binding.ourServicesCL.setOnClickListener {
+            findNavController().navigate(R.id.nav_our_services)
+        }
+
         binding.imgCamera.setOnClickListener {
             val dialog = SelectCameraGalleryDialog.newInstance()
             dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
@@ -124,13 +134,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             dialog.show(parentFragmentManager, "Select Camera Gallery")
         }
 
-        binding.imgArrow.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services)
-        }
+        /*binding.imgArrow.setOnClickListener {
 
-        binding.imgArrowIcon.setOnClickListener {
+        }*/
+
+       /* binding.imgArrowIcon.setOnClickListener {
             findNavController().navigate(R.id.nav_social_media_links)
-        }
+        }*/
 
         binding.imgSave.setOnClickListener {
             val name = binding.etName.text.toString()

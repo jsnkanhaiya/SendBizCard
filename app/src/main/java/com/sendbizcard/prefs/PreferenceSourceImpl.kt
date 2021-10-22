@@ -60,4 +60,13 @@ class PreferenceSourceImpl @Inject constructor(private val preferences: SharedPr
             preferences.edit().putString(USER_MOBILE_NO,value).apply()
         }
 
+    fun clearData(){
+        preferences.edit().putString(USER_TOKEN,"").apply()
+        preferences.edit().putBoolean(IS_USER_LOGGED_IN,false).apply()
+        preferences.edit().putString(USER_MOBILE_NO,"").apply()
+        preferences.edit().putString(USER_EMAIL,"").apply()
+        preferences.edit().putString(USER_ID,"").apply()
+
+    }
+
 }

@@ -3,6 +3,7 @@ package com.sendbizcard.utils
 import java.util.regex.Pattern
 
 object AppConstants  {
+    val BASE_URL = "http://xapi.sendbusinesscard.com"
     const val APPLICATION_PREFERENCE_NAME = "send_biz_card_pref"
     const val IMAGE_BASE_URL = "https://xapi.sendbusinesscard.com/storage/"
     const val ERROR_EMAIL = "Enter proper email Id"

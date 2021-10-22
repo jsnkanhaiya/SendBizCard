@@ -8,4 +8,5 @@ interface PreferenceSource {
     var userEmail : String
     var userMobileNO : String
     var isFirstTimeUser : Boolean
+
 }

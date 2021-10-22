@@ -48,10 +48,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                 )
                 onClick = {
                     //on click
-                    findNavController().navigate(
-                        R.id.nav_login, null,
-                        getDefaultNavigationAnimation()
-                    )
+                    findNavController().popBackStack()
                 }
             }
         }

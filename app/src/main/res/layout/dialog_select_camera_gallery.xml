@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:drawableStartCompat="@drawable/ic_camera" />
+            app:drawableStartCompat="@drawable/ic__camera_orange" />
 
         <View
             android:id="@+id/one"

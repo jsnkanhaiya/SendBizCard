@@ -186,13 +186,21 @@
         tools:layout="@layout/fragment_intro_screen" >
 
         <action
-            android:id="@+id/actionSuccessMessageFragmentToSignInFragment"
+            android:id="@+id/actionIntroFragmentToSignInFragment"
             app:destination="@id/nav_login"
+            app:popUpTo="@+id/nav_intro"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_select_theme"
+        android:name="com.sendbizcard.ui.theme.ThemeFragment"
+        android:label="@string/menu_select_theme"
+        tools:layout="@layout/fragment_theme" />
 
 </navigation>

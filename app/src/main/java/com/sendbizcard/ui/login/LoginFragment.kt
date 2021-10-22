@@ -122,6 +122,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
 

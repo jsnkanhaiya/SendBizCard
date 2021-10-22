@@ -9,6 +9,7 @@ import com.sendbizcard.base.BaseViewModel
 import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.addCard.AddCardRequest
 import com.sendbizcard.models.response.BaseResponseModel
+import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepository
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.*
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val apiRepositoryImpl: ApiRepositoryImpl
+    private val apiRepositoryImpl: ApiRepositoryImpl,
+    private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel() {
 
     var logoutResponse = MutableLiveData<BaseResponseModel>()
@@ -100,6 +102,10 @@ class HomeViewModel @Inject constructor(
         )
 
 
+    }
+
+    fun clearAllData(){
+        preferenceSourceImpl.clearData()
     }
 
 

@@ -8,17 +8,16 @@ import com.google.gson.JsonSyntaxException
 import com.sendbizcard.R
 import com.sendbizcard.dialog.ConfirmationDialogFragment
 import com.sendbizcard.utils.AppConstants.IS_LOG_ON
-import com.sendbizcard.models.ErrorsListResponse
 import com.sendbizcard.models.LoginErrorResponse
-import com.sendbizcard.models.ServerError
 import java.io.EOFException
 import java.net.SocketTimeoutException
 import javax.net.ssl.SSLHandshakeException
-import androidx.core.content.ContextCompat.startActivity
 
 import android.content.Intent
-import androidx.core.content.ContextCompat
+import android.graphics.Bitmap
+import android.util.Base64
 import com.sendbizcard.BuildConfig
+import java.io.ByteArrayOutputStream
 
 
 fun decodeNetworkError(throwable: Throwable): String {
@@ -120,4 +119,11 @@ fun getHttpStatus(httpCode: Int): HttpStatus {
         }
     }
     return httpStatus
+}
+
+fun convertBitmapToBase64(bitmap: Bitmap): String {
+    val byteArrayOutputStream = ByteArrayOutputStream()
+    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream)
+    val byteArray = byteArrayOutputStream.toByteArray()
+    return Base64.encodeToString(byteArray, Base64.DEFAULT)
 }

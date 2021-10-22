@@ -1,6 +1,7 @@
 package com.sendbizcard.utils
 
 import android.content.res.Resources
+import android.graphics.Bitmap
 import android.graphics.Rect
 import android.os.Handler
 import android.os.Looper
@@ -22,6 +23,13 @@ fun String.isValidEmail() =
 fun AppCompatImageView.loadImages(url: String) {
     val options = RequestOptions()
     Glide.with(context).load(url).apply(options).into(this)
+}
+
+fun AppCompatImageView.loadBitmap(bitmap: Bitmap) {
+    Glide.with(context)
+        .load(bitmap)
+        .apply(RequestOptions.circleCropTransform())
+        .into(this)
 }
 
 fun DialogFragment.setWidthPercent(percentage: Int) {

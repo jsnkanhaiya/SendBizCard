@@ -1,68 +1,80 @@
 package com.sendbizcard.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.os.Looper
 import android.provider.MediaStore
+import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.location.*
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentHomeBinding
+import com.sendbizcard.dialog.SelectCameraGalleryDialog
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
-import java.io.File
-import java.io.IOException
-import java.text.SimpleDateFormat
+import java.io.*
 import java.util.*
-import android.location.LocationManager
-import android.os.Build
-import android.util.Log
-import androidx.annotation.RequiresApi
-
-import com.sendbizcard.utils.LocationGetter
-
-import androidx.core.content.ContextCompat.getSystemService
-
-
-
 
 
 @AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
+    private val APPNAME = "SendBizCardApp"
     private val homeViewModel: HomeViewModel by viewModels()
-    private var isAttachInvisible: Boolean = true
-    var permissionDeniedDialog: PermissionDeniedDialog? = null
-    var permissionNeededDialog: PermissionNeededDialog? = null
     private lateinit var binding: FragmentHomeBinding
-    val REQUEST_LOCATION =0
 
-    companion object {
-        private const val REQUEST_CODE_CAMERA = 0x1001
-        private const val REQUEST_CODE_IMAGE_CAPTURE = 0x1002
-        private const val REQUEST_CODE_IMAGE_CAPTION = 0x1003
-        private const val REQUEST_CODE_GALLERY = 0x1004
-        private const val REQUEST_CODE_READ_EXTERNAL_STORAGE = 0x1005
-        private const val REQUEST_CODE_DOCUMENT = 0x1006
-        private const val IMAGE_MIME_TYPE = "image/*"
-    }
+    private val REQUEST_CODE_CAMERA = 0x1001
+    private val REQUEST_CODE_IMAGE_CAPTURE = 0x1002
+    private val REQUEST_CODE_GALLERY = 0x1003
+    private val REQUEST_CODE_READ_EXTERNAL_STORAGE = 0x1004
+    private val REQUEST_CODE_LOCATION = 0x1005
+    private val IMAGE_MIME_TYPE = "image/*"
+
+
 
     lateinit var currentPhotoPath: String
+
+
+    /**
+     * Provides the entry point to the Fused Location Provider API.
+     */
+    private var mFusedLocationClient: FusedLocationProviderClient? = null
+
+    /**
+     * Represents a geographical location.
+     */
+    protected var mLastLocation: Location? = null
+
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -70,54 +82,54 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding = getViewBinding()
         initOnClicks()
         observeData()
-        initViews()
-
-
-    }
-
-    private fun initViews() {
-        /*binding.tvToolBar.tvBack.gone()
-        binding.tvToolBar.tvTitle.visible()
-        binding.tvToolBar.tvTitle.text = resources.getString(R.string.menu_home)*/
-
     }
 
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun observeData() {
 
-        homeViewModel.saveCradResponse.observe(this){
+        homeViewModel.saveCradResponse.observe(this) {
             binding.progressBarContainer.gone()
             showSuccessDialog()
         }
 
-        homeViewModel.showNetworkError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
-        })
-
-        homeViewModel.showUnknownError.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+        homeViewModel.showNetworkError.observe(this) {
             binding.progressBarContainer.visibility = View.GONE
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
+        }
 
-        homeViewModel.showServerError.observe(this ) { errorMessage ->
+        homeViewModel.showUnknownError.observe(this) {
             binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        }
+
+        homeViewModel.showServerError.observe(this) { errorMessage ->
+            binding.progressBarContainer.visibility = View.GONE
+
         }
     }
 
     private fun initOnClicks() {
+        binding.imgCamera.setOnClickListener {
+            val dialog = SelectCameraGalleryDialog.newInstance()
+            dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
+                override fun onCameraOptionSelected() {
+                    requestCameraPermission()
+                }
+
+                override fun onGalleryOptionSelected() {
+                    requestGalleryPermission()
+                }
+            }
+            dialog.show(parentFragmentManager, "Select Camera Gallery")
+        }
+
         binding.imgArrow.setOnClickListener {
             findNavController().navigate(R.id.nav_our_services)
         }
 
         binding.imgArrowIcon.setOnClickListener {
             findNavController().navigate(R.id.nav_social_media_links)
-        }
-
-        binding.imgUser.setOnClickListener {
-            checkpermissionForCameraGallery()
         }
 
         binding.imgSave.setOnClickListener {
@@ -171,18 +183,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 else -> {
                     binding.progressBarContainer.visible()
                     homeViewModel.addCardRequest(
-                    name,
-                    designation,
-                    mobileNumber,
-                    emailId,
-                    website,
-                    location
-                )}
+                        name,
+                        designation,
+                        mobileNumber,
+                        emailId,
+                        website,
+                        location
+                    )
+                }
             }
         }
 
-        binding.imgLocation.setOnClickListener {
-            getTheUserPermission()
+        binding.etLocation.setOnClickListener {
+            requestLocationPermission()
         }
     }
 
@@ -190,123 +203,131 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         get() = FragmentHomeBinding::inflate
 
 
-    fun checkpermissionForCameraGallery() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            showImageDialogView()
-        } else {
-            showPermissionNeededDialog()
-//                    requestStoragePermission()
-        }
+    private fun checkWriteStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
-    private fun showPermissionNeededDialog() {
-
-    }
-
-    private fun showImageDialogView() {
-        val dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-// ...Irrelevant code for customizing the buttons and title
-// ...Irrelevant code for customizing the buttons and title
-        val inflater = this.layoutInflater
-        dialogBuilder.setView(inflater.inflate(com.sendbizcard.R.layout.attachment_sheet, null))
-        val alertDialog: AlertDialog = dialogBuilder.create()
-
-        var camera = alertDialog.findViewById<TextView>(com.sendbizcard.R.id.camera_view)
-        var gallery = alertDialog.findViewById<TextView>(com.sendbizcard.R.id.gallery_view)
-
-        camera.setOnClickListener {
-
-            requestCameraPermission()
-        }
-
-        gallery.setOnClickListener {
-            requestStoragePermission()
-        }
-
-        alertDialog.show()
-    }
-
-
-    private fun haveStoragePermission() =
-        ContextCompat.checkSelfPermission(
+    private fun checkReadStoragePermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
             requireContext(),
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkCameraPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkLocationPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+            requireContext(),
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+    }
+
+    private fun requestLocationPermission() {
+        if (checkLocationPermission()){
+            getLocation()
+
+        } else {
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_CODE_LOCATION
+            )
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation(){
+        if (isLocationEnabled()){
+            mFusedLocationClient?.lastLocation?.addOnCompleteListener { task ->
+                val location: Location? = task.result
+                if (location != null){
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+                    val geocoder = Geocoder(requireContext(), Locale.getDefault())
+                    val addresses = geocoder.getFromLocation(latitude,longitude,1)
+                    val address = addresses.getOrNull(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    val city = addresses.getOrNull(0)?.locality
+                    val state = addresses.getOrNull(0)?.adminArea
+                    val country = addresses.getOrNull(0)?.countryName
+                    val postalCode = addresses.getOrNull(0)?.postalCode
+                    binding.etLocation.setText(address)
+                } else {
+                    requestNewLocationData()
+                }
+            }
+
+        } else {
+            Toast.makeText(requireContext(), "Turn on location", Toast.LENGTH_LONG).show()
+            val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+            startActivity(intent)
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestNewLocationData() {
+        val mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 0
+        mLocationRequest.fastestInterval = 0
+        mLocationRequest.numUpdates = 1
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        mFusedLocationClient?.requestLocationUpdates(
+            mLocationRequest, mLocationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    private val mLocationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            val mLastLocation: Location = locationResult.lastLocation
+            val latitude = mLastLocation.latitude
+            val longitude = mLastLocation.longitude
+            val geocoder = Geocoder(requireContext(), Locale.getDefault())
+            val addresses = geocoder.getFromLocation(latitude,longitude,1)
+            val address = addresses.getOrNull(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            binding.etLocation.setText(address)
+        }
+    }
+
 
     private fun requestCameraPermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
+
+        if (checkCameraPermission() && checkWriteStoragePermission()) {
+            cameraIntent()
+        } else {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.CAMERA
-                )
-            ) {
-                showPermissionDeniedDialog(Manifest.permission.CAMERA, REQUEST_CODE_CAMERA)
-            } else {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.CAMERA),
-                    REQUEST_CODE_CAMERA
-                )
-            }
+                ), REQUEST_CODE_CAMERA
+            )
         }
     }
 
-    private fun requestStoragePermission() {
-        if (ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    requireActivity(),
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            ) {
-                showPermissionDeniedDialog(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    REQUEST_CODE_READ_EXTERNAL_STORAGE
-                )
-            } else {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    REQUEST_CODE_READ_EXTERNAL_STORAGE
-                )
-            }
+    private fun requestGalleryPermission() {
+        if (checkReadStoragePermission()) {
+            galleryIntent()
+        } else {
+            requestPermissions(
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                REQUEST_CODE_READ_EXTERNAL_STORAGE
+            )
         }
     }
 
-    private fun showPermissionDeniedDialog(
-        permissions: String,
-        permissionRequestCode: Int
-    ) {
-        permissionDeniedDialog = PermissionDeniedDialog.Builder().build()
-        permissionDeniedDialog?.show(
-            requireActivity().supportFragmentManager,
-            PermissionDeniedDialog.TAG
-        )
-
-        permissionDeniedDialog?.setButtonClickListener(object :
-            PermissionDeniedDialog.OnButtonClickListener {
-            override fun exit() {
-//                finish()
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(permissions),
-                    permissionRequestCode
-                )
-                permissionDeniedDialog?.dismiss()
-            }
-        })
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -317,41 +338,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         when (requestCode) {
 
             REQUEST_CODE_CAMERA -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showImageDialogView()
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     cameraIntent()
                 } else {
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            requireActivity(),
-                            Manifest.permission.CAMERA
-                        )
-                    ) {
-                        showPermissionDeniedDialog(Manifest.permission.CAMERA, REQUEST_CODE_CAMERA)
-                    }
+                    Toast.makeText(requireContext(), "Allow Permission", Toast.LENGTH_LONG).show()
                 }
             }
 
             REQUEST_CODE_READ_EXTERNAL_STORAGE -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showImageDialogView()
                     galleryIntent()
-                } else if (grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                } else {
+                    Toast.makeText(requireContext(), "Allow Permission", Toast.LENGTH_LONG).show()
+                }
+            }
 
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(
-                            requireActivity(),
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                        )
-                    ) {
-                        showPermissionDeniedDialog(
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            REQUEST_CODE_READ_EXTERNAL_STORAGE
-                        )
-                    } /*else {
-//                        showMandatoryPermissionsNeedDialog()
-                        if (!ActivityCompat.shouldShowRequestPermissionRationale(requireActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) && (viewModel.readStorageDeniedOnce)) {
-                            showMandatoryPermissionsNeedDialog()
-                        }
-                    }*/
+            REQUEST_CODE_LOCATION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    getLocation()
+                } else {
+                    Toast.makeText(requireContext(), "Allow Permission", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -378,7 +384,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 )
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                startActivityForResult(takePictureIntent, REQUEST_CODE_IMAGE_CAPTURE)
+                if (takePictureIntent.resolveActivity(requireContext().packageManager) != null) {
+                    // Start the image capture intent to take photo
+                    startActivityForResult(takePictureIntent, REQUEST_CODE_IMAGE_CAPTURE)
+                }
+
+
             }
         }
     }
@@ -386,11 +397,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @Throws(IOException::class)
     private fun createImageFile(): File {
         // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())
+        //val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())
         val storageDir: File? =
             requireActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
-            timeStamp, ".jpg", storageDir
+            APPNAME, ".jpg", storageDir
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
@@ -405,20 +416,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         startActivityForResult(galleryIntent, REQUEST_CODE_GALLERY)
     }
 
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-
             REQUEST_CODE_IMAGE_CAPTURE -> {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
-                    currentPhotoPath
-                    //addImageCaption(currentPhotoPath)
+                    val bitmap =
+                        ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
+                    binding.imgUser.loadBitmap(bitmap)
                 }
             }
             REQUEST_CODE_GALLERY -> {
-
                 if (resultCode == AppCompatActivity.RESULT_OK) {
 
                     val imageUri = data?.data
@@ -435,7 +446,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         }
                         // Continue only if the File was successfully created
                         photoFile?.also {
-                            //viewModel.copyImageUriToExternalFilesDir(imageUri, photoFile)
+                            copyImageUriToExternalFilesDir(imageUri,photoFile)
                         }
                     } else {
                         showErrorDialog(
@@ -446,29 +457,50 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     }
                 }
             }
-
         }
     }
 
-    private fun getTheUserPermission() {
-        var addresses=""
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-            REQUEST_LOCATION
-        )
-       var locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager?
-        val locationGetter =
-            LocationGetter(requireActivity(), REQUEST_LOCATION, locationManager)
-        if (!locationManager!!.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            locationGetter.OnGPS()
-        } else {
-            addresses =  locationGetter.getLocation()
+    private fun copyImageUriToExternalFilesDir(uri: Uri, fileName: File) {
 
-            binding.etLocation.text.apply {
-                addresses
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+
+        if (inputStream != null) {
+
+            val file = File("$fileName")
+            val fos = FileOutputStream(file)
+            val bis = BufferedInputStream(inputStream)
+            val bos = BufferedOutputStream(fos)
+            val byteArray = ByteArray(4096)
+            var bytes = bis.read(byteArray)
+
+            while (bytes > 0) {
+                bos.write(byteArray, 0, bytes)
+                bos.flush()
+                bytes = bis.read(byteArray)
+            }
+
+            bos.close()
+            fos.close()
+
+            when (file.length()) {
+                in 0..16000000 -> {
+                    val path = file.path
+                    val bitmap =
+                        ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
+                    binding.imgUser.loadBitmap(bitmap)
+                }
+                else -> {
+                    Toast.makeText(requireContext(),"Size is not in limit",Toast.LENGTH_LONG).show()
+                }
             }
         }
+    }
+
+    private fun isLocationEnabled(): Boolean {
+        val locationManager: LocationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER
+        )
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -486,9 +518,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             }
         )
-
-
     }
-
-
 }

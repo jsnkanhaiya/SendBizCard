@@ -52,10 +52,10 @@ class IntroScreenFragment : BaseFragment<FragmentIntroScreenBinding>() {
 
     private fun setUpAdapter() {
         val listOfIntroScreenImages = ArrayList<Int>()
-        listOfIntroScreenImages.add(R.drawable.theme1)
-        listOfIntroScreenImages.add(R.drawable.theme2)
-        listOfIntroScreenImages.add(R.drawable.theme3)
         listOfIntroScreenImages.add(R.drawable.theme4)
+        listOfIntroScreenImages.add(R.drawable.theme2)
+        listOfIntroScreenImages.add(R.drawable.theme1)
+        listOfIntroScreenImages.add(R.drawable.theme3)
 
         introScreenAdapter.addAll(listOfIntroScreenImages)
 

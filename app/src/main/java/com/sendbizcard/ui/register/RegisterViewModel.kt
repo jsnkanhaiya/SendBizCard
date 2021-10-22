@@ -80,6 +80,9 @@ class RegisterViewModel @Inject constructor(
             mobileNo.isBlank() -> {
                 false
             }
+            mobileNo.length<10 || mobileNo.length>10-> {
+                false
+            }
             emailId.isBlank() -> {
                 false
             }
@@ -92,7 +95,7 @@ class RegisterViewModel @Inject constructor(
             ValidationUtils.isRequiredPasswordLengthForLogin(confPassword) -> {
                 false
             }
-            else -> ValidationUtils.isRequiredPasswordLengthForChangePassword(password)
+            else -> ValidationUtils.isBothPasswordMatch(password,confPassword)
         }
 
     }

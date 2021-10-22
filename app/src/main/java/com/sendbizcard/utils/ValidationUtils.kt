@@ -35,7 +35,7 @@ object ValidationUtils {
   }
 
   fun isRequiredPasswordLengthForLogin(password: String): Boolean {
-    return password.length >= AppConstants.MINIMUM_PASSWORD_LENGTH-2
+    return password.length >= AppConstants.MINIMUM_PASSWORD_LENGTH
   }
 
   fun isBothPasswordMatch(password: String, confirmPassword: String): Boolean {

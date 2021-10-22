@@ -62,7 +62,7 @@
         <entry key="app/src/main/res/layout/feedback_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_thankyou_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_card_list.xml" value="0.18885869565217392" />
-        <entry key="app/src/main/res/layout/fragment_change_password_verification.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_change_password_verification.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_enter_social_media_links.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_feedback.xml" value="0.19293478260869565" />

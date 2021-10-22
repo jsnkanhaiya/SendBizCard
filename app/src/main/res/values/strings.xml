@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SendBizCard</string>
+    <string name="app_name">SendBusinessCard</string>
     <string name="create_account">Create Account</string>
     <string name="enter_pin">Enter PIN</string>
     <string name="change_password_verification">Change Password Verification</string>

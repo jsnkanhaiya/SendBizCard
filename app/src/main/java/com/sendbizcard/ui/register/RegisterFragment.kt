@@ -15,6 +15,8 @@ import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentRegisterBinding
 import com.sendbizcard.dialog.ConfirmationDialogFragment
 import com.sendbizcard.utils.getDefaultNavigationAnimation
+import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -57,25 +59,30 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun setUpObservers() {
         registerViewModel.registerReponse.observe(viewLifecycleOwner, {
-            findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp))
+            binding.progressBarContainer.gone()
+            findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp.toString()))
 
         })
 
         registerViewModel.showUnknownError.observe(this, {
+            binding.progressBarContainer.gone()
             showlogoutDialog(it)
         })
 
         registerViewModel.showNetworkError.observe(this, {
+            binding.progressBarContainer.gone()
             showlogoutDialog(it)
         })
 
         registerViewModel.showServerError.observe(this, {
+            binding.progressBarContainer.gone()
             showlogoutDialog(it)
         })
     }
 
     private fun initViews() {
         binding.btnSave.setOnClickListener {
+
             val name = binding.etName.text.toString()
             val emailId = binding.etEmailID.text.toString()
             val mobileNo = binding.etMobile.text.toString()
@@ -89,6 +96,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                     confPassword
                 )
             ) {
+                binding.progressBarContainer.visible()
                 registerViewModel.registerUser(name, mobileNo, emailId, password, confPassword)
             }
         }

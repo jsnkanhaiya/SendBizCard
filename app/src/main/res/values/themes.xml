@@ -69,7 +69,7 @@
     <style name="gilroy_regular_13">
         <item name="android:fontFamily">@font/gilroy_regular</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">2sp</item>
         <item name="android:textColor">#9b9b9b</item>
     </style>
@@ -95,7 +95,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:textSize">13sp</item>
         <item name="android:lineSpacingExtra">2sp</item>
-        <item name="android:textColor">#ef5e42</item>
+        <item name="android:textColor">#404040</item>
     </style>
 
     <style name="gilroy_semibold_14">

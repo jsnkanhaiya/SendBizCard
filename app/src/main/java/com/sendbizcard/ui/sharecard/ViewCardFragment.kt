@@ -39,9 +39,9 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
     }
 
     private fun loadUrl() {
-        binding.webView.getSettings().setJavaScriptEnabled(true);
-        initWebView();
-        binding.webView.loadUrl(redirectUrl);
+        binding.webView.settings.javaScriptEnabled = true
+        initWebView()
+        binding.webView.loadUrl(redirectUrl)
     }
 
     private fun setupObservers() {
@@ -73,11 +73,11 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
 
 
     private fun initWebView() {
-        binding.webView.setWebChromeClient(MyWebChromeClient(requireContext()))
-        binding.webView.setWebViewClient(object : WebViewClient() {
+        binding.webView.webChromeClient = MyWebChromeClient(requireContext())
+        binding.webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                binding.progressBarContainer.setVisibility(View.VISIBLE)
+                binding.progressBarContainer.visibility = View.VISIBLE
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
@@ -89,7 +89,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
 
             override fun onPageFinished(view: WebView, url: String?) {
                 super.onPageFinished(view, url)
-                binding.progressBarContainer.setVisibility(View.GONE)
+                binding.progressBarContainer.visibility = View.GONE
             }
 
             override fun onReceivedError(
@@ -98,13 +98,13 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
                 error: WebResourceError?
             ) {
                 super.onReceivedError(view, request, error)
-                binding.progressBarContainer.setVisibility(View.GONE)
+                binding.progressBarContainer.visibility = View.GONE
             }
-        })
+        }
         binding.webView.clearCache(true)
         binding.webView.clearHistory()
-        binding.webView.getSettings().setJavaScriptEnabled(true)
-        binding.webView.setHorizontalScrollBarEnabled(false)
+        binding.webView.settings.javaScriptEnabled = true
+        binding.webView.isHorizontalScrollBarEnabled = false
         binding.webView.setOnTouchListener(OnTouchListener { v, event ->
             if (event.pointerCount > 1) {
                 //Multi touch detected

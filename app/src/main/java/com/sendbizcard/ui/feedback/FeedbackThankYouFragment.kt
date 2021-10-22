@@ -9,11 +9,8 @@ import com.sendbizcard.databinding.FragmentFeedbackThankYouBinding
 
 class FeedbackThankYouFragment : BaseFragment<FragmentFeedbackThankYouBinding>() {
 
-    private var binding: FragmentFeedbackThankYouBinding? = null
+    private lateinit var binding: FragmentFeedbackThankYouBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

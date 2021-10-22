@@ -27,27 +27,18 @@ import me.gujun.android.span.span
 
 @AndroidEntryPoint
 class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswordBinding>() {
-    private val TAG = "VerifyOtpFragment"
 
     private val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
-    private var _binding: FragmentVerifyForgotPasswordBinding? = null
+    private lateinit var binding: FragmentVerifyForgotPasswordBinding
     private var otp = ""
     private var email = ""
     var isChangePassword=false
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = getViewBinding()
+        binding = getViewBinding()
         initViews()
         initSpanUI()
         setupObservers()

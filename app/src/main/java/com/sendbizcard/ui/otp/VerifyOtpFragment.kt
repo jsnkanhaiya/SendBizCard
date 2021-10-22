@@ -24,26 +24,15 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding>() {
 
-    private val TAG = "VerifyOtpFragment"
-
     private val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
-    private var _binding: FragmentChangePasswordVerificationBinding? = null
+    private lateinit var binding: FragmentChangePasswordVerificationBinding
     private  var otp= ""
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
 
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = getViewBinding()
+        binding = getViewBinding()
         initViews()
         setupObservers()
     }

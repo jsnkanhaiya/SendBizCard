@@ -16,42 +16,27 @@ import com.sendbizcard.databinding.FragmentChangePasswordVerificationBinding
 import com.sendbizcard.databinding.FragmentSuccssesfulMessageBinding
 import com.sendbizcard.ui.otp.VerifyOtpViewModel
 import com.sendbizcard.utils.AlertDialogWithImageView
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChangePasswordSuccessFragment : BaseFragment<FragmentSuccssesfulMessageBinding>() {
 
-
-    private val TAG = "VerifyOtpFragment"
-
     private val verifyOtpViewModel: VerifyOtpViewModel by viewModels()
-    private var _binding: FragmentSuccssesfulMessageBinding? = null
+    private lateinit var binding: FragmentSuccssesfulMessageBinding
     private  var otp= ""
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = getViewBinding()
+        binding = getViewBinding()
         initViews()
     }
-
 
     private fun initViews() {
         binding.btnSave.setOnClickListener {
             findNavController().navigate(R.id.nav_login)
         }
     }
-
-
-
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentSuccssesfulMessageBinding
         get() = FragmentSuccssesfulMessageBinding::inflate

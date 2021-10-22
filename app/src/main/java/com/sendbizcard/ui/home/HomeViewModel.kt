@@ -26,19 +26,19 @@ class HomeViewModel @Inject constructor(
     var logoutResponse = MutableLiveData<BaseResponseModel>()
     var saveCradResponse = SingleLiveEvent<BaseResponseModel>()
 
-    fun addCardRequest(mName: String, mDesignation: String, mMobileNumber: String, mEmailId: String, mWebsite: String, mLocation: String) {
+    fun addCardRequest(mName: String, mDesignation: String, mMobileNumber: String, mEmailId: String, mWebsite: String, mLocation: String, mUserImageBase64String: String, mCompanyLogoBase64String: String) {
         val addCardRequest = AddCardRequest().apply {
             themeId = "3"
             themeColor = "#748484"
             name = mName
-            userImg = ""
+            userImg = mUserImageBase64String
             designation = mDesignation
             contactPrefix = "+91"
             contactNo = mMobileNumber
             email = mEmailId
             website = mWebsite
             location = mLocation
-            companyLogo = ""
+            companyLogo = mCompanyLogoBase64String
             companyName = "ABC"
             services = UserSessionManager.getDataFromServiceList()
             socialLinks = null

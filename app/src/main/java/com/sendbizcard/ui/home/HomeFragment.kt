@@ -54,22 +54,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val REQUEST_CODE_READ_EXTERNAL_STORAGE = 0x1004
     private val REQUEST_CODE_LOCATION = 0x1005
     private val IMAGE_MIME_TYPE = "image/*"
-
-
-
     lateinit var currentPhotoPath: String
-
-
-    /**
-     * Provides the entry point to the Fused Location Provider API.
-     */
     private var mFusedLocationClient: FusedLocationProviderClient? = null
-
-    /**
-     * Represents a geographical location.
-     */
-    protected var mLastLocation: Location? = null
-
+    private var isUserImageSelected = false
+    private var isCompanyLogoSelected = false
+    private var userImageBase64String = ""
+    private var companyLogoBase64String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,10 +108,18 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 }
 
                 override fun onGalleryOptionSelected() {
+                    isUserImageSelected = true
+                    isCompanyLogoSelected = false
                     requestGalleryPermission()
                 }
             }
             dialog.show(parentFragmentManager, "Select Camera Gallery")
+        }
+
+        binding.imgCompanyLogo.setOnClickListener {
+            isUserImageSelected = false
+            isCompanyLogoSelected = true
+            requestGalleryPermission()
         }
 
         binding.imgArrow.setOnClickListener {
@@ -188,7 +186,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         mobileNumber,
                         emailId,
                         website,
-                        location
+                        location,
+                        userImageBase64String,
+                        companyLogoBase64String
                     )
                 }
             }
@@ -424,9 +424,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         when (requestCode) {
             REQUEST_CODE_IMAGE_CAPTURE -> {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
-                    val bitmap =
-                        ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
-                    binding.imgUser.loadBitmap(bitmap)
+                    if (::currentPhotoPath.isInitialized){
+                        val bitmap =
+                            ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
+                        binding.imgUser.loadBitmap(bitmap)
+                        userImageBase64String = convertBitmapToBase64(bitmap)
+                    }
+
                 }
             }
             REQUEST_CODE_GALLERY -> {
@@ -487,7 +491,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     val path = file.path
                     val bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    binding.imgUser.loadBitmap(bitmap)
+                    if (isUserImageSelected){
+                        binding.imgUser.loadBitmap(bitmap)
+                        userImageBase64String = convertBitmapToBase64(bitmap)
+                    } else {
+                        companyLogoBase64String = convertBitmapToBase64(bitmap)
+                    }
+
                 }
                 else -> {
                     Toast.makeText(requireContext(),"Size is not in limit",Toast.LENGTH_LONG).show()

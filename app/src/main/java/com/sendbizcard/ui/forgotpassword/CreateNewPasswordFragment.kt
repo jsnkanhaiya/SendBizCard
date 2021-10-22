@@ -24,50 +24,38 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>() {
 
-
-    private val TAG = "CreateNewPasswordFragment"
-
-    private val forgotPasswordViewmodel: ForgotPasswordViewModel by viewModels()
-    private var _binding: FragmentCreateNewPasswordBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private val forgotPasswordViewModel: ForgotPasswordViewModel by viewModels()
+    private lateinit var binding: FragmentCreateNewPasswordBinding
     var otp = ""
     var isChangePassword = false
 
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding = getViewBinding()
+        binding = getViewBinding()
         initViews()
         setupObservers()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setupObservers() {
-        forgotPasswordViewmodel.changePasswordResponse.observe(viewLifecycleOwner, Observer {
+        forgotPasswordViewModel.changePasswordResponse.observe(viewLifecycleOwner, Observer {
             binding.progressBarContainer.visibility = View.GONE
             showSuccessDialog()
         })
 
-        forgotPasswordViewmodel.showNetworkError.observe(this, Observer {
+        forgotPasswordViewModel.showNetworkError.observe(this, Observer {
             binding.progressBarContainer.visibility = View.GONE
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
-        forgotPasswordViewmodel.showUnknownError.observe(this, Observer {
+        forgotPasswordViewModel.showUnknownError.observe(this, Observer {
             binding.progressBarContainer.visibility = View.GONE
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
-        forgotPasswordViewmodel.showServerError.observe(this) { errorMessage ->
+        forgotPasswordViewModel.showServerError.observe(this) { errorMessage ->
             binding.progressBarContainer.visibility = View.GONE
             Log.d("Login Error", errorMessage)
         }
@@ -95,9 +83,9 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         binding.btnSave.setOnClickListener {
             val password = binding.etNewPassword.text.toString()
             val confpassword = binding.etConfirmPassword.text.toString()
-            if (forgotPasswordViewmodel.isValidChangePasswordData(otp, password, confpassword)) {
+            if (forgotPasswordViewModel.isValidChangePasswordData(otp, password, confpassword)) {
                 binding.progressBarContainer.visibility = View.VISIBLE
-                forgotPasswordViewmodel.changePasswordUser(otp, password, confpassword)
+                forgotPasswordViewModel.changePasswordUser(otp, password, confpassword)
             }
         }
     }

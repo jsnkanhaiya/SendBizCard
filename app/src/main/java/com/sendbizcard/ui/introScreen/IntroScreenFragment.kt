@@ -46,7 +46,9 @@ class IntroScreenFragment : BaseFragment<FragmentIntroScreenBinding>() {
         }
 
         binding.btnGetStarted.setOnClickListener {
-            findNavController().navigate(R.id.nav_login)
+           // findNavController().navigate(R.id.nav_login)
+            val direction = IntroScreenFragmentDirections.actionIntroFragmentToSignInFragment()
+            findNavController().navigate(direction)
         }
     }
 

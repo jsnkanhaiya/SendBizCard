@@ -100,6 +100,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initOnClicks() {
+
+        binding.ourServicesCL.setOnClickListener {
+            findNavController().navigate(R.id.nav_our_services)
+        }
+
+        binding.socialMediaCL.setOnClickListener {
+            findNavController().navigate(R.id.nav_social_media_links)
+        }
+
+        binding.ourServicesCL.setOnClickListener {
+            findNavController().navigate(R.id.nav_our_services)
+        }
+
         binding.imgCamera.setOnClickListener {
             val dialog = SelectCameraGalleryDialog.newInstance()
             dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {

@@ -56,9 +56,11 @@
 
     <fragment
         android:id="@+id/nav_feedback"
-        android:name="com.sendbizcard.ui.feedback.FeedbackThankYouFragment"
+        android:name="com.sendbizcard.ui.feedback.FeedbackFragment"
         android:label="@string/menu_feedback"
-        tools:layout="@layout/fragment_feedback_thank_you" />
+        tools:layout="@layout/fragment_feedback" >
+
+    </fragment>
 
     <fragment
         android:id="@+id/nav_select_theme"

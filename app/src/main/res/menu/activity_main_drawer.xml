@@ -29,11 +29,6 @@
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_log_out_white"
             android:title="@string/menu_logout" />
-        <item
-            android:id="@+id/nav_our_services"
-            android:iconTint="@color/white"
-            android:icon="@drawable/ic_services"
-            android:title="@string/menu_our_services" />
 
     </group>
 </menu>

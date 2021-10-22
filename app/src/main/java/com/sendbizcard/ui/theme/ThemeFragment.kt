@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentThemeBinding
 import com.sendbizcard.models.response.theme.ListThemeItem
+import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -26,6 +28,7 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+        binding.progressBarContainer.visible()
         observeData()
         themeViewModel.getThemeList()
 
@@ -34,6 +37,7 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
     private fun observeData() {
         themeViewModel.themeList.observe(this) { themeList ->
             setUpAdapter(themeList)
+            binding.progressBarContainer.gone()
         }
     }
 

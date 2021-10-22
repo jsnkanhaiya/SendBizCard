@@ -25,6 +25,12 @@ fun AppCompatImageView.loadImages(url: String) {
     Glide.with(context).load(url).apply(options).into(this)
 }
 
+
+fun AppCompatImageView.loadCircleImages(url: String) {
+
+    Glide.with(context).load(url) .apply(RequestOptions.circleCropTransform()).into(this)
+}
+
 fun AppCompatImageView.loadBitmap(bitmap: Bitmap) {
     Glide.with(context)
         .load(bitmap)

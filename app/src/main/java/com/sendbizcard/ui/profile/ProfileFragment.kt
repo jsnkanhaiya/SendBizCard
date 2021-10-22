@@ -118,7 +118,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
 
             if (profileViewModel.isValidUserProfileData(name,mobile,email,website,designation)){
                 binding.progressBarContainer.visibility = View.VISIBLE
-                profileViewModel.updateUserData(name,mobile,email,website,designation)
+                profileViewModel.updateUserData(name,mobile,email,website,designation,userImageBase64String)
             }
 
         }
@@ -243,8 +243,11 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
                     if (::currentPhotoPath.isInitialized){
                         val bitmap =
                             ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
-                        binding.imgUser.loadBitmap(bitmap)
-                        userImageBase64String = convertBitmapToBase64(bitmap)
+                       withDelayOnMain(300){
+                           binding.imgUser.loadBitmap(bitmap)
+                           userImageBase64String = convertBitmapToBase64(bitmap)
+                       }
+
                     }
 
                 }
@@ -324,6 +327,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
          binding.etWebsite.setText(userProfileResponse.user?.website)
          binding.etDesignation.setText(userProfileResponse.user?.designation)
          binding.etEmail.setText(userProfileResponse.user?.email)
+        binding.imgUser.loadCircleImages(AppConstants.IMAGE_BASE_URL+userProfileResponse.user?.userImg)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

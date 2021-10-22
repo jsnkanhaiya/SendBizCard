@@ -440,8 +440,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     if (::currentPhotoPath.isInitialized){
                         val bitmap =
                             ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
-                        binding.imgUser.loadBitmap(bitmap)
-                        userImageBase64String = convertBitmapToBase64(bitmap)
+
+                        withDelayOnMain(300){
+                            binding.imgUser.loadBitmap(bitmap)
+                            userImageBase64String = convertBitmapToBase64(bitmap)
+                        }
+
                     }
 
                 }

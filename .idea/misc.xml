@@ -7,35 +7,27 @@
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/dialog_background.xml" value="0.18385416666666668" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/dialog_background_with_inset.xml" value="0.18385416666666668" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/dialog_round_corners.xml" value="0.18385416666666668" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/ic_card_list.xml" value="0.17592592592592593" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/ic_feedback_white.xml" value="0.17592592592592593" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/ic_gallery.xml" value="0.18385416666666668" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/ic_share_white.xml" value="0.17592592592592593" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/ic_user_img.xml" value="0.17592592592592593" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/drawable/splash_background.xml" value="0.15833333333333333" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/activity_home.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/activity_intro_screen.xml" value="0.1621376811594203" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/activity_splash.xml" value="0.16770833333333332" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/app_bar_home.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/attachment_sheet.xml" value="0.16770833333333332" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/content_home.xml" value="0.12" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/dialog_add_services.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/dialog_confirmation.xml" value="0.16770833333333332" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/dialog_select_camera_gallery.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_change_password_verification.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_create_new_password.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_enter_social_media_links.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_enter_social_media_links.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_feedback.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_feedback_thank_you.xml" value="0.12228260869565218" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_forgot_password.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_gallery.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_home.xml" value="0.22" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_intro_screen.xml" value="0.22" />
+        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_home.xml" value="0.16666666666666666" />
+        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_intro_screen.xml" value="0.16770833333333332" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_login.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_otp.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_our_services.xml" value="0.22" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_profile.xml" value="0.1" />
+        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_our_services.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_rate_us.xml" value="0.12228260869565218" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_register.xml" value="0.12228260869565218" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/fragment_siginup.xml" value="0.16576086956521738" />
@@ -53,37 +45,61 @@
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/row_our_services_item.xml" value="0.16770833333333332" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/row_saved_card_item.xml" value="0.16770833333333332" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/row_theme_item.xml" value="0.16770833333333332" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/layout/toolbar.xml" value="0.1" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/menu/activity_main_drawer.xml" value="0.3333333333333333" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/menu/home.xml" value="0.16770833333333332" />
         <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/xml/network_security_config.xml" value="0.1" />
-        <entry key="..\:/AndroidStudioWP/SendBizCard/app/src/main/res/xml/provider_paths.xml" value="0.15353260869565216" />
+        <entry key="app/src/main/res/drawable/bottomsheet_bg.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/drawable/dialog_background_with_inset.xml" value="0.146875" />
+        <entry key="app/src/main/res/drawable/dialog_round_corners.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/drawable/ic__camera_orange.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/drawable/ic_card_theme.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/drawable/ic_feedback_white.xml" value="0.21388888888888888" />
+        <entry key="app/src/main/res/drawable/ic_gallery.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/drawable/ic_linkedin.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/drawable/ic_play.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/drawable/ic_preview.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.2175925925925926" />
+        <entry key="app/src/main/res/drawable/ic_share_white.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/drawable/ic_think.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/drawable/ic_twiter_blue.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/drawable/ic_twiter_white.xml" value="0.14791666666666667" />
+        <entry key="app/src/main/res/drawable/rectangle.xml" value="0.24166666666666667" />
+        <entry key="app/src/main/res/drawable/rectangle_radius.xml" value="0.24166666666666667" />
         <entry key="app/src/main/res/font/roboto.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/dialog_select_camera_gallery.xml" value="0.335" />
         <entry key="app/src/main/res/layout/feedback_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_thankyou_fragment.xml" value="0.12284701114488349" />
-        <entry key="app/src/main/res/layout/fragment_change_password_verification.xml" value="0.12284701114488349" />
-        <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_card_list.xml" value="0.18885869565217392" />
+        <entry key="app/src/main/res/layout/fragment_change_password_verification.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_create_new_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_enter_social_media_links.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_feedback.xml" value="0.19293478260869565" />
         <entry key="app/src/main/res/layout/fragment_feedback_thank_you.xml" value="0.19293478260869565" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2346014492753623" />
+        <entry key="app/src/main/res/layout/fragment_intro_screen.xml" value="0.18885869565217392" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_otp.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/fragment_our_services.xml" value="0.18885869565217392" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.19293478260869565" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_siginup.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_succssesful_message.xml" value="0.12335359675785208" />
-        <entry key="app/src/main/res/layout/fragment_verify_forgot_password.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/fragment_theme.xml" value="0.23097826086956522" />
+        <entry key="app/src/main/res/layout/fragment_verify_forgot_password.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_view_card.xml" value="0.18885869565217392" />
+        <entry key="app/src/main/res/layout/layout_alert_dialog_with_image.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.12335359675785208" />
         <entry key="app/src/main/res/layout/row_item_saved_card.xml" value="0.2346014492753623" />
+        <entry key="app/src/main/res/layout/row_saved_card_item.xml" value="0.18885869565217392" />
+        <entry key="app/src/main/res/layout/row_theme_item.xml" value="0.23097826086956522" />
+        <entry key="app/src/main/res/layout/toolbar.xml" value="0.18885869565217392" />
+        <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>

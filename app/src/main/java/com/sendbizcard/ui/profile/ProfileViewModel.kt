@@ -3,7 +3,6 @@ package com.sendbizcard.ui.profile
 import androidx.lifecycle.MutableLiveData
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
-import com.sendbizcard.models.request.LoginRequestModel
 import com.sendbizcard.models.request.UpdateProfileRequest
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.UserProfileResponse
@@ -56,12 +55,15 @@ class ProfileViewModel @Inject constructor(
         )
     }
 
-    fun updateUserData( name: String,
-                        mobile: String,
-                        email: String,
-                        website: String,
-                        designation: String) {
-        val updateUserProfileRequestModel = UpdateProfileRequest(website,name,email,mobile,designation,"")
+    fun updateUserData(
+        name: String,
+        mobile: String,
+        email: String,
+        website: String,
+        designation: String,
+        userImageBase64String: String
+    ) {
+        val updateUserProfileRequestModel = UpdateProfileRequest(website,name,email,mobile,designation,userImageBase64String)
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {

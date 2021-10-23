@@ -3,25 +3,17 @@ package com.sendbizcard.ui.forgotpassword
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentCreateNewPasswordBinding
 import com.sendbizcard.dialog.CommonDialogFragment
-import com.sendbizcard.utils.AlertDialogWithImageView
-import com.sendbizcard.utils.getDefaultNavigationAnimation
-import com.sendbizcard.utils.gone
-import com.sendbizcard.utils.visible
-
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -72,9 +64,11 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
 
     private fun showErrorMessage(errorMessage: String) {
         hideProgressBar()
-        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
-            errorMessage,"",R.drawable.ic_icon_error)
-        fragment.show(parentFragmentManager,"CreateNewPasswordFragment")
+        val fragment = CommonDialogFragment.newInstance(
+            resources.getString(R.string.error),
+            errorMessage, "", R.drawable.ic_icon_error
+        )
+        fragment.show(parentFragmentManager, "CreateNewPasswordFragment")
     }
 
     private fun initViews() {
@@ -83,12 +77,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         if (bundle != null) {
             otp = bundle.getString("otp").toString()
             //binding.otpPinView.text=
-          // Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
+            // Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
         }
         if (bundle != null) {
             isChangePassword = bundle.getBoolean("isChangepassword")
             //binding.otpPinView.text=
-          //  Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
+            //  Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
         }
 
         if (isChangePassword) {
@@ -96,14 +90,16 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         }
 
         binding.btnSave.setOnClickListener {
-            var isValidationPassed = false
             val password = binding.etNewPassword.text.toString()
             val confpassword = binding.etConfirmPassword.text.toString()
 
-            isValidationPassed =  binding.etNewPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
-            isValidationPassed =  binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
+            val isValidationPassedPassword =
+                binding.etNewPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
+            val isValidationPassedConfirmPassword =
+                binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
 
-            if (isValidationPassed) {
+
+            if (isValidationPassedPassword && isValidationPassedConfirmPassword) {
                 showProgressBar()
                 forgotPasswordViewModel.changePasswordUser(otp, password, confpassword)
             }
@@ -116,22 +112,23 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
             requireFragmentManager().beginTransaction(),
             requireContext(),
             requireContext().resources.getString(R.string.success_title),
-            if (isChangePassword){
+            if (isChangePassword) {
                 requireContext().resources.getString(R.string.success_title_new_password)
-            }else{
+            } else {
                 requireContext().resources.getString(R.string.success_title_change_password)
-            }
-            ,
+            },
             R.drawable.ic_success,
             onDismiss = {
                 if (fragmentManager != null) {
-                    if (isChangePassword){
+                    if (isChangePassword) {
                         var intent = Intent(requireContext(), HomeActivity::class.java)
                         startActivity(intent)
 
-                    }else{
-                        findNavController().navigate(R.id.nav_login,null,
-                            getDefaultNavigationAnimation())
+                    } else {
+                        findNavController().navigate(
+                            R.id.nav_login, null,
+                            getDefaultNavigationAnimation()
+                        )
                     }
                 }
             }

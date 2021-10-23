@@ -51,6 +51,8 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
             object : BaseViewHolder.ItemCardClickCallback<CardDetailsItem> {
                 override fun onEditClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "EditClickedCallback")
+                    findNavController().navigate(R.id.nav_edit_card,null,
+                        getDefaultNavigationAnimation())
                 }
 
                 override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {

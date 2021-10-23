@@ -13,9 +13,6 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentRegisterBinding
 import com.sendbizcard.dialog.CommonDialogFragment
-import com.sendbizcard.utils.ValidationUtils
-import com.sendbizcard.utils.gone
-import com.sendbizcard.utils.visible
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
@@ -57,7 +54,10 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private fun setUpObservers() {
         registerViewModel.registerReponse.observe(viewLifecycleOwner, {
             hideProgressBar()
-            findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp.toString()))
+            findNavController().navigate(
+                R.id.nav_verifyOtp,
+                bundleOf("otp" to it.data?.contactOtp.toString())
+            )
 
         })
 
@@ -69,7 +69,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             showErrorMessage(errorMessage)
         }
 
-        registerViewModel.showServerError.observe(this ) { errorMessage ->
+        registerViewModel.showServerError.observe(this) { errorMessage ->
             showErrorMessage(errorMessage)
         }
     }
@@ -77,21 +77,24 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private fun initViews() {
         binding.btnSave.setOnClickListener {
 
-            var isValidationPassed =false
             val name = binding.etName.text.toString()
             val emailId = binding.etEmailID.text.toString()
             val mobileNo = binding.etMobile.text.toString()
             val password = binding.etPassword.text.toString()
             val confPassword = binding.etConfirmPassword.text.toString()
 
-            isValidationPassed = binding.etName.checkValidations(FieldEnum.NAME.fieldName)
-            isValidationPassed = binding.etEmailID.checkValidations(FieldEnum.EMAIL_ID.fieldName)
-            isValidationPassed = binding.etMobile.checkValidations(FieldEnum.MOBILE_NUMBER.fieldName)
-            isValidationPassed =  binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
-            isValidationPassed =  binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
+            val isValidationPassedName = binding.etName.checkValidations(FieldEnum.NAME.fieldName)
+            val isValidationPassedEmail =
+                binding.etEmailID.checkValidations(FieldEnum.EMAIL_ID.fieldName)
+            val isValidationPassedMobile =
+                binding.etMobile.checkValidations(FieldEnum.MOBILE_NUMBER.fieldName)
+            val isValidationPassedPassword =
+                binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
+            val isValidationPassedConfirmPassword =
+                binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
 
 
-            if (isValidationPassed) {
+            if (isValidationPassedName && isValidationPassedEmail && isValidationPassedMobile && isValidationPassedPassword && isValidationPassedConfirmPassword) {
                 showProgressBar()
                 registerViewModel.registerUser(name, mobileNo, emailId, password, confPassword)
             }
@@ -112,11 +115,12 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun showErrorMessage(errorMessage: String) {
         hideProgressBar()
-        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
-            errorMessage,"",R.drawable.ic_icon_error)
-        fragment.show(parentFragmentManager,"RegisterFragment")
+        val fragment = CommonDialogFragment.newInstance(
+            resources.getString(R.string.error),
+            errorMessage, "", R.drawable.ic_icon_error
+        )
+        fragment.show(parentFragmentManager, "RegisterFragment")
     }
-
 
 
     fun isValidRegisterData(
@@ -128,38 +132,38 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     ): Boolean {
         return when {
             name.isBlank() -> {
-                binding.textInputName.error= resources.getString(R.string.enter_emailID)
+                binding.textInputName.error = resources.getString(R.string.enter_emailID)
                 false
             }
             mobileNo.isBlank() -> {
-                binding.textInputMobile.error= resources.getString(R.string.enter_emailID)
+                binding.textInputMobile.error = resources.getString(R.string.enter_emailID)
                 false
             }
-            mobileNo.length<10 || mobileNo.length>10-> {
-                binding.textInputMobile.error= resources.getString(R.string.enter_emailID)
+            mobileNo.length < 10 || mobileNo.length > 10 -> {
+                binding.textInputMobile.error = resources.getString(R.string.enter_emailID)
                 false
             }
             emailId.isBlank() -> {
-                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                binding.textInputEmail.error = resources.getString(R.string.enter_emailID)
                 false
             }
             confPassword.isBlank() -> {
-                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                binding.textInputEmail.error = resources.getString(R.string.enter_emailID)
                 false
             }
             ValidationUtils.isRequiredPasswordLengthForLogin(password) -> {
-                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                binding.textInputEmail.error = resources.getString(R.string.enter_emailID)
                 false
             }
             ValidationUtils.isRequiredPasswordLengthForLogin(confPassword) -> {
-                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                binding.textInputEmail.error = resources.getString(R.string.enter_emailID)
                 false
             }
             else -> {
                 if (ValidationUtils.isBothPasswordMatch(password, confPassword)) {
                     return true
                 } else {
-                    binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                    binding.textInputEmail.error = resources.getString(R.string.enter_emailID)
                     return false
                 }
             }

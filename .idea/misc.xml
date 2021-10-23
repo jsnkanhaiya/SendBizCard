@@ -74,6 +74,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/dialog_add_services.xml" value="0.23097826086956522" />
+        <entry key="app/src/main/res/layout/dialog_common_fragment.xml" value="0.23097826086956522" />
         <entry key="app/src/main/res/layout/dialog_select_camera_gallery.xml" value="0.335" />
         <entry key="app/src/main/res/layout/feedback_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_thankyou_fragment.xml" value="0.12284701114488349" />

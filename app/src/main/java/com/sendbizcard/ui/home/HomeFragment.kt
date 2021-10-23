@@ -166,7 +166,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             val emailId = binding.etEmail.text.toString()
             val website = binding.etWebsite.text.toString()
             val location = binding.etLocation.text.toString()
-
+            val companyName = binding.etCompanyName.text.toString()
 
             when {
                 name.isEmpty() -> {
@@ -218,7 +218,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         location,
                         userImageBase64String,
                         companyLogoBase64String,
-                        backgroundColour
+                        backgroundColour,
+                        companyName
                     )
                 }
             }

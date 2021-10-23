@@ -54,7 +54,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_name"
         style="@style/gilroy_regular_13"
-        android:layout_width="250dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:background="@null"
@@ -75,7 +75,7 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_designation"
         style="@style/gilroy_regular_13"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:background="@null"

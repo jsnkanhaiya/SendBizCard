@@ -59,7 +59,7 @@ fun DialogFragment.setWidthPercent(percentage: Int) {
     dialog?.window?.setLayout(percentWidth.toInt(), ViewGroup.LayoutParams.WRAP_CONTENT)
 }
 
-fun TextInputEditText.checkValidations(fieldName: String): Boolean {
+fun TextInputEditText.checkValidations(fieldName: String,password: String? = ""): Boolean {
     val textInputLayout = this.parent.parent as TextInputLayout
     textInputLayout.errorIconDrawable = null
     this.onChange { textInputLayout.error = null }
@@ -116,6 +116,14 @@ fun TextInputEditText.checkValidations(fieldName: String): Boolean {
                 false
             }
         }
+        FieldEnum.CONFIRM_PASSWORD.fieldName -> {
+            return if (strInputField == password) {
+                true
+            } else {
+                textInputLayout.error = "Confirm password does not match with password"
+                false
+            }
+        }
 
         else -> {
             return if (strInputField.isNotEmpty()) {
@@ -128,6 +136,7 @@ fun TextInputEditText.checkValidations(fieldName: String): Boolean {
     }
 
 }
+
 
 
 fun TextInputEditText.onChange(cb: (String) -> Unit) {

@@ -90,18 +90,22 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         }
 
         binding.btnSave.setOnClickListener {
+
             val password = binding.etNewPassword.text.toString()
-            val confpassword = binding.etConfirmPassword.text.toString()
+            val confirmPassword = binding.etConfirmPassword.text.toString()
 
             val isValidationPassedPassword =
                 binding.etNewPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
             val isValidationPassedConfirmPassword =
-                binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
+                binding.etConfirmPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
 
+            if (isValidationPassedConfirmPassword){
+                val isConfirmPasswordValidated = binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName,password)
+                if (isValidationPassedPassword && isValidationPassedConfirmPassword && isConfirmPasswordValidated) {
+                    showProgressBar()
+                    forgotPasswordViewModel.changePasswordUser(otp, password, confirmPassword)
+                }
 
-            if (isValidationPassedPassword && isValidationPassedConfirmPassword) {
-                showProgressBar()
-                forgotPasswordViewModel.changePasswordUser(otp, password, confpassword)
             }
         }
     }

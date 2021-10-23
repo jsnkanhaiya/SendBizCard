@@ -76,7 +76,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun initViews() {
         binding.btnSave.setOnClickListener {
-
             val name = binding.etName.text.toString()
             val emailId = binding.etEmailID.text.toString()
             val mobileNo = binding.etMobile.text.toString()
@@ -91,13 +90,19 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             val isValidationPassedPassword =
                 binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
             val isValidationPassedConfirmPassword =
-                binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
+                binding.etConfirmPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
 
+            if (isValidationPassedConfirmPassword) {
+                val isConfirmPasswordValidated = binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName,password)
 
-            if (isValidationPassedName && isValidationPassedEmail && isValidationPassedMobile && isValidationPassedPassword && isValidationPassedConfirmPassword) {
-                showProgressBar()
-                registerViewModel.registerUser(name, mobileNo, emailId, password, confPassword)
+                if (isValidationPassedName && isValidationPassedEmail && isValidationPassedMobile && isValidationPassedPassword && isValidationPassedConfirmPassword && isConfirmPasswordValidated) {
+                    showProgressBar()
+                    registerViewModel.registerUser(name, mobileNo, emailId, password, confPassword)
+                }
+
             }
+
+
         }
     }
 

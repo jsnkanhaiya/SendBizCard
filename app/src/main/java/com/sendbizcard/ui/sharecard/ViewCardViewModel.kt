@@ -33,11 +33,10 @@ class ViewCardViewModel @Inject constructor(
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {
-                    apiRepositoryImpl.getCradUrl(viewCardRequest)
+                    apiRepositoryImpl.getCardUrl(viewCardRequest)
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
-                        //loginReponse = result
                         viewCardResponse.value = result.body
                     }
 

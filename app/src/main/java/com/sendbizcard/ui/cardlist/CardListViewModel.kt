@@ -27,17 +27,18 @@ class CardListViewModel@Inject constructor(
 ) : BaseViewModel() {
 
     val cardListLiveData : SingleLiveEvent<List<CardDetailsItem>> by lazy { SingleLiveEvent() }
+    val cardSearchLiveData : SingleLiveEvent<List<CardDetailsItem>> by lazy { SingleLiveEvent() }
 
     fun getThemeId():String{
         return preferenceSourceImpl.themeID
     }
 
     fun getCardList() {
-     //   val cardListRequestModel = CardListRequestModel("",0,10,null,"")
+        val cardListRequestModel = CardListRequestModel("",0,10,null,"")
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {
-                    apiRepositoryImpl.getCardList()
+                    apiRepositoryImpl.getCardList(cardListRequestModel)
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
@@ -45,6 +46,36 @@ class CardListViewModel@Inject constructor(
                             cardListLiveData.value = cardList
                         }
 
+                    }
+
+                    is NetworkResponse.ServerError -> {
+                        showServerError.value = decodeServerError(result.body)
+                    }
+
+                    is NetworkResponse.NetworkError -> {
+                        showNetworkError.value = decodeNetworkError(result.error)
+                    }
+
+                    is NetworkResponse.UnknownError -> {
+                        showUnknownError.value = decodeUnknownError(result.error)
+                    }
+                }
+            }
+        )
+    }
+
+    fun getCardSearchList(mStrSearch: String) {
+        val cardListRequestModel = CardListRequestModel(mStrSearch,0,10,preferenceSourceImpl.userId.toInt(),"")
+        jobList.add(
+            launch {
+                val result = withContext(Dispatchers.IO) {
+                    apiRepositoryImpl.getCardListSearch(cardListRequestModel)
+                }
+                when(result) {
+                    is NetworkResponse.Success -> {
+                        result.body.data?.cardDetails?.let { cardList ->
+                            cardSearchLiveData.value = cardList
+                        }
                     }
 
                     is NetworkResponse.ServerError -> {

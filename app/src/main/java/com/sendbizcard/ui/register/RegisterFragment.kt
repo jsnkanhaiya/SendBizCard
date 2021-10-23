@@ -16,6 +16,8 @@ import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.utils.ValidationUtils
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
+import com.sendbizcard.dialog.ConfirmationDialogFragment
+import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -76,19 +78,21 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
     private fun initViews() {
         binding.btnSave.setOnClickListener {
 
+            var isValidationPassed =false
             val name = binding.etName.text.toString()
             val emailId = binding.etEmailID.text.toString()
             val mobileNo = binding.etMobile.text.toString()
             val password = binding.etPassword.text.toString()
             val confPassword = binding.etConfirmPassword.text.toString()
-            if (isValidRegisterData(
-                    name,
-                    mobileNo,
-                    emailId,
-                    password,
-                    confPassword
-                )
-            ) {
+
+            isValidationPassed = binding.etName.checkValidations(FieldEnum.NAME.fieldName)
+            isValidationPassed = binding.etEmailID.checkValidations(FieldEnum.EMAIL_ID.fieldName)
+            isValidationPassed = binding.etMobile.checkValidations(FieldEnum.MOBILE_NUMBER.fieldName)
+            isValidationPassed =  binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
+            isValidationPassed =  binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
+
+
+            if (isValidationPassed) {
                 showProgressBar()
                 registerViewModel.registerUser(name, mobileNo, emailId, password, confPassword)
             }

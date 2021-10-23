@@ -35,13 +35,22 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        viewCardViewModel.getCardURL(cardId,themeId)
+        initViews()
+        viewCardViewModel.getCardURL(cardId,viewCardViewModel.getThemeId())
         setupObservers()
         //dummy Load URL
-        loadUrl()
+       // loadUrl()
     }
 
-    private fun loadUrl() {
+    private fun initViews() {
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            cardId = bundle.getString("id").toString()
+        }
+    }
+
+    private fun loadUrl(redirectUrl:String) {
         binding.webView.settings.javaScriptEnabled = true
         initWebView()
         showProgressBar()
@@ -53,7 +62,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
         viewCardViewModel.viewCardResponse.observe(this) {
             hideProgressBar()
            //load URl
-
+            loadUrl(it.redirectUrl.toString())
         }
 
         viewCardViewModel.showNetworkError.observe(this) { errorMessage ->
@@ -84,7 +93,6 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
             errorMessage,"", R.drawable.ic_icon_error)
         fragment.show(parentFragmentManager,"ViewCardFragment")
     }
-
 
     private fun initWebView() {
         binding.webView.webChromeClient = MyWebChromeClient(requireContext())
@@ -119,7 +127,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
         binding.webView.clearHistory()
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.isHorizontalScrollBarEnabled = false
-        binding.webView.setOnTouchListener(OnTouchListener { v, event ->
+       /* binding.webView.setOnTouchListener(OnTouchListener { v, event ->
             if (event.pointerCount > 1) {
                 //Multi touch detected
                 return@OnTouchListener true
@@ -137,7 +145,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
                 }
             }
             false
-        })
+        })*/
     }
 
 

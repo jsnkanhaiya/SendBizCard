@@ -20,6 +20,11 @@ class ThemeViewModel @Inject constructor(
     private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel() {
 
+
+    fun saveThemeId(themeId:String){
+        preferenceSourceImpl.themeID= themeId
+    }
+
     val themeList : SingleLiveEvent<List<ListThemeItem>> by lazy { SingleLiveEvent() }
 
     fun getThemeList() {

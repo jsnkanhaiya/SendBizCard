@@ -85,12 +85,14 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun initOnClicks() {
         binding.btnSave.setOnClickListener {
+            var isValidationPassed = false
             val emailId = binding.etEmailID.text.toString()
             val password = binding.etPassword.text.toString()
 
-            if (binding.etEmailID.checkValidations(FieldEnum.MOBILE_NUMBER.fieldName) &&
-                binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
-            ) {
+            isValidationPassed = binding.etEmailID.checkValidations(FieldEnum.EMAIL_ID.fieldName)
+            isValidationPassed =  binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
+
+            if (isValidationPassed) {
                 showProgressBar()
                 loginViewModel.login(emailId, password)
             }

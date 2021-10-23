@@ -16,6 +16,8 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentForgotPasswordBinding
 import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.utils.FieldEnum
+import com.sendbizcard.utils.checkValidations
 import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
@@ -114,7 +116,8 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
         hideProgressBar()
         binding.btnSave.setOnClickListener {
             val emailId = binding.etEmailID.text.toString()
-            if (forgotPasswordViewModel.isValidData(emailId)) {
+
+            if (binding.etEmailID.checkValidations(FieldEnum.EMAIL_ID.fieldName)) {
                 showProgressBar()
                 forgotPasswordViewModel.forgotPasswordUser(emailId)
             }

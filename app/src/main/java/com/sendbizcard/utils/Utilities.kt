@@ -65,12 +65,12 @@ fun decodeServerError(errorResponse: LoginErrorResponse?): String {
     return errorResponse?.message?.username?.getOrNull(0) ?: "Something Went Wrong"
 }
 
-fun shareApp(context: Context){
+fun shareApp(context: Context,text:String ){
     val sendIntent = Intent()
     sendIntent.action = Intent.ACTION_SEND
     sendIntent.putExtra(
         Intent.EXTRA_TEXT,
-        "Hey check out my app at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID
+        text
     )
     sendIntent.type = "text/plain"
     context.startActivity(sendIntent)

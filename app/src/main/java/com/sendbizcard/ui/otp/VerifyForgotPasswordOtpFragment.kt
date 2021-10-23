@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,7 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentVerifyForgotPasswordBinding
 import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.utils.*
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
@@ -122,14 +124,26 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
         }
 
         hideProgressBar()
+        binding.otpPinView.addTextChangedListener {
+            if (it?.length!! >0){
+                binding.tvOtpError.gone()
+            }
+        }
+
+        binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
             otp = binding.otpPinView.text.toString()
-            if (verifyOtpViewModel.isValidForgotOtpData(otp)) {
+
+            if (verifyOtpViewModel.isValidForgotOtpData(otp)){
+                    binding.tvOtpError.gone()
                 showProgressBar()
-                 verifyOtpViewModel.verifyForGotOtp(otp,email)
-              //  Toast.makeText(context, "email id  is " + email  +"otp is "+ otp, Toast.LENGTH_LONG).show()
-               // showSuccessDialog()
+                verifyOtpViewModel.verifyForGotOtp(otp,email)
+
+            }else{
+                binding.tvOtpError.visible()
+                binding.tvOtpError.text = resources.getString(R.string.enter_otp)
             }
+
         }
     }
 

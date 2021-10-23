@@ -24,7 +24,60 @@
         app:itemTextColor="@color/white"
         android:background="@color/colorPrimary"
         app:headerLayout="@layout/nav_header_home"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer" >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/socialMediaCL"
+            android:layout_width="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="54dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_fb"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="@color/white"
+                android:src="@drawable/ic_facebook_white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_insta"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginLeft="35dp"
+                android:tint="@color/white"
+                android:src="@drawable/ic_insta_white"
+                app:layout_constraintEnd_toStartOf="@+id/img_twitter"
+                app:layout_constraintStart_toEndOf="@+id/img_fb"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_twitter"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:tint="@color/white"
+                android:layout_marginLeft="35dp"
+                android:src="@drawable/ic_twiter_white"
+                app:layout_constraintEnd_toStartOf="@+id/img_insta"
+                app:layout_constraintStart_toEndOf="@+id/img_insta"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.navigation.NavigationView>
+
+
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

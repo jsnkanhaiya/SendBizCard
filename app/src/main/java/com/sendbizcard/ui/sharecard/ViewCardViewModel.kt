@@ -24,6 +24,9 @@ class ViewCardViewModel @Inject constructor(
 
     var viewCardResponse = SingleLiveEvent<ViewCardResponse>()
 
+    fun getThemeId():String{
+        return preferenceSourceImpl.themeID
+    }
 
     fun getCardURL(id: String, themeId: String) {
         val viewCardRequest = ViewCardRequest(id,themeId)

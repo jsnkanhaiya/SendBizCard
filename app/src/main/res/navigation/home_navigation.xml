@@ -11,6 +11,49 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
+
+    <fragment
+        android:id="@+id/nav_view_card"
+        android:name="com.sendbizcard.ui.sharecard.ViewCardFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_view_card" />
+
+    <fragment
+        android:id="@+id/nav_card_list"
+        android:name="com.sendbizcard.ui.cardlist.CardListFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_card_list" >
+
+        <argument
+            android:name="id"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <action
+            android:id="@+id/actionCardListFragmentToViewCardFragment"
+            app:destination="@id/nav_view_card"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+
+        <action
+            android:id="@+id/actionCardListFragmentToEditCardFragment"
+            app:destination="@id/nav_view_card"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_edit_card"
+        android:name="com.sendbizcard.ui.editcard.EditCardFragment"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_edit_card" />
+
     <fragment
         android:id="@+id/nav_my_profile"
         android:name="com.sendbizcard.ui.profile.ProfileFragment"

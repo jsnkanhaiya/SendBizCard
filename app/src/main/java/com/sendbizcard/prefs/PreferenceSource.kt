@@ -7,6 +7,7 @@ interface PreferenceSource {
     var userName : String
     var userEmail : String
     var userMobileNO : String
+    var themeID : String
     var isFirstTimeUser : Boolean
 
 }

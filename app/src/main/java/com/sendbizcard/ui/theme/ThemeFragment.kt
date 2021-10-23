@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import com.sendbizcard.base.BaseFragment
@@ -13,6 +14,7 @@ import com.sendbizcard.databinding.FragmentThemeBinding
 import com.sendbizcard.models.response.theme.ListThemeItem
 import com.sendbizcard.utils.PickingLayoutManager
 import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.showErrorDialog
 import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -32,9 +34,19 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
         observeData()
+        initOnClick()
         showProgressBar()
         themeViewModel.getThemeList()
 
+    }
+
+    private fun initOnClick() {
+        binding.btnSave.setOnClickListener {
+            val theme = themeAdapter.list.firstOrNull {
+                it.isSelected
+            }
+            themeViewModel.saveThemeId(theme?.id.toString())
+        }
     }
 
     private fun observeData() {
@@ -43,16 +55,19 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
             setUpAdapter(themeList)
         }
 
-        themeViewModel.showServerError.observe(this) {
+        themeViewModel.showNetworkError.observe(this, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            showErrorDialog(it,requireActivity(),requireContext())
+        })
 
-        }
+        themeViewModel.showUnknownError.observe(this, Observer {
+            binding.progressBarContainer.visibility = View.GONE
+            showErrorDialog(it,requireActivity(),requireContext())
+        })
 
-        themeViewModel.showNetworkError.observe(this) {
-
-        }
-
-        themeViewModel.showUnknownError.observe(this) {
-
+        themeViewModel.showServerError.observe(this) { errorMessage ->
+            binding.progressBarContainer.visibility = View.GONE
+            showErrorDialog(errorMessage,requireActivity(),requireContext())
         }
 
     }

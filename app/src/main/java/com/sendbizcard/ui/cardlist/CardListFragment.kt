@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
+import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.databinding.FragmentCardListBinding
 import com.sendbizcard.databinding.FragmentLoginBinding
 import com.sendbizcard.models.response.CardDetailsItem
@@ -63,6 +64,23 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>(){
         cardListViewModel.cardListResponse.observe(viewLifecycleOwner, Observer {
             binding.progressBarContainer.visibility = View.GONE
             cardListAdapter.addAll(it.data?.cardDetails as List<CardDetailsItem>)
+            cardListAdapter.cardClickListener = object : BaseViewHolder.ItemCardClickCallback<CardDetailsItem> {
+                override fun onEditClicked(data: CardDetailsItem, pos: Int) {
+                    Log.d("CardListFragment","EditClickedCallback")
+                }
+
+                override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {
+                    Log.d("CardListFragment","PreviewClickedCallback")
+                }
+
+                override fun onShareClicked(data: CardDetailsItem, pos: Int) {
+                    Log.d("CardListFragment","ShareClickedCallback")
+                }
+
+                override fun onDeleteClicked(data: CardDetailsItem, pos: Int) {
+                    Log.d("CardListFragment","DeleteClickedCallback")
+                }
+            }
             binding.rvCardList.adapter = cardListAdapter
         })
 

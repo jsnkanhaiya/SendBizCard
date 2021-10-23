@@ -18,6 +18,7 @@ class CardListAdapter @Inject constructor() : BaseAdapter<CardDetailsItem, CardL
 
     override fun onBindViewHolder(holder: CardListViewHolder, position: Int) {
         holder.loadData(list[position],position)
+        holder.itemCardClickCallback = cardClickListener
     }
 
     override fun getItemCount(): Int {

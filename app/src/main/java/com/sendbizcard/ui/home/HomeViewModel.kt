@@ -32,11 +32,12 @@ class HomeViewModel @Inject constructor(
         mLocation: String,
         mUserImageBase64String: String,
         mCompanyLogoBase64String: String,
-        backgroundColour: String
+        mBackgroundColour: String,
+        mCompanyName: String
     ) {
         val addCardRequest = AddCardRequest().apply {
             themeId = preferenceSourceImpl.themeID
-            themeColor = backgroundColour
+            themeColor = mBackgroundColour
             name = mName
             userImg = mUserImageBase64String
             designation = mDesignation
@@ -46,7 +47,7 @@ class HomeViewModel @Inject constructor(
             website = mWebsite
             location = mLocation
             companyLogo = mCompanyLogoBase64String
-            companyName = "ABC"
+            companyName = mCompanyName
             services = UserSessionManager.getDataFromServiceList()
             socialLinks = null
         }

@@ -1,11 +1,14 @@
 package com.sendbizcard.ui.cardlist
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
@@ -40,6 +43,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         binding = getViewBinding()
         observeData()
         initOnClicks()
+        initOnTextChangedListener()
         showProgressBar()
         cardListViewModel.getCardList()
 
@@ -55,14 +59,16 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
                 override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "PreviewClickedCallback")
-                    findNavController().navigate(R.id.nav_view_card, bundleOf("id" to data.id),
-                        getDefaultNavigationAnimation())
+                    findNavController().navigate(
+                        R.id.nav_view_card, bundleOf("id" to data.id),
+                        getDefaultNavigationAnimation()
+                    )
                 }
 
                 override fun onShareClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "ShareClickedCallback")
-                    viewCardViewModel.getCardURL(data.id.toString(),cardListViewModel.getThemeId())
-                   // shareApp(requireContext(),data.)
+                    viewCardViewModel.getCardURL(data.id.toString(), cardListViewModel.getThemeId())
+                    // shareApp(requireContext(),data.)
                 }
 
                 override fun onDeleteClicked(data: CardDetailsItem, pos: Int) {
@@ -70,6 +76,11 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
                 }
             }
         binding.rvCardList.adapter = cardListAdapter
+    }
+
+    private fun setUpSearchDataInAdapter(cardList: List<CardDetailsItem>) {
+        cardListAdapter.addAll(cardList)
+        cardListAdapter.notifyDataSetChanged()
     }
 
 
@@ -83,6 +94,11 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         cardListViewModel.cardListLiveData.observe(this) { cardList ->
             hideProgressBar()
             setUpAdapter(cardList)
+        }
+
+        cardListViewModel.cardSearchLiveData.observe(this) { searchCardList ->
+            hideProgressBar()
+            setUpAdapter(searchCardList)
         }
 
         cardListViewModel.showNetworkError.observe(this) { errorMessage ->
@@ -100,14 +116,24 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
     private fun showErrorMessage(errorMessage: String) {
         hideProgressBar()
-        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
-            errorMessage,"",R.drawable.ic_icon_error)
-        fragment.show(parentFragmentManager,"CardListFragment")
+        val fragment = CommonDialogFragment.newInstance(
+            resources.getString(R.string.error),
+            errorMessage, "", R.drawable.ic_icon_error
+        )
+        fragment.show(parentFragmentManager, "CardListFragment")
     }
 
     private fun initOnClicks() {
         binding.btnAdd.setOnClickListener {
             findNavController().navigate(R.id.nav_home, null, getDefaultNavigationAnimation())
+        }
+
+        binding.imgSearch.setOnClickListener {
+            val strSearch = binding.etSearch.text.toString()
+            if (strSearch.isNotEmpty()) {
+                showProgressBar()
+                cardListViewModel.getCardSearchList(strSearch)
+            }
         }
     }
 
@@ -117,6 +143,24 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
     private fun hideProgressBar() {
         binding.progressBarContainer.gone()
+    }
+
+    private fun initOnTextChangedListener() {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun afterTextChanged(editable: Editable) {
+                val searchData = binding.etSearch.text.toString()
+                val cardList = cardListViewModel.cardListLiveData.value ?: ArrayList()
+                if (searchData.isEmpty() && cardList.isNotEmpty()){
+                    setUpSearchDataInAdapter(cardList)
+                }
+            }
+        })
+
+
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentCardListBinding

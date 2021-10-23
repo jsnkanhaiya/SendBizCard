@@ -82,7 +82,7 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_name"
-            android:layout_width="250dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:background="@null"
@@ -101,7 +101,7 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_designation"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"
             android:fontFamily="@font/gilroy_regular"
@@ -356,12 +356,12 @@
             app:layout_constraintTop_toBottomOf="@+id/img_company_logo" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/tv_company_name"
+            android:id="@+id/et_company_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
             android:fontFamily="@font/gilroy_medium"
-            android:hint="ABC Private Limited"
+            android:hint="@string/enter_company_name"
             android:textColor="@color/textcolour"
             android:textSize="12sp"
             android:background="@null"
@@ -378,7 +378,7 @@
             android:src="@drawable/ic_save_card"
             app:layout_constraintEnd_toStartOf="@+id/img_preview"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_company_name"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -390,7 +390,7 @@
             android:src="@drawable/ic_preview"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_company_name"
             />
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -402,7 +402,7 @@
             android:src="@drawable/ic_share"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_preview"
-            app:layout_constraintTop_toBottomOf="@+id/tv_company_name"
+            app:layout_constraintTop_toBottomOf="@+id/et_company_name"
             />
 
         <RelativeLayout

@@ -61,13 +61,13 @@ interface ApiService {
     suspend fun addCardRequest(@Url url: String, @Body addCardRequest: AddCardRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
 
     @POST
-    suspend fun getCradUrl(@Url url: String, @Body viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse, LoginErrorResponse>
+    suspend fun getCardUrl(@Url url: String, @Body viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse, LoginErrorResponse>
 
     @POST
     suspend fun getCardListSearch(@Url url: String, @Body cardListRequestModel: CardListRequestModel) : NetworkResponse<CardListResponseModel, LoginErrorResponse>
 
     @POST
-    suspend fun getCardList(@Url url: String) : NetworkResponse<CardListResponseModel, LoginErrorResponse>
+    suspend fun getCardList(@Url url: String, @Body cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel, LoginErrorResponse>
 
 
 

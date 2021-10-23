@@ -66,6 +66,7 @@ class CommonDialogFragment : BaseDialogFragment<DialogCommonFragmentBinding>() {
 
     private fun initOnClicks(){
         binding.btnCancel.setOnClickListener {
+            dismiss()
             callbacks?.onDismissClicked()
         }
     }

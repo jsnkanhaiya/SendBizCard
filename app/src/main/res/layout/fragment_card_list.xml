@@ -40,10 +40,10 @@
         android:background="@drawable/search_bar_border">
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/tv_search"
+            android:id="@+id/et_search"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:text="@string/search"
+            android:hint="@string/search"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:gravity="center|start"
@@ -63,7 +63,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="16dp"
-            app:layout_constraintStart_toEndOf="@+id/tv_search"/>
+            app:layout_constraintStart_toEndOf="@+id/et_search"
+            android:src="@drawable/ic_search"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

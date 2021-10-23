@@ -10,13 +10,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentViewCardBinding
-import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
 import android.view.MotionEvent
 
 import android.graphics.Bitmap
 import android.view.View.OnTouchListener
 import android.webkit.*
+import com.sendbizcard.R
+import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.visible
 
 
 @AndroidEntryPoint
@@ -41,35 +44,45 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
     private fun loadUrl() {
         binding.webView.settings.javaScriptEnabled = true
         initWebView()
-        binding.progressBarContainer.visibility = View.VISIBLE
+        showProgressBar()
         binding.webView.loadUrl(redirectUrl)
     }
 
     private fun setupObservers() {
 
-        viewCardViewModel.viewCardResponse.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
+        viewCardViewModel.viewCardResponse.observe(this) {
+            hideProgressBar()
            //load URl
 
-        })
+        }
 
-        viewCardViewModel.showNetworkError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
-        })
+        viewCardViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
-        viewCardViewModel.showUnknownError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
-
-
-        viewCardViewModel.showServerError.observe(this ) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
+        viewCardViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
 
+        viewCardViewModel.showServerError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar(){
+        binding.progressBarContainer.gone()
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"", R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"ViewCardFragment")
     }
 
 
@@ -78,7 +91,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
         binding.webView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView, url: String?, favicon: Bitmap?) {
                 super.onPageStarted(view, url, favicon)
-                binding.progressBarContainer.visibility = View.VISIBLE
+                showProgressBar()
             }
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String?): Boolean {
@@ -90,7 +103,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
 
             override fun onPageFinished(view: WebView, url: String?) {
                 super.onPageFinished(view, url)
-                binding.progressBarContainer.visibility = View.GONE
+                hideProgressBar()
             }
 
             override fun onReceivedError(
@@ -99,7 +112,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
                 error: WebResourceError?
             ) {
                 super.onReceivedError(view, request, error)
-                binding.progressBarContainer.visibility = View.GONE
+                hideProgressBar()
             }
         }
         binding.webView.clearCache(true)

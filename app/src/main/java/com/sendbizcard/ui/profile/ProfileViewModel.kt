@@ -8,6 +8,7 @@ import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.models.response.UserProfileResponse
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
+import com.sendbizcard.utils.SingleLiveEvent
 import com.sendbizcard.utils.decodeNetworkError
 import com.sendbizcard.utils.decodeServerError
 import com.sendbizcard.utils.decodeUnknownError
@@ -23,8 +24,8 @@ class ProfileViewModel @Inject constructor(
     private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel()  {
 
-    var userProfileResponse = MutableLiveData<UserProfileResponse>()
-    var updateUserProfileResponse = MutableLiveData<BaseResponseModel>()
+    var userProfileResponse = SingleLiveEvent<UserProfileResponse>()
+    var updateUserProfileResponse = SingleLiveEvent<BaseResponseModel>()
 
     fun getUserProfileData() {
 

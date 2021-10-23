@@ -2,11 +2,9 @@ package com.sendbizcard.utils
 
 import android.content.Context
 import android.util.Log
-import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavOptions
 import com.google.gson.JsonSyntaxException
 import com.sendbizcard.R
-import com.sendbizcard.dialog.ConfirmationDialogFragment
 import com.sendbizcard.utils.AppConstants.IS_LOG_ON
 import com.sendbizcard.models.LoginErrorResponse
 import java.io.EOFException
@@ -66,38 +64,6 @@ fun decodeUnknownError(throwable: Throwable): String {
 fun decodeServerError(errorResponse: LoginErrorResponse?): String {
     return errorResponse?.message?.username?.getOrNull(0) ?: "Something Went Wrong"
 }
-
-
- fun showErrorDialog(message: String, requireActivity: FragmentActivity, context:Context) {
-    val confirmationDialogFragment = ConfirmationDialogFragment.Builder()
-        .setAcceptButton(
-            context?.resources?.getString(R.string.ok_confirmation)!!
-        )
-        .setTitle(
-            context?.resources?.getString(R.string.error)!!
-        )
-        .setMessage(
-            message
-        )
-        .setMessageTextColor(context.resources.getColor(R.color.textcolour))
-        .build()
-    confirmationDialogFragment.show(
-        requireActivity.supportFragmentManager,
-        ConfirmationDialogFragment.TAG
-    )
-
-    confirmationDialogFragment.setButtonClickListener(object :
-        ConfirmationDialogFragment.OnButtonClickListener {
-        override fun onAcceptClick() {
-            confirmationDialogFragment.dismiss()
-        }
-
-        override fun onRejectClick() {
-        }
-    })
-
-}
-
 
 fun shareApp(context: Context){
     val sendIntent = Intent()

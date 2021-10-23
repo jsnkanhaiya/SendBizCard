@@ -16,9 +16,12 @@ import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentCreateNewPasswordBinding
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.utils.AlertDialogWithImageView
 import com.sendbizcard.utils.getDefaultNavigationAnimation
-import com.sendbizcard.utils.showErrorDialog
+import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.visible
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,26 +43,37 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setupObservers() {
-        forgotPasswordViewModel.changePasswordResponse.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
+        forgotPasswordViewModel.changePasswordResponse.observe(this) {
+            hideProgressBar()
             showSuccessDialog()
-        })
-
-        forgotPasswordViewModel.showNetworkError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
-
-        forgotPasswordViewModel.showUnknownError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
-
-        forgotPasswordViewModel.showServerError.observe(this) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error", errorMessage)
         }
 
+        forgotPasswordViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+        forgotPasswordViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+        forgotPasswordViewModel.showServerError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBarContainer.gone()
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"CreateNewPasswordFragment")
     }
 
     private fun initViews() {
@@ -84,7 +98,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
             val password = binding.etNewPassword.text.toString()
             val confpassword = binding.etConfirmPassword.text.toString()
             if (forgotPasswordViewModel.isValidChangePasswordData(otp, password, confpassword)) {
-                binding.progressBarContainer.visibility = View.VISIBLE
+                showProgressBar()
                 forgotPasswordViewModel.changePasswordUser(otp, password, confpassword)
             }
         }

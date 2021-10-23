@@ -24,8 +24,7 @@ class LoginViewModel @Inject constructor(
     private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel() {
 
-    var loginReponse = SingleLiveEvent<LoginResponseModel>()
-    var error = MutableLiveData<String>()
+    var loginResponse = SingleLiveEvent<LoginResponseModel>()
 
 
     fun login(emailId: String, password: String) {
@@ -44,7 +43,7 @@ class LoginViewModel @Inject constructor(
                         preferenceSourceImpl.userMobileNO= result.body.data?.contact.toString()
                         preferenceSourceImpl.userName=result.body.data?.name.toString()
                         preferenceSourceImpl.userEmail= result.body.data?.email.toString()
-                        loginReponse.value = result.body
+                        loginResponse.value = result.body
                     }
 
                     is NetworkResponse.ServerError -> {
@@ -61,26 +60,5 @@ class LoginViewModel @Inject constructor(
                 }
             }
         )
-    }
-
-    fun isValidLoginData(emailId: String, password: String): Boolean {
-        return when {
-            emailId.isBlank() -> {
-                error.value = ERROR_EMAIL
-                false
-            }
-            password.isBlank() -> {
-                error.value = ERROR_PASSWORD
-                false
-            }
-            else -> {if (!ValidationUtils.isRequiredPasswordLengthForChangePassword(password)){
-                error.value = ERROR_PASSWORD
-                return false
-            }else{
-                return true
-            }
-            }
-        }
-
     }
 }

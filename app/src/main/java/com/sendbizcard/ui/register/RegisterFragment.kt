@@ -1,6 +1,5 @@
 package com.sendbizcard.ui.register
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -13,9 +12,8 @@ import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentRegisterBinding
-import com.sendbizcard.dialog.ConfirmationDialogFragment
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.utils.ValidationUtils
-import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
@@ -57,25 +55,22 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun setUpObservers() {
         registerViewModel.registerReponse.observe(viewLifecycleOwner, {
-            binding.progressBarContainer.gone()
+            hideProgressBar()
             findNavController().navigate(R.id.nav_verifyOtp, bundleOf("otp" to it.data?.contactOtp.toString()))
 
         })
 
-        registerViewModel.showUnknownError.observe(this, {
-            binding.progressBarContainer.gone()
-            showlogoutDialog(it)
-        })
+        registerViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
-        registerViewModel.showNetworkError.observe(this, {
-            binding.progressBarContainer.gone()
-            showlogoutDialog(it)
-        })
+        registerViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
-        registerViewModel.showServerError.observe(this, {
-            binding.progressBarContainer.gone()
-            showlogoutDialog(it)
-        })
+        registerViewModel.showServerError.observe(this ) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
     }
 
     private fun initViews() {
@@ -94,7 +89,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
                     confPassword
                 )
             ) {
-                binding.progressBarContainer.visible()
+                showProgressBar()
                 registerViewModel.registerUser(name, mobileNo, emailId, password, confPassword)
             }
         }
@@ -104,35 +99,21 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
         get() = FragmentRegisterBinding::inflate
 
 
-    private fun showlogoutDialog(message: String) {
-        val confirmationDialogFragment = ConfirmationDialogFragment.Builder()
-            .setAcceptButton(
-                context?.resources?.getString(R.string.ok_confirmation)!!
-            )
-            .setTitle(
-                context?.resources?.getString(R.string.error)!!
-            )
-            .setMessage(
-                message
-            )
-            .setMessageTextColor(requireContext().resources.getColor(R.color.textcolour))
-            .build()
-        confirmationDialogFragment.show(
-            requireActivity().supportFragmentManager,
-            ConfirmationDialogFragment.TAG
-        )
-
-        confirmationDialogFragment.setButtonClickListener(object :
-            ConfirmationDialogFragment.OnButtonClickListener {
-            override fun onAcceptClick() {
-                confirmationDialogFragment.dismiss()
-            }
-
-            override fun onRejectClick() {
-            }
-        })
-
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
     }
+
+    private fun hideProgressBar() {
+        binding.progressBarContainer.gone()
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"RegisterFragment")
+    }
+
 
 
     fun isValidRegisterData(

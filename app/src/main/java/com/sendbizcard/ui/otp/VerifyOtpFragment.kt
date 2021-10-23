@@ -19,9 +19,8 @@ import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentChangePasswordVerificationBinding
-import com.sendbizcard.utils.AlertDialogWithImageView
-import com.sendbizcard.utils.getDefaultNavigationAnimation
-import com.sendbizcard.utils.showErrorDialog
+import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -80,31 +79,43 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setupObservers() {
-        verifyOtpViewModel.otpResponseModel.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
+        verifyOtpViewModel.otpResponseModel.observe(this) {
+            hideProgressBar()
             showSuccessDialog()
-        })
-        verifyOtpViewModel.showNetworkError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
-        })
+        }
+        verifyOtpViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
-        verifyOtpViewModel.showUnknownError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
+        verifyOtpViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
         verifyOtpViewModel.showServerError.observe(this ) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
+            showErrorMessage(errorMessage)
         }
     }
 
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBarContainer.gone()
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"VerifyOTPFragment")
+    }
+
     private fun initViews() {
-        binding.progressBarContainer.visibility = View.GONE
+        hideProgressBar()
         binding.btnverify.setOnClickListener {
             if (verifyOtpViewModel.isValidOtpData(otp)&& binding.cbprivacy.isChecked){
-                binding.progressBarContainer.visibility = View.VISIBLE
+                showProgressBar()
                 verifyOtpViewModel.verifyOtp(otp)
             }
         }

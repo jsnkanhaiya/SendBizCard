@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.sendbizcard.HomeActivity
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentFeedbackBinding
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.utils.gone
-import com.sendbizcard.utils.showErrorDialog
 import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -33,21 +34,25 @@ class FeedbackFragment : BaseFragment<FragmentFeedbackBinding>() {
             requireActivity().startActivity(i)
         }
 
-        feedBackViewModel.showNetworkError.observe(this) {
-            hideProgressBar()
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        feedBackViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
-        feedBackViewModel.showUnknownError.observe(this) {
-            hideProgressBar()
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        feedBackViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
 
         feedBackViewModel.showServerError.observe(this) { errorMessage ->
-            hideProgressBar()
-
+            showErrorMessage(errorMessage)
         }
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"", R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"FeedbackFragment")
     }
 
     private fun initOnClicks() {

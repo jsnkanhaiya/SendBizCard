@@ -1,24 +1,19 @@
 package com.sendbizcard.ui.login
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.textfield.TextInputEditText
 import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentLoginBinding
-import com.sendbizcard.dialog.ConfirmationDialogFragment
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
@@ -61,32 +56,31 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     }
 
     private fun setupObservers() {
-        loginViewModel.loginReponse.observe(viewLifecycleOwner, Observer {
+        loginViewModel.loginResponse.observe(this) {
             hideProgressBar()
             val i = Intent(requireContext(), HomeActivity::class.java)
             requireActivity().startActivity(i)
             requireActivity().finish()
-        })
+        }
 
-        loginViewModel.showNetworkError.observe(this, Observer {
-            hideProgressBar()
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
+        loginViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
-        loginViewModel.showUnknownError.observe(this, Observer {
-            hideProgressBar()
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
-
-
-        loginViewModel.error.observe(viewLifecycleOwner, Observer {
-            hideProgressBar()
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
+        loginViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
         loginViewModel.showServerError.observe(this) { errorMessage ->
-            hideProgressBar()
+            showErrorMessage(errorMessage)
         }
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"LoginFragment")
     }
 
     private fun initOnClicks() {

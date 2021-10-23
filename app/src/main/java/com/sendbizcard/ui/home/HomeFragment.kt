@@ -36,6 +36,7 @@ import com.google.android.gms.location.*
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentHomeBinding
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
 import com.sendbizcard.ui.profile.ProfileViewModel
 import com.sendbizcard.utils.*
@@ -84,25 +85,37 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun observeData() {
 
-        homeViewModel.saveCradResponse.observe(this) {
-            binding.progressBarContainer.gone()
+        homeViewModel.saveCardResponse.observe(this) {
+            hideProgressBar()
             showSuccessDialog()
         }
 
-        homeViewModel.showNetworkError.observe(this) {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        homeViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
-        homeViewModel.showUnknownError.observe(this) {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        homeViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
         homeViewModel.showServerError.observe(this) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-
+            showErrorMessage(errorMessage)
         }
+    }
+
+    private fun showProgressBar(){
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar(){
+        binding.progressBarContainer.visible()
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"HomeFragment")
     }
 
     private fun initOnClicks() {
@@ -202,7 +215,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     return@setOnClickListener
                 }
                 else -> {
-                    binding.progressBarContainer.visible()
+                    showProgressBar()
                     homeViewModel.addCardRequest(
                         name,
                         designation,
@@ -480,11 +493,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                             copyImageUriToExternalFilesDir(imageUri,photoFile)
                         }
                     } else {
-                        showErrorDialog(
-                            "Selected image file might be invalid or not available on device",
-                            requireActivity(),
-                            requireContext()
-                        )
+                        showErrorMessage("Selected image file might be invalid or not available on device")
                     }
                 }
             }
@@ -542,7 +551,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showSuccessDialog() {
-        // binding.progressBarContainer.visibility = View.GONE
         AlertDialogWithImageView.showDialog(
             requireFragmentManager().beginTransaction(),
             requireContext(),
@@ -550,14 +558,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             requireContext().resources.getString(R.string.card_saved_successfully),
             R.drawable.ic_success,
             onDismiss = {
-
                 findNavController().popBackStack()
-
             }
         )
     }
 
-    fun showColourPattle(){
+    private fun showColourPattle(){
         ColorPickerDialog
             .Builder(requireContext())        				// Pass Activity Instance
             .setTitle("Pick Theme")           	// Default "Choose Color"

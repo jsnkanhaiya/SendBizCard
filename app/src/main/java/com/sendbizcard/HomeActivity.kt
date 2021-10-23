@@ -18,6 +18,7 @@ import androidx.navigation.Navigation
 import androidx.navigation.ui.*
 import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.databinding.ActivityHomeBinding
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.ui.profile.ProfileViewModel
@@ -70,35 +71,36 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             tvName.text = it.user?.name?:""
         }
 
-        homeViewModel.showNetworkError.observe(this, Observer {
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-             showErrorDialog(it,this,this)
-        })
+        homeViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
-        homeViewModel.showUnknownError.observe(this, Observer {
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(it,this,this)
-        })
+        homeViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
         homeViewModel.showServerError.observe(this) { errorMessage ->
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(errorMessage,this,this)
+            showErrorMessage(errorMessage)
         }
 
-        profileViewModel.showNetworkError.observe(this, Observer {
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(it,this,this)
-        })
+        profileViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
-        profileViewModel.showUnknownError.observe(this, Observer {
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(it,this,this)
-        })
+        profileViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
 
         profileViewModel.showServerError.observe(this) { errorMessage ->
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(errorMessage,this,this)
+            showErrorMessage(errorMessage)
         }
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        binding.appBarHome.progressBarContainer.visibility = View.GONE
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(supportFragmentManager,"HomeActivity")
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -152,22 +154,17 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showSuccessDialog() {
-        //  binding.progressBarContainer.visibility = View.GONE
-        AlertDialogWithImageView.showDialog(
-            supportFragmentManager.beginTransaction(),
-            this,
-            this.resources.getString(R.string.success_title),
-            this.resources.getString(R.string.success_title_logout),
-            R.drawable.ic_success,
-            onDismiss = {
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.success_title),
+            resources.getString(R.string.success_title_logout),"",R.drawable.ic_icon_success)
+        fragment.callbacks = object : CommonDialogFragment.Callbacks {
+            override fun onDismissClicked() {
                 homeViewModel.clearAllData()
-                val i = Intent(this, MainActivity::class.java)
+                val i = Intent(this@HomeActivity, MainActivity::class.java)
                 startActivity(i)
                 finish()
-
             }
-        )
-
+        }
+        fragment.show(supportFragmentManager,"HomeActivity")
     }
 
     override val bindingInflater: (LayoutInflater) -> ActivityHomeBinding

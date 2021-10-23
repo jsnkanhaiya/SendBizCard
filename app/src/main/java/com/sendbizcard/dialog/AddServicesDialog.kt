@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseDialogFragment
 import com.sendbizcard.databinding.DialogAddServicesBinding
 import com.sendbizcard.utils.setWidthPercent
@@ -13,6 +14,11 @@ class AddServicesDialog : BaseDialogFragment<DialogAddServicesBinding>() {
 
     private lateinit var binding: DialogAddServicesBinding
     var onSaveButtonClick: OnSaveButtonClick? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.DialogStyle)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

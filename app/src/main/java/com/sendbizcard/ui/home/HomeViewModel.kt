@@ -26,7 +26,7 @@ class HomeViewModel @Inject constructor(
 ) : BaseViewModel() {
 
     var logoutResponse = MutableLiveData<BaseResponseModel>()
-    var saveCradResponse = SingleLiveEvent<BaseResponseModel>()
+    var saveCardResponse = SingleLiveEvent<BaseResponseModel>()
 
     fun addCardRequest(mName: String, mDesignation: String, mMobileNumber: String, mEmailId: String, mWebsite: String, mLocation: String, mUserImageBase64String: String, mCompanyLogoBase64String: String) {
         val addCardRequest = AddCardRequest().apply {
@@ -52,7 +52,7 @@ class HomeViewModel @Inject constructor(
                 }
                 when (result) {
                     is NetworkResponse.Success -> {
-                        saveCradResponse.value=result.body
+                        saveCardResponse.value=result.body
                     }
 
                     is NetworkResponse.ServerError -> {

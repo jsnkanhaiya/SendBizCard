@@ -11,11 +11,11 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.databinding.FragmentCardListBinding
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.models.response.CardListResponseModel
 import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.gone
-import com.sendbizcard.utils.showErrorDialog
 import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -71,19 +71,24 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
             setUpAdapter(cardList)
         }
 
-        cardListViewModel.showNetworkError.observe(this) {
-            hideProgressBar()
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        cardListViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
-        cardListViewModel.showUnknownError.observe(this) {
-            hideProgressBar()
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
+        cardListViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
         cardListViewModel.showServerError.observe(this) { errorMessage ->
-            hideProgressBar()
+            showErrorMessage(errorMessage)
         }
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"CardListFragment")
     }
 
     private fun initOnClicks() {

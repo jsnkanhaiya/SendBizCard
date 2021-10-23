@@ -112,6 +112,7 @@ Terms of Service and Privacy Policy</string>
     <string name="enter">Enter</string>
     <string name="your_services">Your Services</string>
     <string name="add_services">Add Services</string>
+    <string name="add_service_name">Add Service Name</string>
     <string name="documents">Documents</string>
     <string name="gallery">Gallery</string>
     <string name="camera">Camera</string>

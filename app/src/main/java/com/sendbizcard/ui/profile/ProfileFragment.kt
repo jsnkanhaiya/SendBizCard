@@ -24,6 +24,7 @@ import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentProfileBinding
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
 import com.sendbizcard.models.response.UserProfileResponse
 import com.sendbizcard.utils.*
@@ -51,39 +52,52 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        binding.progressBarContainer.visibility = View.VISIBLE
-        profileViewModel.getUserProfileData()
-        initOnClicks()
         setupObservers()
+        initOnClicks()
+        showProgressBar()
+        profileViewModel.getUserProfileData()
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setupObservers() {
-        profileViewModel.userProfileResponse.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
+        profileViewModel.userProfileResponse.observe(this) {
+            hideProgressBar()
             setUserData(it)
-        })
-
-        profileViewModel.updateUserProfileResponse.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            showSuccessDialog()
-        })
-
-        profileViewModel.showNetworkError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
-        })
-
-        profileViewModel.showUnknownError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
-
-        profileViewModel.showServerError.observe(this ) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
         }
 
+        profileViewModel.updateUserProfileResponse.observe(this)  {
+            hideProgressBar()
+            showSuccessDialog()
+        }
+
+        profileViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+        profileViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+        profileViewModel.showServerError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+    }
+
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBarContainer.gone()
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"",R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"ProfileFragment")
     }
 
     private fun initOnClicks() {
@@ -116,7 +130,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
             val website = binding.etWebsite.text.toString()
 
             if (profileViewModel.isValidUserProfileData(name,mobile,email,website,designation)){
-                binding.progressBarContainer.visibility = View.VISIBLE
+                showProgressBar()
                 profileViewModel.updateUserData(name,mobile,email,website,designation,userImageBase64String)
             }
 
@@ -271,11 +285,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
                             copyImageUriToExternalFilesDir(imageUri,photoFile)
                         }
                     } else {
-                        showErrorDialog(
-                            "Selected image file might be invalid or not available on device",
-                            requireActivity(),
-                            requireContext()
-                        )
+                        showErrorMessage("Selected image file might be invalid or not available on device")
                     }
                 }
             }
@@ -331,7 +341,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showSuccessDialog() {
-        binding.progressBarContainer.visibility = View.GONE
+        hideProgressBar()
         AlertDialogWithImageView.showDialog(
             requireFragmentManager().beginTransaction(),
             requireContext(),

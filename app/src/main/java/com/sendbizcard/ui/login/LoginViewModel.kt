@@ -40,6 +40,10 @@ class LoginViewModel @Inject constructor(
                         //loginReponse = result
                         preferenceSourceImpl.isUserLoggedIn=true
                         preferenceSourceImpl.userToken= result.body.token.toString()
+                        preferenceSourceImpl.userId= result.body.data?.id.toString()
+                        preferenceSourceImpl.userMobileNO= result.body.data?.contact.toString()
+                        preferenceSourceImpl.userName=result.body.data?.name.toString()
+                        preferenceSourceImpl.userEmail= result.body.data?.email.toString()
                         loginReponse.value = result.body
                     }
 

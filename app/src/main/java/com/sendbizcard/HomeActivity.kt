@@ -3,13 +3,16 @@ package com.sendbizcard
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.*
@@ -34,11 +37,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         Navigation.findNavController(this, R.id.nav_host_fragment_content_home)
     }
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
+        binding.appBarHome.progressBarContainer.visible()
         profileViewModel.getUserProfileData()
         setSupportActionBar(binding.appBarHome.toolbar)
         appBarConfiguration = AppBarConfiguration(
@@ -63,7 +66,38 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             showSuccessDialog()
         }
         profileViewModel.userProfileResponse.observe(this){
+            binding.appBarHome.progressBarContainer.gone()
             tvName.text = it.user?.name?:""
+        }
+
+        homeViewModel.showNetworkError.observe(this, Observer {
+            binding.appBarHome.progressBarContainer.visibility = View.GONE
+             showErrorDialog(it,this,this)
+        })
+
+        homeViewModel.showUnknownError.observe(this, Observer {
+            binding.appBarHome.progressBarContainer.visibility = View.GONE
+            showErrorDialog(it,this,this)
+        })
+
+        homeViewModel.showServerError.observe(this) { errorMessage ->
+            binding.appBarHome.progressBarContainer.visibility = View.GONE
+            showErrorDialog(errorMessage,this,this)
+        }
+
+        profileViewModel.showNetworkError.observe(this, Observer {
+            binding.appBarHome.progressBarContainer.visibility = View.GONE
+            showErrorDialog(it,this,this)
+        })
+
+        profileViewModel.showUnknownError.observe(this, Observer {
+            binding.appBarHome.progressBarContainer.visibility = View.GONE
+            showErrorDialog(it,this,this)
+        })
+
+        profileViewModel.showServerError.observe(this) { errorMessage ->
+            binding.appBarHome.progressBarContainer.visibility = View.GONE
+            showErrorDialog(errorMessage,this,this)
         }
     }
 
@@ -133,7 +167,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
             }
         )
-
 
     }
 

@@ -1,39 +1,29 @@
-package com.sendbizcard.ui.sharecard
+package com.sendbizcard.ui.privacy
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import com.sendbizcard.base.BaseFragment
-import com.sendbizcard.databinding.FragmentViewCardBinding
-import com.sendbizcard.utils.showErrorDialog
-import dagger.hilt.android.AndroidEntryPoint
-import android.view.MotionEvent
-
-import android.graphics.Bitmap
-import android.view.View.OnTouchListener
 import android.webkit.*
-
+import com.sendbizcard.base.BaseFragment
+import com.sendbizcard.databinding.FragmentThemeBinding
+import com.sendbizcard.databinding.FragmentViewCardBinding
+import com.sendbizcard.ui.sharecard.ViewCardFragment
+import com.sendbizcard.utils.AppConstants
+import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
+class PrivacyFragment: BaseFragment<FragmentViewCardBinding>()  {
 
-    private val viewCardViewModel: ViewCardViewModel by viewModels()
-    private lateinit var binding: FragmentViewCardBinding
-    var cardId =""
-    var themeId = ""
     private var m_downX = 0f
-    var redirectUrl = "https://tinyurl.com/ygxh7upb"
+    private lateinit var binding: FragmentViewCardBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        viewCardViewModel.getCardURL(cardId,themeId)
-        setupObservers()
         //dummy Load URL
         loadUrl()
     }
@@ -42,36 +32,8 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
         binding.webView.settings.javaScriptEnabled = true
         initWebView()
         binding.progressBarContainer.visibility = View.VISIBLE
-        binding.webView.loadUrl(redirectUrl)
+        binding.webView.loadUrl(AppConstants.PRIVACY_POLICY)
     }
-
-    private fun setupObservers() {
-
-        viewCardViewModel.viewCardResponse.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-           //load URl
-
-        })
-
-        viewCardViewModel.showNetworkError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
-        })
-
-        viewCardViewModel.showUnknownError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
-        })
-
-
-        viewCardViewModel.showServerError.observe(this ) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
-        }
-
-
-    }
-
 
     private fun initWebView() {
         binding.webView.webChromeClient = MyWebChromeClient(requireContext())
@@ -106,7 +68,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
         binding.webView.clearHistory()
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.isHorizontalScrollBarEnabled = false
-        binding.webView.setOnTouchListener(OnTouchListener { v, event ->
+        binding.webView.setOnTouchListener(View.OnTouchListener { v, event ->
             if (event.pointerCount > 1) {
                 //Multi touch detected
                 return@OnTouchListener true

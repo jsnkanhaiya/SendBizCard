@@ -19,7 +19,6 @@ class AddServicesDialog : BaseDialogFragment<DialogAddServicesBinding>() {
         setWidthPercent(90)
         binding = getViewBinding()
         initOnClick()
-
     }
 
     private fun initOnClick() {

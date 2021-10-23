@@ -85,8 +85,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             binding.progressBarContainer.visibility = View.GONE
             Log.d("Login Error",errorMessage)
         }
-
-
     }
 
     private fun initOnClicks() {
@@ -98,14 +96,18 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
             when {
                 emailId.isEmpty() -> {
-                    showErrorDialog("Enter Email Id", requireActivity(), requireContext())
+                    binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                   // showErrorDialog("Enter Email Id", requireActivity(), requireContext())
                     return@setOnClickListener
                 }
                 password.isEmpty() -> {
-                    showErrorDialog("Enter Password", requireActivity(), requireContext())
+                    binding.textInputPassword.error= resources.getString(R.string.enter_password)
+                  //  showErrorDialog("Enter Password", requireActivity(), requireContext())
                     return@setOnClickListener
                 }
                 else -> {
+                    binding.textInputEmail.error= null
+                    binding.textInputPassword.error= null
                     binding.progressBarContainer.visibility = View.VISIBLE
                     loginViewModel.login(emailId, password)
                 }

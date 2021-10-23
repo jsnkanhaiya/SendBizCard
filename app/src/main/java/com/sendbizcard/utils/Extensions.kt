@@ -13,6 +13,10 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.DialogFragment
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.sendbizcard.R
+
+
+
 
 fun withDelayOnMain(delay: Long, block: () -> Unit) {
     Handler(Looper.getMainLooper()).postDelayed(Runnable(block), delay)
@@ -21,14 +25,25 @@ fun String.isValidEmail() =
     !TextUtils.isEmpty(this) && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 fun AppCompatImageView.loadImages(url: String) {
-    val options = RequestOptions()
-    Glide.with(context).load(url).apply(options).into(this)
+    val options =
+        RequestOptions().placeholder(R.drawable.placeholder_image).error(R.drawable.placeholder_image)
+    Glide.with(context)
+        .load(url).
+    apply(options).into(this)
+}
+
+fun AppCompatImageView.loadImagesUser(url: String) {
+    val options =
+        RequestOptions().placeholder(R.drawable.ic_profile_img).error(R.drawable.ic_profile_img)
+    Glide.with(context)
+        .load(url).
+        apply(options).into(this)
 }
 
 
 fun AppCompatImageView.loadCircleImages(url: String) {
 
-    Glide.with(context).load(url) .apply(RequestOptions.circleCropTransform()).into(this)
+    Glide.with(context).load(url) .apply(RequestOptions.circleCropTransform().placeholder(R.drawable.ic_profile_img).error(R.drawable.ic_profile_img)).into(this)
 }
 
 fun AppCompatImageView.loadBitmap(bitmap: Bitmap) {

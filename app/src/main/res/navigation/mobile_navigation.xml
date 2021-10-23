@@ -154,6 +154,23 @@
             android:name="otp"
             android:defaultValue=""
             app:argType="string" />
+
+        <action
+            android:id="@+id/actionVerifyOtpFragmentToThemeFragment"
+            app:destination="@id/nav_select_theme"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/actionVerifyOtpFragmentToPrivacyFragment"
+            app:destination="@id/nav_privacy"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
         <action
             android:id="@+id/actionVerifyOtpFragmentToHomeFragment"
             app:destination="@id/nav_sign_up"
@@ -198,9 +215,41 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_privacy"
+        android:name="com.sendbizcard.ui.privacy.PrivacyFragment"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_view_card" >
+
+        <action
+            android:id="@+id/actionPrivacyFragmentToVerifyOtpFragment"
+            app:destination="@id/nav_verifyOtp"
+            app:popUpTo="@+id/nav_intro"
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
         android:id="@+id/nav_select_theme"
         android:name="com.sendbizcard.ui.theme.ThemeFragment"
         android:label="@string/menu_select_theme"
-        tools:layout="@layout/fragment_theme" />
+        tools:layout="@layout/fragment_theme" >
+
+        <argument
+            android:name="isFromHome"
+            android:defaultValue="false"
+            app:argType="boolean" />
+
+        <action
+            android:id="@+id/actionVerifyOtpFragmentToHomeFragment"
+            app:destination="@id/nav_sign_up"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
 
 </navigation>

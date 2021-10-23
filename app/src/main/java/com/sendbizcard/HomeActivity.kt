@@ -4,10 +4,12 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.viewModels
 import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.*
@@ -15,6 +17,7 @@ import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.databinding.ActivityHomeBinding
 import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.ui.main.MainActivity
+import com.sendbizcard.ui.profile.ProfileViewModel
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -24,6 +27,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
+    private val profileViewModel: ProfileViewModel by viewModels()
+    lateinit var tvName : TextView
 
     private val navController by lazy {
         Navigation.findNavController(this, R.id.nav_host_fragment_content_home)
@@ -34,6 +39,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
+        profileViewModel.getUserProfileData()
         setSupportActionBar(binding.appBarHome.toolbar)
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -56,6 +62,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             binding.appBarHome.progressBarContainer.gone()
             showSuccessDialog()
         }
+        profileViewModel.userProfileResponse.observe(this){
+            tvName.text = it.user?.name?:""
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -66,6 +75,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private fun setUpDrawerLayout() {
 
         binding.navView.setupWithNavController(navController)
+
         setupActionBarWithNavController(navController, appBarConfiguration)
 
 
@@ -92,6 +102,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
             true
         }
+
+        var headerview = binding.navView.getHeaderView(0);
+         tvName = headerview.findViewById<TextView>(R.id.tvName)
 
     }
 

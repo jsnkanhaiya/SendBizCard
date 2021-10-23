@@ -30,15 +30,20 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.github.dhaval2404.colorpicker.ColorPickerDialog
+import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.google.android.gms.location.*
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentHomeBinding
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
+import com.sendbizcard.ui.profile.ProfileViewModel
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 import java.util.*
+
+
 
 
 @AndroidEntryPoint
@@ -70,6 +75,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+
         initOnClicks()
         observeData()
     }
@@ -100,6 +106,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initOnClicks() {
+
+        binding.coloPattle.setOnClickListener {
+            showColourPattle()
+        }
 
         binding.ourServicesCL.setOnClickListener {
             findNavController().navigate(R.id.nav_our_services)
@@ -545,5 +555,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             }
         )
+    }
+
+    fun showColourPattle(){
+        ColorPickerDialog
+            .Builder(requireContext())        				// Pass Activity Instance
+            .setTitle("Pick Theme")           	// Default "Choose Color"
+           // .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
+            .setDefaultColor(R.color.orange_100)     // Pass Default Color
+            .setColorListener { color, colorHex ->
+                // Handle Color Selection
+                Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
+                binding.imgCardBack.setBackgroundColor(color)
+            }
+            .show()
     }
 }

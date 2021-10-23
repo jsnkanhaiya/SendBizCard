@@ -28,6 +28,7 @@
     <string name="Submit">Submit</string>
     <string name="feedback_title">Help us improve</string>
     <string name="enter_emailID">Enter Email ID</string>
+    <string name="enter_password">Enter Password</string>
     <string name="full_name">Full Name</string>
     <string name="password">Password</string>
     <string name="new_password">New Password</string>

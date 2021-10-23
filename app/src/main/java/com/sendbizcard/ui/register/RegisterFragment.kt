@@ -14,6 +14,7 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentRegisterBinding
 import com.sendbizcard.dialog.ConfirmationDialogFragment
+import com.sendbizcard.utils.ValidationUtils
 import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
@@ -85,7 +86,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             val mobileNo = binding.etMobile.text.toString()
             val password = binding.etPassword.text.toString()
             val confPassword = binding.etConfirmPassword.text.toString()
-            if (registerViewModel.isValidRegisterData(
+            if (isValidRegisterData(
                     name,
                     mobileNo,
                     emailId,
@@ -130,6 +131,55 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             override fun onRejectClick() {
             }
         })
+
+    }
+
+
+    fun isValidRegisterData(
+        name: String,
+        mobileNo: String,
+        emailId: String,
+        password: String,
+        confPassword: String
+    ): Boolean {
+        return when {
+            name.isBlank() -> {
+                binding.textInputName.error= resources.getString(R.string.enter_emailID)
+                false
+            }
+            mobileNo.isBlank() -> {
+                binding.textInputMobile.error= resources.getString(R.string.enter_emailID)
+                false
+            }
+            mobileNo.length<10 || mobileNo.length>10-> {
+                binding.textInputMobile.error= resources.getString(R.string.enter_emailID)
+                false
+            }
+            emailId.isBlank() -> {
+                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                false
+            }
+            confPassword.isBlank() -> {
+                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                false
+            }
+            ValidationUtils.isRequiredPasswordLengthForLogin(password) -> {
+                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                false
+            }
+            ValidationUtils.isRequiredPasswordLengthForLogin(confPassword) -> {
+                binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                false
+            }
+            else -> {
+                if (ValidationUtils.isBothPasswordMatch(password, confPassword)) {
+                    return true
+                } else {
+                    binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
+                    return false
+                }
+            }
+        }
 
     }
 }

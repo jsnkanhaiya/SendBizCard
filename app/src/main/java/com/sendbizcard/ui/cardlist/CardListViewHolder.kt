@@ -16,5 +16,8 @@ class CardListViewHolder(private val binding: RowSavedCardItemBinding) : BaseVie
         binding.tvDesignation.text = receivedData.designation
         binding.imgProfile.loadCircleImages(AppConstants.IMAGE_BASE_URL+receivedData.userImg)
         //binding.tvName.text = receivedData.name
+        binding.imgEdit.setOnClickListener {
+
+        }
     }
 }

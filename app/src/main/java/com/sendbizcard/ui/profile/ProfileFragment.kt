@@ -47,7 +47,6 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
     lateinit var currentPhotoPath: String
     private var userImageBase64String = ""
 
-
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

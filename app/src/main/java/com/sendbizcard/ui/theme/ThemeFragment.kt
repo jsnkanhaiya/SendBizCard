@@ -32,9 +32,19 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
         observeData()
+        initOnClick()
         showProgressBar()
         themeViewModel.getThemeList()
 
+    }
+
+    private fun initOnClick() {
+        binding.btnSave.setOnClickListener {
+            val theme = themeAdapter.list.firstOrNull {
+                it.isSelected
+            }
+            themeViewModel.saveThemeId(theme?.id.toString())
+        }
     }
 
     private fun observeData() {

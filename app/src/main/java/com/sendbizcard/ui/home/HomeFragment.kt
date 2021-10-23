@@ -2,11 +2,9 @@ package com.sendbizcard.ui.home
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -17,27 +15,22 @@ import android.os.Environment
 import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
-import com.github.dhaval2404.colorpicker.model.ColorShape
 import com.google.android.gms.location.*
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentHomeBinding
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
-import com.sendbizcard.ui.profile.ProfileViewModel
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
@@ -52,7 +45,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val APPNAME = "SendBizCardApp"
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var binding: FragmentHomeBinding
-
+    private var backgroundColour = "#ef5e42"
     private val REQUEST_CODE_CAMERA = 0x1001
     private val REQUEST_CODE_IMAGE_CAPTURE = 0x1002
     private val REQUEST_CODE_GALLERY = 0x1003
@@ -211,7 +204,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                         website,
                         location,
                         userImageBase64String,
-                        companyLogoBase64String
+                        companyLogoBase64String,
+                        backgroundColour
                     )
                 }
             }
@@ -565,7 +559,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             .setDefaultColor(R.color.orange_100)     // Pass Default Color
             .setColorListener { color, colorHex ->
                 // Handle Color Selection
-                Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
+               // Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
+                backgroundColour= colorHex
                 binding.imgCardBack.setBackgroundColor(color)
             }
             .show()

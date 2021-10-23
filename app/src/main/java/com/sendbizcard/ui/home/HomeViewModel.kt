@@ -1,16 +1,11 @@
 package com.sendbizcard.ui.home
 
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
-import com.sendbizcard.models.home.SavedCards
 import com.sendbizcard.models.request.addCard.AddCardRequest
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.prefs.PreferenceSourceImpl
-import com.sendbizcard.repository.ApiRepository
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,10 +23,20 @@ class HomeViewModel @Inject constructor(
     var logoutResponse = MutableLiveData<BaseResponseModel>()
     var saveCradResponse = SingleLiveEvent<BaseResponseModel>()
 
-    fun addCardRequest(mName: String, mDesignation: String, mMobileNumber: String, mEmailId: String, mWebsite: String, mLocation: String, mUserImageBase64String: String, mCompanyLogoBase64String: String) {
+    fun addCardRequest(
+        mName: String,
+        mDesignation: String,
+        mMobileNumber: String,
+        mEmailId: String,
+        mWebsite: String,
+        mLocation: String,
+        mUserImageBase64String: String,
+        mCompanyLogoBase64String: String,
+        backgroundColour: String
+    ) {
         val addCardRequest = AddCardRequest().apply {
-            themeId = "3"
-            themeColor = "#748484"
+            themeId = preferenceSourceImpl.themeID
+            themeColor = backgroundColour
             name = mName
             userImg = mUserImageBase64String
             designation = mDesignation

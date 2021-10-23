@@ -1,6 +1,7 @@
 package com.sendbizcard
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.viewModels
@@ -30,8 +33,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
-    private val profileViewModel: ProfileViewModel by viewModels()
+ //   private val profileViewModel: ProfileViewModel by viewModels()
     lateinit var tvName : TextView
+    lateinit var imgFb : AppCompatImageView
+    lateinit var imgInsta : AppCompatImageView
+    lateinit var imgTwiter : AppCompatImageView
 
     private val navController by lazy {
         Navigation.findNavController(this, R.id.nav_host_fragment_content_home)
@@ -41,8 +47,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
-        binding.appBarHome.progressBarContainer.visible()
-        profileViewModel.getUserProfileData()
+       /* binding.appBarHome.progressBarContainer.visible()
+        profileViewModel.getUserProfileData()*/
         setSupportActionBar(binding.appBarHome.toolbar)
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -65,11 +71,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             binding.appBarHome.progressBarContainer.gone()
             showSuccessDialog()
         }
-        profileViewModel.userProfileResponse.observe(this){
+       /* profileViewModel.userProfileResponse.observe(this){
             binding.appBarHome.progressBarContainer.gone()
             tvName.text = it.user?.name?:""
         }
-
+*/
         homeViewModel.showNetworkError.observe(this, Observer {
             binding.appBarHome.progressBarContainer.visibility = View.GONE
              showErrorDialog(it,this,this)
@@ -85,20 +91,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             showErrorDialog(errorMessage,this,this)
         }
 
-        profileViewModel.showNetworkError.observe(this, Observer {
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(it,this,this)
-        })
-
-        profileViewModel.showUnknownError.observe(this, Observer {
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(it,this,this)
-        })
-
-        profileViewModel.showServerError.observe(this) { errorMessage ->
-            binding.appBarHome.progressBarContainer.visibility = View.GONE
-            showErrorDialog(errorMessage,this,this)
-        }
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -117,7 +109,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             when(dest.itemId) {
                 R.id.nav_share_app -> {
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
-                    shareApp(this)
+                    shareApp(this,"")
                 }
 
                 R.id.nav_logout -> {
@@ -137,9 +129,29 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             true
         }
 
-        var headerview = binding.navView.getHeaderView(0);
-         tvName = headerview.findViewById<TextView>(R.id.tvName)
+       binding.navView
 
+        var headerview = binding.navView.getHeaderView(0);
+        var socialMediaCL = binding.navView.findViewById<ConstraintLayout>(R.id.socialMediaCL);
+         tvName = headerview.findViewById<TextView>(R.id.tvName)
+        imgFb = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_fb)
+        imgInsta = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_insta)
+        imgTwiter = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_twitter)
+
+        imgFb.setOnClickListener {
+            val open = Intent(Intent.ACTION_VIEW, Uri.parse("http://facebook.com"))
+            startActivity(open)
+        }
+
+        imgInsta.setOnClickListener {
+            val open = Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"))
+            startActivity(open)
+        }
+
+        imgTwiter.setOnClickListener {
+            val open = Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"))
+            startActivity(open)
+        }
     }
 
     override fun onBackPressed() {

@@ -17,6 +17,7 @@ import android.view.MotionEvent
 import android.graphics.Bitmap
 import android.view.View.OnTouchListener
 import android.webkit.*
+import android.widget.Toast
 
 
 @AndroidEntryPoint
@@ -32,13 +33,22 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        viewCardViewModel.getCardURL(cardId,themeId)
+        initViews()
+        viewCardViewModel.getCardURL(cardId,viewCardViewModel.getThemeId())
         setupObservers()
         //dummy Load URL
-        loadUrl()
+       // loadUrl()
     }
 
-    private fun loadUrl() {
+    private fun initViews() {
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            cardId = bundle.getString("id").toString()
+        }
+    }
+
+    private fun loadUrl(redirectUrl:String) {
         binding.webView.settings.javaScriptEnabled = true
         initWebView()
         binding.progressBarContainer.visibility = View.VISIBLE
@@ -50,7 +60,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
         viewCardViewModel.viewCardResponse.observe(viewLifecycleOwner, Observer {
             binding.progressBarContainer.visibility = View.GONE
            //load URl
-
+            loadUrl(it.redirectUrl.toString())
         })
 
         viewCardViewModel.showNetworkError.observe(this, Observer {
@@ -69,9 +79,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
             Log.d("Login Error",errorMessage)
         }
 
-
     }
-
 
     private fun initWebView() {
         binding.webView.webChromeClient = MyWebChromeClient(requireContext())
@@ -106,7 +114,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
         binding.webView.clearHistory()
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.isHorizontalScrollBarEnabled = false
-        binding.webView.setOnTouchListener(OnTouchListener { v, event ->
+       /* binding.webView.setOnTouchListener(OnTouchListener { v, event ->
             if (event.pointerCount > 1) {
                 //Multi touch detected
                 return@OnTouchListener true
@@ -124,7 +132,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
                 }
             }
             false
-        })
+        })*/
     }
 
 

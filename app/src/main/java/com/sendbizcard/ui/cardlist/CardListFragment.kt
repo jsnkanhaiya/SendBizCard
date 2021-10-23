@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
@@ -13,10 +14,8 @@ import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.databinding.FragmentCardListBinding
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.models.response.CardListResponseModel
-import com.sendbizcard.utils.getDefaultNavigationAnimation
-import com.sendbizcard.utils.gone
-import com.sendbizcard.utils.showErrorDialog
-import com.sendbizcard.utils.visible
+import com.sendbizcard.ui.sharecard.ViewCardViewModel
+import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -29,6 +28,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
     var cardList: CardListResponseModel? = null
 
     private val cardListViewModel: CardListViewModel by viewModels()
+    private val viewCardViewModel: ViewCardViewModel by viewModels()
     private lateinit var binding: FragmentCardListBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,10 +51,14 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
                 override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "PreviewClickedCallback")
+                    findNavController().navigate(R.id.nav_view_card, bundleOf("id" to data.id),
+                        getDefaultNavigationAnimation())
                 }
 
                 override fun onShareClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "ShareClickedCallback")
+                    viewCardViewModel.getCardURL(data.id.toString(),cardListViewModel.getThemeId())
+                   // shareApp(requireContext(),data.)
                 }
 
                 override fun onDeleteClicked(data: CardDetailsItem, pos: Int) {
@@ -66,6 +70,12 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
 
     private fun observeData() {
+
+        viewCardViewModel.viewCardResponse.observe(this) { cardList ->
+            hideProgressBar()
+            cardList.redirectUrl?.let { shareApp(requireContext(), it) }
+        }
+
         cardListViewModel.cardListLiveData.observe(this) { cardList ->
             hideProgressBar()
             setUpAdapter(cardList)

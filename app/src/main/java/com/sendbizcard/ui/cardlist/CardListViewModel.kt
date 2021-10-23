@@ -28,6 +28,9 @@ class CardListViewModel@Inject constructor(
 
     val cardListLiveData : SingleLiveEvent<List<CardDetailsItem>> by lazy { SingleLiveEvent() }
 
+    fun getThemeId():String{
+        return preferenceSourceImpl.themeID
+    }
 
     fun getCardList() {
      //   val cardListRequestModel = CardListRequestModel("",0,10,null,"")

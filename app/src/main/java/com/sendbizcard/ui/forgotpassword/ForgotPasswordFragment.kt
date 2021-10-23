@@ -15,6 +15,8 @@ import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentForgotPasswordBinding
+import com.sendbizcard.utils.FieldEnum
+import com.sendbizcard.utils.checkValidations
 import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.showErrorDialog
 import dagger.hilt.android.AndroidEntryPoint
@@ -98,11 +100,11 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
 
     private fun initViews() {
 
-
         binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
             val emailId = binding.etEmailID.text.toString()
-            if (forgotPasswordViewModel.isValidData(emailId)) {
+
+            if (binding.etEmailID.checkValidations(FieldEnum.EMAIL_ID.fieldName)) {
                 binding.progressBarContainer.visibility = View.VISIBLE
                 forgotPasswordViewModel.forgotPasswordUser(emailId)
             }

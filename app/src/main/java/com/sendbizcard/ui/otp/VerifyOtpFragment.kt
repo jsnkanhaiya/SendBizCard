@@ -8,8 +8,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -19,9 +21,7 @@ import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentChangePasswordVerificationBinding
-import com.sendbizcard.utils.AlertDialogWithImageView
-import com.sendbizcard.utils.getDefaultNavigationAnimation
-import com.sendbizcard.utils.showErrorDialog
+import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -101,11 +101,29 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
     }
 
     private fun initViews() {
+
+        binding.otpPinView.addTextChangedListener {
+            if (it?.length!! >0){
+                binding.tvOtpError.gone()
+            }
+        }
+
         binding.progressBarContainer.visibility = View.GONE
         binding.btnverify.setOnClickListener {
-            if (verifyOtpViewModel.isValidOtpData(otp)&& binding.cbprivacy.isChecked){
-                binding.progressBarContainer.visibility = View.VISIBLE
-                verifyOtpViewModel.verifyOtp(otp)
+
+
+            if (verifyOtpViewModel.isValidOtpData(otp)){
+                if (binding.cbprivacy.isChecked){
+                    binding.tvOtpError.gone()
+                    binding.progressBarContainer.visibility = View.VISIBLE
+                    verifyOtpViewModel.verifyOtp(otp)
+                }else{
+                    Toast.makeText(requireContext(),resources.getString(R.string.select_terms),Toast.LENGTH_LONG).show()
+                }
+
+            }else{
+                binding.tvOtpError.visible()
+                binding.tvOtpError.text = resources.getString(R.string.enter_otp6)
             }
         }
     }

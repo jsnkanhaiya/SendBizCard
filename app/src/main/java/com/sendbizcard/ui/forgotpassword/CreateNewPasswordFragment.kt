@@ -16,9 +16,7 @@ import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentCreateNewPasswordBinding
-import com.sendbizcard.utils.AlertDialogWithImageView
-import com.sendbizcard.utils.getDefaultNavigationAnimation
-import com.sendbizcard.utils.showErrorDialog
+import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -81,9 +79,14 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         }
 
         binding.btnSave.setOnClickListener {
+            var isValidationPassed = false
             val password = binding.etNewPassword.text.toString()
             val confpassword = binding.etConfirmPassword.text.toString()
-            if (forgotPasswordViewModel.isValidChangePasswordData(otp, password, confpassword)) {
+
+            isValidationPassed =  binding.etNewPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
+            isValidationPassed =  binding.etConfirmPassword.checkValidations(FieldEnum.CONFIRM_PASSWORD.fieldName)
+
+            if (isValidationPassed) {
                 binding.progressBarContainer.visibility = View.VISIBLE
                 forgotPasswordViewModel.changePasswordUser(otp, password, confpassword)
             }

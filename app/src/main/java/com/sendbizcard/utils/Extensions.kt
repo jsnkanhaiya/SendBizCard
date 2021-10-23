@@ -91,6 +91,32 @@ fun TextInputEditText.checkValidations(fieldName: String): Boolean {
                 false
             }
         }
+        FieldEnum.OTP.fieldName -> {
+            return if (strInputField.length == 6){
+                true
+            } else {
+                textInputLayout.error = "Enter 6 Digit OTP"
+                false
+            }
+        }
+
+        FieldEnum.FORGOT_OTP.fieldName -> {
+            return if (strInputField.length == 5){
+                true
+            } else {
+                textInputLayout.error = "Enter 5 Digit OTP"
+                false
+            }
+        }
+        FieldEnum.NAME.fieldName -> {
+            return if (strInputField.isNotEmpty()) {
+                true
+            } else {
+                textInputLayout.error = "Enter Your Name"
+                false
+            }
+        }
+
         else -> {
             return if (strInputField.isNotEmpty()) {
                 true

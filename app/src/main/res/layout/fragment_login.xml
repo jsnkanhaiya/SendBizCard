@@ -74,7 +74,7 @@
                 android:background="@color/white"
                 android:hint="@string/password"
                 android:imeOptions="actionDone"
-                android:inputType="textVisiblePassword" />
+                android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView

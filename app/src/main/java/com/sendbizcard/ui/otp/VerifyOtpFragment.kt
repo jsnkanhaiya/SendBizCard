@@ -121,7 +121,7 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
                 R.drawable.ic_success_tick,
                 onDismiss = {
                     if(fragmentManager!= null) {
-                        var i = Intent(requireContext(),HomeActivity::class.java)
+                        val i = Intent(requireContext(),HomeActivity::class.java)
                         startActivity(i)
                     }
                 }

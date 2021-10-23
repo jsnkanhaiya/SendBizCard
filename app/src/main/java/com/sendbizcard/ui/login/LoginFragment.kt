@@ -13,13 +13,13 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.textfield.TextInputEditText
 import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentLoginBinding
 import com.sendbizcard.dialog.ConfirmationDialogFragment
-import com.sendbizcard.utils.getDefaultNavigationAnimation
-import com.sendbizcard.utils.showErrorDialog
+import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
 
@@ -51,8 +51,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 )
                 onClick = {
                     //on click
-                    findNavController().navigate(R.id.nav_sign_up,null,
-                        getDefaultNavigationAnimation())
+                    findNavController().navigate(
+                        R.id.nav_sign_up, null,
+                        getDefaultNavigationAnimation()
+                    )
                 }
             }
         }
@@ -60,41 +62,47 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
 
     private fun setupObservers() {
         loginViewModel.loginReponse.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
+            hideProgressBar()
             val i = Intent(requireContext(), HomeActivity::class.java)
             requireActivity().startActivity(i)
+            requireActivity().finish()
         })
 
         loginViewModel.showNetworkError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            context?.let { it1 -> showErrorDialog(it,requireActivity(), it1) }
+            hideProgressBar()
+            context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
         loginViewModel.showUnknownError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
+            hideProgressBar()
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
 
         loginViewModel.error.observe(viewLifecycleOwner, Observer {
-            binding.progressBarContainer.visibility = View.GONE
+            hideProgressBar()
             context?.let { it1 -> showErrorDialog(it, requireActivity(), it1) }
         })
 
-        loginViewModel.showServerError.observe(this ) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-            Log.d("Login Error",errorMessage)
+        loginViewModel.showServerError.observe(this) { errorMessage ->
+            hideProgressBar()
         }
     }
 
     private fun initOnClicks() {
-        binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
-
             val emailId = binding.etEmailID.text.toString()
             val password = binding.etPassword.text.toString()
 
-            when {
+            if (binding.etEmailID.checkValidations(FieldEnum.MOBILE_NUMBER.fieldName) &&
+                binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
+            ) {
+                showProgressBar()
+                loginViewModel.login(emailId, password)
+            }
+
+
+            /*when {
                 emailId.isEmpty() -> {
                     binding.textInputEmail.error= resources.getString(R.string.enter_emailID)
                    // showErrorDialog("Enter Email Id", requireActivity(), requireContext())
@@ -113,7 +121,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
                 }
             }
 
-            /*if (loginViewModel.isValidLoginData(emailId, password)) {
+            if (loginViewModel.isValidLoginData(emailId, password)) {
                 binding.progressBarContainer.visibility = View.VISIBLE
                 loginViewModel.login(emailId, password)
             }*/
@@ -124,13 +132,16 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBarContainer.gone()
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentLoginBinding
         get() = FragmentLoginBinding::inflate
-
 
 
 }

@@ -7,6 +7,7 @@ import com.sendbizcard.models.request.FeedBackRequestModel
 import com.sendbizcard.models.response.BaseResponseModel
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
+import com.sendbizcard.utils.SingleLiveEvent
 import com.sendbizcard.utils.decodeNetworkError
 import com.sendbizcard.utils.decodeServerError
 import com.sendbizcard.utils.decodeUnknownError
@@ -22,7 +23,7 @@ class FeedBackViewModel @Inject constructor(
     private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel() {
 
-    var feedbackResponse = MutableLiveData<BaseResponseModel>()
+    var feedbackResponse = SingleLiveEvent<BaseResponseModel>()
 
     fun isValidFeedbackData(strFeedBAck: String): Boolean {
         return when {

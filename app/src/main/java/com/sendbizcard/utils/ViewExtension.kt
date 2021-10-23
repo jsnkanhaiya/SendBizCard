@@ -11,18 +11,6 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.badge.BadgeDrawable
 
-fun View.getParentActivity(): AppCompatActivity? {
-  var context = this.context
-  while (context is ContextWrapper) {
-    if (context is AppCompatActivity) {
-      return context
-    }
-    context = context.baseContext
-  }
-  return null
-}
-
-
 fun View.visible() {
   this.visibility = View.VISIBLE
 }

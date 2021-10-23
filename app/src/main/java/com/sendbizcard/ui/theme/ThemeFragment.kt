@@ -1,7 +1,6 @@
 package com.sendbizcard.ui.theme
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +20,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
 
-
     @Inject
     lateinit var themeAdapter: ThemeAdapter
 
@@ -33,21 +31,34 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        binding.progressBarContainer.visible()
         observeData()
+        showProgressBar()
         themeViewModel.getThemeList()
 
     }
 
     private fun observeData() {
         themeViewModel.themeList.observe(this) { themeList ->
+            hideProgressBar()
             setUpAdapter(themeList)
-            binding.progressBarContainer.gone()
         }
+
+        themeViewModel.showServerError.observe(this) {
+
+        }
+
+        themeViewModel.showNetworkError.observe(this) {
+
+        }
+
+        themeViewModel.showUnknownError.observe(this) {
+
+        }
+
     }
 
     private fun setUpAdapter(themeList: List<ListThemeItem>) {
-        if (themeList.isNotEmpty()){
+        if (themeList.isNotEmpty()) {
             binding.rvSelectTheme.layoutManager =
                 PickingLayoutManager(
                     requireContext(),
@@ -60,21 +71,30 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
             snapHelper.attachToRecyclerView(binding.rvSelectTheme)
             themeList.getOrNull(0)?.isSelected = true
             themeAdapter.addAll(themeList)
-            themeAdapter.clickListenerWithPosition = object : BaseViewHolder.ItemClickedCallBackWithPosition<ListThemeItem> {
-                override fun onItemClicked(data: ListThemeItem, pos: Int) {
-                    themeAdapter.list.forEach {
-                        it.isSelected = false
+            themeAdapter.clickListenerWithPosition =
+                object : BaseViewHolder.ItemClickedCallBackWithPosition<ListThemeItem> {
+                    override fun onItemClicked(data: ListThemeItem, pos: Int) {
+                        themeAdapter.list.forEach {
+                            it.isSelected = false
+                        }
+
+                        themeAdapter.list[pos].isSelected = true
+                        binding.rvSelectTheme.smoothScrollToPosition(pos)
+                        themeAdapter.notifyDataSetChanged()
                     }
 
-                    themeAdapter.list[pos].isSelected = true
-                    binding.rvSelectTheme.smoothScrollToPosition(pos)
-                    themeAdapter.notifyDataSetChanged()
                 }
-
-            }
             binding.rvSelectTheme.adapter = themeAdapter
             binding.btnSave.visible()
         }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBarContainer.gone()
     }
 
 

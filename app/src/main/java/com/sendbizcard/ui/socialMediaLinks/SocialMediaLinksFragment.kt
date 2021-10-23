@@ -117,15 +117,10 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
             requireContext().resources.getString(R.string.saved_successfully),
             R.drawable.ic_success,
             onDismiss = {
-
-                    findNavController().popBackStack()
-
+                findNavController().popBackStack()
             }
         )
-
-
     }
-
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEnterSocialMediaLinksBinding
         get() = FragmentEnterSocialMediaLinksBinding::inflate

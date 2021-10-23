@@ -4,8 +4,10 @@ import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.base.BaseViewModel
 import com.sendbizcard.models.request.CardListRequestModel
 import com.sendbizcard.models.request.LoginRequestModel
+import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.models.response.CardListResponseModel
 import com.sendbizcard.models.response.LoginResponseModel
+import com.sendbizcard.models.response.theme.ListThemeItem
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.SingleLiveEvent
@@ -24,7 +26,8 @@ class CardListViewModel@Inject constructor(
     private val preferenceSourceImpl: PreferenceSourceImpl
 ) : BaseViewModel() {
 
-    var cardListResponse = SingleLiveEvent<CardListResponseModel>()
+    val cardListLiveData : SingleLiveEvent<List<CardDetailsItem>> by lazy { SingleLiveEvent() }
+
 
     fun getCardList() {
      //   val cardListRequestModel = CardListRequestModel("",0,10,null,"")
@@ -35,7 +38,10 @@ class CardListViewModel@Inject constructor(
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
-                        cardListResponse.value = result.body
+                        result.body.data?.cardDetails?.let { cardList ->
+                            cardListLiveData.value = cardList
+                        }
+
                     }
 
                     is NetworkResponse.ServerError -> {

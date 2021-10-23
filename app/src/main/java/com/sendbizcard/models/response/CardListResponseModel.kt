@@ -44,7 +44,7 @@ data class ServicesItem(
 data class DataCardDetail(
 
 	@field:SerializedName("card_details")
-	val cardDetails: List<CardDetailsItem?>? = null
+	val cardDetails: List<CardDetailsItem>? = null
 )
 
 data class CardDetailsItem(

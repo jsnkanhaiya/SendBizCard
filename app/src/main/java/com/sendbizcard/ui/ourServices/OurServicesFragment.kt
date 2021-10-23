@@ -1,5 +1,6 @@
 package com.sendbizcard.ui.ourServices
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -41,6 +42,7 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
         binding.btnAdd.setOnClickListener {
             val dialog = AddServicesDialog.newInstance()
             dialog.onSaveButtonClick = object : AddServicesDialog.OnSaveButtonClick {
+                @SuppressLint("NotifyDataSetChanged")
                 override fun addServicesItem(serviceEntered: String) {
                     ourServicesAdapter.add(ServicesItem(name = serviceEntered))
                     ourServicesAdapter.notifyDataSetChanged()
@@ -64,7 +66,6 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showSuccessDialog() {
-        // binding.progressBarContainer.visibility = View.GONE
         AlertDialogWithImageView.showDialog(
             requireFragmentManager().beginTransaction(),
             requireContext(),
@@ -72,9 +73,7 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
             requireContext().resources.getString(R.string.saved_successfully),
             R.drawable.ic_success,
             onDismiss = {
-
                 findNavController().popBackStack()
-
             }
         )
 

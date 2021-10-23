@@ -35,5 +35,8 @@ data class ListThemeItem(
 	val isDefault: Int? = null,
 
 	@field:SerializedName("card_slug")
-	val cardSlug: String? = null
+	val cardSlug: String? = null,
+
+	@field:SerializedName("is_selected")
+	var isSelected: Boolean = false
 )

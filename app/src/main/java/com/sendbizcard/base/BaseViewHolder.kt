@@ -9,6 +9,7 @@ abstract class BaseViewHolder<T>(binding: ViewBinding) : RecyclerView.ViewHolder
     var itemClickCallback: ItemClickedCallback<T>? = null
     var positionCallback: ItemClickedPositionCallback? = null
     var positionCallbackWithData: ItemClickedCallBackWithPosition<T>? = null
+    var itemCardClickCallback: ItemCardClickCallback<T>? = null
 
     abstract fun loadData(receivedData: T,position: Int)
 
@@ -22,6 +23,13 @@ abstract class BaseViewHolder<T>(binding: ViewBinding) : RecyclerView.ViewHolder
 
     interface ItemClickedCallBackWithPosition<T> {
         fun onItemClicked(data: T, pos: Int)
+    }
+
+    interface ItemCardClickCallback<T>{
+        fun onEditClicked(data: T, pos: Int)
+        fun onPreviewClicked(data: T, pos: Int)
+        fun onShareClicked(data: T, pos: Int)
+        fun onDeleteClicked(data: T, pos: Int)
     }
 
 

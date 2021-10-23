@@ -12,8 +12,8 @@ abstract class BaseAdapter<V : Any, T : RecyclerView.ViewHolder> : RecyclerView.
 
     var clickListener: BaseViewHolder.ItemClickedCallback<V>?=null
     var positionListener: BaseViewHolder.ItemClickedPositionCallback?=null
-    var clickListerWithPosition: BaseViewHolder.ItemClickedCallBackWithPosition<V>?=null
-
+    var clickListenerWithPosition: BaseViewHolder.ItemClickedCallBackWithPosition<V>?=null
+    var cardClickListener: BaseViewHolder.ItemCardClickCallback<V>?= null
 
     /**
      * clear all the list and add the whole list

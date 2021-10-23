@@ -16,7 +16,7 @@ class ThemeAdapter @Inject constructor() : BaseAdapter<ListThemeItem,ThemeViewHo
 
     override fun onBindViewHolder(holder: ThemeViewHolder, position: Int) {
         holder.loadData(list[position],position)
-
+        holder.positionCallbackWithData = clickListenerWithPosition
     }
 
     override fun getItemCount(): Int {

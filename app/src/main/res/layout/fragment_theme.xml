@@ -13,11 +13,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="16dp"
         android:text="@string/select_your_theme"
         android:gravity="center"
-        android:padding="8dp"
-        style="@style/gilroy_bold_18"/>
+        style="@style/gilroy_bold_18"
+        android:textColor="@color/textcolour"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
@@ -27,12 +26,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_select_theme"
-        android:orientation="horizontal"
-        android:layout_marginTop="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/row_theme_item"
+        android:layout_marginTop="32dp"
         />
 
     <androidx.appcompat.widget.AppCompatButton
@@ -40,16 +34,17 @@
         style="@style/gilroy_regular_16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/button_rectangle"
-        android:paddingLeft="65sp"
-        android:paddingRight="65sp"
+        android:paddingStart="64dp"
+        android:paddingEnd="64dp"
         android:text="@string/select"
         android:textAllCaps="false"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rv_select_theme" />
+        app:layout_constraintTop_toBottomOf="@+id/rv_select_theme"
+        android:visibility="gone"/>
 
     <RelativeLayout
         android:id="@+id/progressBarContainer"

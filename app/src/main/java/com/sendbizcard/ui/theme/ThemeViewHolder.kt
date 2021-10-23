@@ -1,5 +1,6 @@
 package com.sendbizcard.ui.theme
 
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.databinding.RowThemeItemBinding
 import com.sendbizcard.models.response.theme.ListThemeItem
@@ -10,5 +11,13 @@ class ThemeViewHolder (private val binding: RowThemeItemBinding) : BaseViewHolde
     override fun loadData(receivedData: ListThemeItem, position: Int) {
         val themeImageUrl = "https://xapi.sendbusinesscard.com/storage/" + receivedData.cardImg
         binding.imgTheme.loadImages(themeImageUrl)
+        binding.imgSelection.setOnClickListener {
+            positionCallbackWithData?.onItemClicked(receivedData,position)
+        }
+        if (receivedData.isSelected){
+            binding.imgSelection.setImageResource(R.drawable.ic_theme_selected)
+        } else {
+            binding.imgSelection.setImageResource(R.drawable.ic_theme_unselected)
+        }
     }
 }

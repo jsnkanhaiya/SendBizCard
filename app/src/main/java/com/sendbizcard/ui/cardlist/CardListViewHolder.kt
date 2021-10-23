@@ -15,9 +15,17 @@ class CardListViewHolder(private val binding: RowSavedCardItemBinding) : BaseVie
         binding.tvName.text = receivedData.name
         binding.tvDesignation.text = receivedData.designation
         binding.imgProfile.loadCircleImages(AppConstants.IMAGE_BASE_URL+receivedData.userImg)
-        //binding.tvName.text = receivedData.name
         binding.imgEdit.setOnClickListener {
-
+            itemCardClickCallback?.onEditClicked(receivedData,position)
+        }
+        binding.imgShare.setOnClickListener {
+            itemCardClickCallback?.onShareClicked(receivedData,position)
+        }
+        binding.imgPreVeiw.setOnClickListener {
+            itemCardClickCallback?.onPreviewClicked(receivedData,position)
+        }
+        binding.imgDelete.setOnClickListener {
+            itemCardClickCallback?.onDeleteClicked(receivedData,position)
         }
     }
 }

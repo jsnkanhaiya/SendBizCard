@@ -16,7 +16,6 @@ import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.utils.ValidationUtils
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
-import com.sendbizcard.dialog.ConfirmationDialogFragment
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span

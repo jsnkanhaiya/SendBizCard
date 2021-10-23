@@ -5,16 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.databinding.FragmentThemeBinding
+import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.models.response.theme.ListThemeItem
 import com.sendbizcard.utils.PickingLayoutManager
 import com.sendbizcard.utils.gone
-import com.sendbizcard.utils.showErrorDialog
 import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -55,21 +55,25 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
             setUpAdapter(themeList)
         }
 
-        themeViewModel.showNetworkError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            showErrorDialog(it,requireActivity(),requireContext())
-        })
-
-        themeViewModel.showUnknownError.observe(this, Observer {
-            binding.progressBarContainer.visibility = View.GONE
-            showErrorDialog(it,requireActivity(),requireContext())
-        })
-
-        themeViewModel.showServerError.observe(this) { errorMessage ->
-            binding.progressBarContainer.visibility = View.GONE
-            showErrorDialog(errorMessage,requireActivity(),requireContext())
+        themeViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
         }
 
+        themeViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+        themeViewModel.showServerError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"", R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"LoginFragment")
     }
 
     private fun setUpAdapter(themeList: List<ListThemeItem>) {

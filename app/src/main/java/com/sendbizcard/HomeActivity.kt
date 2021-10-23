@@ -88,18 +88,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         homeViewModel.showServerError.observe(this) { errorMessage ->
             showErrorMessage(errorMessage)
         }
-
-        profileViewModel.showNetworkError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
-        }
-
-        profileViewModel.showUnknownError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
-        }
-
-        profileViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
-        }
     }
 
     private fun showErrorMessage(errorMessage: String) {

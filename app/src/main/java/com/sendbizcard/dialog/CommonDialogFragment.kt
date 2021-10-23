@@ -8,6 +8,7 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseDialogFragment
 import com.sendbizcard.databinding.DialogCommonFragmentBinding
 import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.setWidthPercent
 
 class CommonDialogFragment : BaseDialogFragment<DialogCommonFragmentBinding>() {
 
@@ -34,6 +35,7 @@ class CommonDialogFragment : BaseDialogFragment<DialogCommonFragmentBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setWidthPercent(90)
         binding = getViewBinding()
         initOnClicks()
         setDataToUI()

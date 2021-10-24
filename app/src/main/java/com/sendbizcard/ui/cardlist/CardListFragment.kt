@@ -1,5 +1,6 @@
 package com.sendbizcard.ui.cardlist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -88,6 +89,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         binding.rvCardList.adapter = cardListAdapter
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun setUpSearchDataInAdapter(cardList: List<CardDetailsItem>) {
         cardListAdapter.addAll(cardList)
         cardListAdapter.notifyDataSetChanged()
@@ -106,7 +108,10 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
             hideProgressBar()
             showSuccessDialog()
             var deletedCardIndex = -1
-           for ((index, value) in cardListAdapter.list.withIndex()!!) {
+
+
+
+           for ((index, value) in cardListAdapter.list.withIndex()) {
                 println("the element at $index is $value")
                 if (value.id?.equals(deletedId) == true){
                     deletedCardIndex = index

@@ -88,8 +88,8 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.getCardUrl(url,viewCardRequest)
     }
 
-    override suspend fun deleteCard( deleteCardRequest:DeleteCardRequest): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
-        val url = remoteConfigImpl.getCardShareURL()
+    override suspend fun deleteCard( deleteCardRequest:DeleteCardRequest): NetworkResponse<BaseResponseModel, ErrorResponse> {
+        val url = remoteConfigImpl.getDeleteCardURL()
         return apiService.deleteCard(url,deleteCardRequest)
     }
 

@@ -56,7 +56,7 @@ interface ApiService {
     suspend fun getCardUrl(@Url url: String, @Body viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse, ErrorResponse>
 
     @POST
-    suspend fun deleteCard(@Url url: String, @Body deleteCardRequest: DeleteCardRequest) : NetworkResponse<BaseResponseModel, LoginErrorResponse>
+    suspend fun deleteCard(@Url url: String, @Body deleteCardRequest: DeleteCardRequest) : NetworkResponse<BaseResponseModel, ErrorResponse>
 
 
     @POST

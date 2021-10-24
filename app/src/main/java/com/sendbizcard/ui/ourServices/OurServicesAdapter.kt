@@ -17,6 +17,7 @@ class OurServicesAdapter @Inject constructor() : BaseAdapter<ServicesItem, OurSe
 
     override fun onBindViewHolder(holder: OurServicesViewHolder, position: Int) {
         holder.loadData(list[position],position)
+        holder.positionCallback = positionListener
     }
 
     override fun getItemCount(): Int {

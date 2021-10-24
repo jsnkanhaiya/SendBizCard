@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
+import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.databinding.FragmentOurServicesBinding
 import com.sendbizcard.dialog.AddServicesDialog
 import com.sendbizcard.models.request.addCard.ServicesItem
@@ -61,6 +62,13 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
     private fun setUpAdapter() {
         val ourServicesList = UserSessionManager.getDataFromServiceList()
         ourServicesAdapter.addAll(ourServicesList)
+        ourServicesAdapter.positionListener = object : BaseViewHolder.ItemClickedPositionCallback {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onItemOfPositionClicked(t: Int) {
+                ourServicesAdapter.list.removeAt(t)
+                ourServicesAdapter.notifyDataSetChanged()
+            }
+        }
         binding.rvOurServices.adapter = ourServicesAdapter
     }
 

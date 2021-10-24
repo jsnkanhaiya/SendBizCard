@@ -8,5 +8,8 @@ class OurServicesViewHolder(private val binding: RowOurServicesItemBinding) : Ba
 
     override fun loadData(receivedData: ServicesItem, position: Int) {
         binding.tvOurServiceItem.text = receivedData.name
+        binding.imgRemove.setOnClickListener {
+            positionCallback?.onItemOfPositionClicked(position)
+        }
     }
 }

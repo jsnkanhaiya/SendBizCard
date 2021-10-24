@@ -136,6 +136,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         imgInsta = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_insta)
         imgTwiter = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_twitter)
 
+        tvName.text= homeViewModel.getUserName()
+
         imgFb.setOnClickListener {
             val open = Intent(Intent.ACTION_VIEW, Uri.parse("http://facebook.com"))
             startActivity(open)

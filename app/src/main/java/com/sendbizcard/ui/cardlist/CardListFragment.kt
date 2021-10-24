@@ -1,5 +1,7 @@
 package com.sendbizcard.ui.cardlist
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
@@ -18,6 +21,7 @@ import com.sendbizcard.databinding.FragmentCardListBinding
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.models.response.CardListResponseModel
+import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
@@ -33,7 +37,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
     lateinit var cardListAdapter: CardListAdapter
 
     var cardList: CardListResponseModel? = null
-
+    var deletedId =""
     private val cardListViewModel: CardListViewModel by viewModels()
     private val viewCardViewModel: ViewCardViewModel by viewModels()
     private lateinit var binding: FragmentCardListBinding
@@ -75,6 +79,10 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
                 override fun onDeleteClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "DeleteClickedCallback")
+                    deletedId = data.id.toString()
+                    binding.progressBarContainer.visible()
+                    viewCardViewModel.deleteCard(data.id.toString())
+
                 }
             }
         binding.rvCardList.adapter = cardListAdapter
@@ -85,8 +93,31 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         cardListAdapter.notifyDataSetChanged()
     }
 
+    private fun showSuccessDialog() {
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.success_title),
+            resources.getString(R.string.success_title_card_delete),"",R.drawable.ic_icon_success)
+        fragment.show(parentFragmentManager,"CardListFragment")
+    }
 
     private fun observeData() {
+
+        viewCardViewModel.deleteCardResponse.observe(this) {
+            binding.progressBarContainer.gone()
+            hideProgressBar()
+            showSuccessDialog()
+            var deletedCardIndex = -1
+           for ((index, value) in cardListAdapter.list.withIndex()!!) {
+                println("the element at $index is $value")
+                if (value.id?.equals(deletedId) == true){
+                    deletedCardIndex = index
+                    break
+                }
+            }
+            if (deletedCardIndex!=-1){
+                cardListAdapter.list.removeAt(deletedCardIndex)
+                cardListAdapter.notifyItemRemoved(deletedCardIndex)
+            }
+        }
 
         viewCardViewModel.viewCardResponse.observe(this) { cardList ->
             hideProgressBar()

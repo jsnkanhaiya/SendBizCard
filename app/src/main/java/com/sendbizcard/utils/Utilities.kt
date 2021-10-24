@@ -6,7 +6,6 @@ import androidx.navigation.NavOptions
 import com.google.gson.JsonSyntaxException
 import com.sendbizcard.R
 import com.sendbizcard.utils.AppConstants.IS_LOG_ON
-import com.sendbizcard.models.LoginErrorResponse
 import java.io.EOFException
 import java.net.SocketTimeoutException
 import javax.net.ssl.SSLHandshakeException
@@ -15,6 +14,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Base64
 import com.sendbizcard.BuildConfig
+import com.sendbizcard.models.ErrorResponse
 import java.io.ByteArrayOutputStream
 
 
@@ -61,8 +61,8 @@ fun decodeUnknownError(throwable: Throwable): String {
     }
 }
 
-fun decodeServerError(errorResponse: LoginErrorResponse?): String {
-    return errorResponse?.message?.username?.getOrNull(0) ?: "Something Went Wrong"
+fun decodeServerError(errorResponse: ErrorResponse?): String {
+    return errorResponse?.message?.errors?.getOrNull(0) ?: "Something Went Wrong"
 }
 
 fun shareApp(context: Context,text:String ){
@@ -76,16 +76,6 @@ fun shareApp(context: Context,text:String ){
     context.startActivity(sendIntent)
 }
 
-fun getHttpStatus(httpCode: Int): HttpStatus {
-    var httpStatus = HttpStatus.DEFAULT
-    for (i in HttpStatus.values()) {
-        if (httpCode == i.code) {
-            httpStatus = i
-            break
-        }
-    }
-    return httpStatus
-}
 
 fun convertBitmapToBase64(bitmap: Bitmap): String {
     val byteArrayOutputStream = ByteArrayOutputStream()

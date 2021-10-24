@@ -1,29 +1,27 @@
 package com.sendbizcard.repository
 
 import com.haroldadmin.cnradapter.NetworkResponse
-import com.sendbizcard.models.ErrorsListResponse
-import com.sendbizcard.models.LoginErrorResponse
-import com.sendbizcard.models.home.SavedCards
+import com.sendbizcard.models.ErrorResponse
 import com.sendbizcard.models.request.*
 import com.sendbizcard.models.request.addCard.AddCardRequest
 import com.sendbizcard.models.response.*
 import com.sendbizcard.models.response.theme.ThemeResponse
 
 interface ApiRepository {
-    suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, LoginErrorResponse>
-    suspend fun updateUserProfile(updateProfileRequest: UpdateProfileRequest): NetworkResponse<BaseResponseModel, LoginErrorResponse>
-    suspend fun register(registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel,ErrorsListResponse>
-    suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<ForgotPasswordResponse,LoginErrorResponse>
-    suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
-    suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
-    suspend fun verifyOtp(registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
-    suspend fun resendOTP() : NetworkResponse<ForgotPasswordResponse,LoginErrorResponse>
-    suspend fun logoutUser() : NetworkResponse<BaseResponseModel,LoginErrorResponse>
-    suspend fun getThemeList() : NetworkResponse<ThemeResponse,ErrorsListResponse>
-    suspend fun getUserProfileData() : NetworkResponse<UserProfileResponse,LoginErrorResponse>
-    suspend fun sendFeedBack(feedback:FeedBackRequestModel) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
-    suspend fun addCardRequest(addCardRequest: AddCardRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
-    suspend fun getCardUrl(viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse,LoginErrorResponse>
-    suspend fun getCardListSearch(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,LoginErrorResponse>
-    suspend fun getCardList(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,LoginErrorResponse>
+    suspend fun login(loginRequest: LoginRequestModel): NetworkResponse<LoginResponseModel, ErrorResponse>
+    suspend fun updateUserProfile(updateProfileRequest: UpdateProfileRequest): NetworkResponse<BaseResponseModel, ErrorResponse>
+    suspend fun register(registerRequestModel: RegisterRequestModel) : NetworkResponse<RegisterResponseModel,ErrorResponse>
+    suspend fun forgotPassword(forgotPasswordRequestModel: ForgotPasswordRequestModel) : NetworkResponse<ForgotPasswordResponse,ErrorResponse>
+    suspend fun changePassword(changePasswordRequestModel: ChangePasswordRequestModel) : NetworkResponse<BaseResponseModel,ErrorResponse>
+    suspend fun verifyForgotPasswordOTP(registerRequestModel: VerifyForgotPasswordRequest) : NetworkResponse<BaseResponseModel,ErrorResponse>
+    suspend fun verifyOtp(registerRequestModel: VerifyOtpRequest) : NetworkResponse<BaseResponseModel,ErrorResponse>
+    suspend fun resendOTP() : NetworkResponse<ForgotPasswordResponse,ErrorResponse>
+    suspend fun logoutUser() : NetworkResponse<BaseResponseModel,ErrorResponse>
+    suspend fun getThemeList() : NetworkResponse<ThemeResponse,ErrorResponse>
+    suspend fun getUserProfileData() : NetworkResponse<UserProfileResponse,ErrorResponse>
+    suspend fun sendFeedBack(feedback:FeedBackRequestModel) : NetworkResponse<BaseResponseModel,ErrorResponse>
+    suspend fun addCardRequest(addCardRequest: AddCardRequest) : NetworkResponse<BaseResponseModel,ErrorResponse>
+    suspend fun getCardUrl(viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse,ErrorResponse>
+    suspend fun getCardListSearch(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,ErrorResponse>
+    suspend fun getCardList(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,ErrorResponse>
 }

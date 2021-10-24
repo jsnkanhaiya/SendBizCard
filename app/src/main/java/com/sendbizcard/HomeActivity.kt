@@ -48,14 +48,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
-       /* binding.appBarHome.progressBarContainer.visible()
-        profileViewModel.getUserProfileData()*/
         setSupportActionBar(binding.appBarHome.toolbar)
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
                 R.id.nav_my_profile,
                 R.id.nav_saved_cards,
+                R.id.nav_contact_list,
                 R.id.nav_feedback,
                 R.id.nav_select_theme,
                 R.id.nav_share_app,
@@ -63,20 +62,15 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             ), binding.drawerLayout
         )
         setUpDrawerLayout()
-        setObservers()
+        setUpObservers()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    private fun setObservers() {
+    private fun setUpObservers() {
         homeViewModel.logoutResponse.observe(this) {
             binding.appBarHome.progressBarContainer.gone()
             showSuccessDialog()
         }
-       /* profileViewModel.userProfileResponse.observe(this){
-            binding.appBarHome.progressBarContainer.gone()
-            tvName.text = it.user?.name?:""
-        }
-*/
         homeViewModel.showNetworkError.observe(this) { errorMessage ->
             showErrorMessage(errorMessage)
         }

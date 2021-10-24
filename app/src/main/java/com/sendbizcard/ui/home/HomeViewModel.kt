@@ -62,7 +62,7 @@ class HomeViewModel @Inject constructor(
                     }
 
                     is NetworkResponse.ServerError -> {
-                       // showServerError.value = decodeServerError(result.body)
+                        showServerError.value = decodeServerError(result.body)
                     }
 
                     is NetworkResponse.NetworkError -> {

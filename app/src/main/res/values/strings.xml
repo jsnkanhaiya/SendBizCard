@@ -68,6 +68,7 @@ Terms of Service and Privacy Policy</string>
     <string name="menu_my_Register">Create Account</string>
     <string name="menu_my_login">Login</string>
     <string name="menu_saved_cards">Saved Cards</string>
+    <string name="menu_contact_list">Contact List</string>
     <string name="menu_feedback">Feedback</string>
     <string name="menu_select_theme">Select Theme</string>
     <string name="menu_home">Home</string>

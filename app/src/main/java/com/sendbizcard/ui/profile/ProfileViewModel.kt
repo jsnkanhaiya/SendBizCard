@@ -36,7 +36,7 @@ class ProfileViewModel @Inject constructor(
                 }
                 when(result) {
                     is NetworkResponse.Success -> {
-                        //loginReponse = result
+
                         preferenceSourceImpl.userName= result.body.user?.name.toString()
                         preferenceSourceImpl.userEmail= result.body.user?.email.toString()
                         preferenceSourceImpl.userMobileNO= result.body.user?.contact.toString()

@@ -25,17 +25,6 @@ class FeedBackViewModel @Inject constructor(
 
     var feedbackResponse = SingleLiveEvent<BaseResponseModel>()
 
-    fun isValidFeedbackData(strFeedBAck: String): Boolean {
-        return when {
-            strFeedBAck.isNullOrEmpty() -> {
-                false
-            }
-            else -> {
-                return true
-            }
-        }
-
-    }
 
     fun sendFeedBAck(strFeedBAck: String) {
         val feedBackRequestModel = FeedBackRequestModel(

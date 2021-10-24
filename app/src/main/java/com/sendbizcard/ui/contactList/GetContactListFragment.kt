@@ -12,31 +12,41 @@ import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentGetContactListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import android.provider.ContactsContract
-
-import android.content.ContentResolver
-import android.R.id
 import android.widget.Toast
+import androidx.fragment.app.viewModels
 
 
 @AndroidEntryPoint
 class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
+
+    private val contactListViewModel: GetContactListViewModel by viewModels()
 
     private val REQUEST_CODE_CONTACTS = 0x1006
     private val contactList: ArrayList<String> by lazy {
         ArrayList()
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestReadContactPermission()
+        setUpObservers()
+    }
+
+    private fun setUpObservers(){
+        contactListViewModel.cardListLiveData.observe(this) {
+
+        }
+
+        contactListViewModel.cardSearchLiveData.observe(this){
+
+        }
     }
 
     private fun requestReadContactPermission(){
         if (checkReadContactsPermission()){
             val list = readContacts()
             if (list.isNotEmpty()){
-
+                contactListViewModel.getCardList()
             }
         } else {
             requestPermissions(
@@ -63,7 +73,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     val list = readContacts()
                     if (list.isNotEmpty()){
-
+                        contactListViewModel.getCardList()
                     }
                 } else {
                     Toast.makeText(requireContext(), "Allow Permission", Toast.LENGTH_LONG).show()

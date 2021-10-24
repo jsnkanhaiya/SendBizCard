@@ -2,7 +2,7 @@ package com.sendbizcard.models
 
 import com.google.gson.annotations.SerializedName
 
-data class LoginErrorResponse(
+data class ErrorResponse(
 
 	@field:SerializedName("error_code")
 	val errorCode: Any? = null,
@@ -16,6 +16,6 @@ data class LoginErrorResponse(
 
 data class Message(
 
-	@field:SerializedName("username")
-	val username: List<String?>? = null
+	@field:SerializedName("errors")
+	val errors: List<String?>? = null
 )

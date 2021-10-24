@@ -10,6 +10,7 @@ import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.ValidationUtils
 import com.sendbizcard.utils.decodeNetworkError
+import com.sendbizcard.utils.decodeServerError
 import com.sendbizcard.utils.decodeUnknownError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -50,7 +51,7 @@ class RegisterViewModel @Inject constructor(
                 }
 
                 is NetworkResponse.ServerError -> {
-
+                    showServerError.value = decodeServerError(result.body)
                 }
 
                 is NetworkResponse.NetworkError -> {

@@ -2,7 +2,6 @@ package com.sendbizcard.base
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-import com.sendbizcard.models.ServerError
 import com.sendbizcard.utils.SingleLiveEvent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

@@ -8,6 +8,9 @@ import com.sendbizcard.models.response.theme.ThemeResponse
 import com.sendbizcard.prefs.PreferenceSourceImpl
 import com.sendbizcard.repository.ApiRepositoryImpl
 import com.sendbizcard.utils.SingleLiveEvent
+import com.sendbizcard.utils.decodeNetworkError
+import com.sendbizcard.utils.decodeServerError
+import com.sendbizcard.utils.decodeUnknownError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -41,15 +44,15 @@ class ThemeViewModel @Inject constructor(
                     }
 
                     is NetworkResponse.ServerError -> {
-
+                        showServerError.value = decodeServerError(result.body)
                     }
 
                     is NetworkResponse.NetworkError -> {
-
+                        showNetworkError.value = decodeNetworkError(result.error)
                     }
 
                     is NetworkResponse.UnknownError -> {
-
+                        showUnknownError.value = decodeUnknownError(result.error)
                     }
                 }
             }

@@ -101,6 +101,23 @@
 
     </fragment>
 
+
+    <fragment
+        android:id="@+id/nav_contact_list"
+        android:name="com.sendbizcard.ui.contactList.GetContactListFragment"
+        android:label="@string/menu_contact_list"
+        tools:layout="@layout/fragment_get_contact_list" >
+
+        <action
+            android:id="@+id/actionGetContactListFragmentToHomeFragment"
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
     <fragment
         android:id="@+id/nav_feedback"
         android:name="com.sendbizcard.ui.feedback.FeedbackFragment"

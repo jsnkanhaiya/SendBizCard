@@ -44,7 +44,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
 
     private fun requestReadContactPermission(){
         if (checkReadContactsPermission()){
-            val list = readContacts()
+            val list = readContacts().distinct()
             if (list.isNotEmpty()){
                 contactListViewModel.getCardList()
             }
@@ -70,7 +70,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
     ) {
         when(requestCode){
             REQUEST_CODE_CONTACTS -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     val list = readContacts()
                     if (list.isNotEmpty()){
                         contactListViewModel.getCardList()

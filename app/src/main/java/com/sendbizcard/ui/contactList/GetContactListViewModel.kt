@@ -26,11 +26,11 @@ class GetContactListViewModel @Inject constructor(
     val cardSearchLiveData : SingleLiveEvent<List<CardDetailsItem>> by lazy { SingleLiveEvent() }
 
     fun getCardList() {
-        val cardListRequestModel = CardListRequestModel("",0,10,null,"")
+      //  val cardListRequestModel = CardListRequestModel("",0,10,null,"")
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {
-                    apiRepositoryImpl.getCardList(cardListRequestModel)
+                    apiRepositoryImpl.getCardList()
                 }
                 when(result) {
                     is NetworkResponse.Success -> {

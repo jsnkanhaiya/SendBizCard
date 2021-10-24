@@ -90,14 +90,19 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.getCardUrl(url,viewCardRequest)
     }
 
+    override suspend fun deleteCard( deleteCardRequest:DeleteCardRequest): NetworkResponse<BaseResponseModel, LoginErrorResponse> {
+        val url = remoteConfigImpl.getCardShareURL()
+        return apiService.deleteCard(url,deleteCardRequest)
+    }
+
     override suspend fun getCardListSearch(cardListRequest: CardListRequestModel): NetworkResponse<CardListResponseModel, LoginErrorResponse> {
         val url = remoteConfigImpl.getCardShareURL()
         return apiService.getCardListSearch(url,cardListRequest)
     }
 
-    override suspend fun getCardList(cardListRequest: CardListRequestModel): NetworkResponse<CardListResponseModel, LoginErrorResponse> {
+    override suspend fun getCardList(): NetworkResponse<CardListResponseModel, LoginErrorResponse> {
         val url = remoteConfigImpl.getCardListURL()
-        return apiService.getCardList(url,cardListRequest)
+        return apiService.getCardList(url)
     }
 
 }

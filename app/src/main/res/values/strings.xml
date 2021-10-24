@@ -85,6 +85,7 @@ Terms of Service and Privacy Policy</string>
     <string name="success_title_sub">OTP verified Successfully</string>
     <string name="success_title_feedback">Thank You\nYour Feedback send Successfully</string>
     <string name="success_title_logout">Logout Successfully</string>
+    <string name="success_title_card_delete">Card deleted Successfully</string>
     <string name="saved_successfully">Saved Successfully</string>
     <string name="card_saved_successfully">Card Saved Successfully</string>
     <string name="update_profile_successfully">Profile updated Successfully</string>

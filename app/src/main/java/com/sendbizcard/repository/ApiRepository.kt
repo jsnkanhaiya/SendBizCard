@@ -24,6 +24,7 @@ interface ApiRepository {
     suspend fun sendFeedBack(feedback:FeedBackRequestModel) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
     suspend fun addCardRequest(addCardRequest: AddCardRequest) : NetworkResponse<BaseResponseModel,ErrorsListResponse>
     suspend fun getCardUrl(viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse,LoginErrorResponse>
+    suspend fun deleteCard(deleteCardRequest: DeleteCardRequest) : NetworkResponse<BaseResponseModel,LoginErrorResponse>
     suspend fun getCardListSearch(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,LoginErrorResponse>
-    suspend fun getCardList(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,LoginErrorResponse>
+    suspend fun getCardList() : NetworkResponse<CardListResponseModel,LoginErrorResponse>
 }

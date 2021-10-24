@@ -23,6 +23,10 @@ class HomeViewModel @Inject constructor(
     var logoutResponse = MutableLiveData<BaseResponseModel>()
     var saveCardResponse = SingleLiveEvent<BaseResponseModel>()
 
+    fun getUserName() : String{
+       return preferenceSourceImpl.userName
+    }
+
     fun addCardRequest(
         mName: String,
         mDesignation: String,

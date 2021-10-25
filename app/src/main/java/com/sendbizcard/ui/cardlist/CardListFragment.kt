@@ -38,7 +38,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
     lateinit var cardListAdapter: CardListAdapter
 
     var cardList: CardListResponseModel? = null
-    var deletedId =""
+    var deletedId = -1
     private val cardListViewModel: CardListViewModel by viewModels()
     private val viewCardViewModel: ViewCardViewModel by viewModels()
     private lateinit var binding: FragmentCardListBinding
@@ -80,7 +80,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
                 override fun onDeleteClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "DeleteClickedCallback")
-                    deletedId = data.id.toString()
+                    deletedId = data.id ?: -1
                     binding.progressBarContainer.visible()
                     viewCardViewModel.deleteCard(data.id.toString())
 
@@ -106,19 +106,17 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         viewCardViewModel.deleteCardResponse.observe(this) {
             binding.progressBarContainer.gone()
             hideProgressBar()
-            showSuccessDialog()
             var deletedCardIndex = -1
 
-
-
-           for ((index, value) in cardListAdapter.list.withIndex()) {
-                println("the element at $index is $value")
-                if (value.id?.equals(deletedId) == true){
+            for ((index, value) in cardListAdapter.list.withIndex()) {
+                val id = value.id ?: -1
+                if (id == deletedId){
                     deletedCardIndex = index
                     break
                 }
             }
             if (deletedCardIndex!=-1){
+                showSuccessDialog()
                 cardListAdapter.list.removeAt(deletedCardIndex)
                 cardListAdapter.notifyItemRemoved(deletedCardIndex)
             }

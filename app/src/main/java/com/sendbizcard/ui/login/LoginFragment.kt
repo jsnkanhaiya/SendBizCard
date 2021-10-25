@@ -88,7 +88,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             val emailId = binding.etEmailID.text.toString()
             val password = binding.etPassword.text.toString()
 
-            val isEmailIdValidated = binding.etEmailID.checkValidations(FieldEnum.MOBILE_NUMBER.fieldName)
+            val isEmailIdValidated = binding.etEmailID.checkValidations(FieldEnum.EMAIL_ID.fieldName)
             val isPasswordValidated =  binding.etPassword.checkValidations(FieldEnum.PASSWORD.fieldName)
 
             if (isEmailIdValidated && isPasswordValidated) {

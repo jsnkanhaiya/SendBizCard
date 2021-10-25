@@ -12,42 +12,95 @@ import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentGetContactListBinding
 import dagger.hilt.android.AndroidEntryPoint
 import android.provider.ContactsContract
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.sendbizcard.base.BaseViewHolder
+import com.sendbizcard.models.response.CardDetailsItem
+import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.visible
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
 
 @AndroidEntryPoint
 class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
 
+    @Inject
+    lateinit var contactListAdapter: ContactListAdapter
+
     private val contactListViewModel: GetContactListViewModel by viewModels()
+    private lateinit var binding: FragmentGetContactListBinding
 
     private val REQUEST_CODE_CONTACTS = 0x1006
     private val contactList: ArrayList<String> by lazy {
         ArrayList()
     }
 
+    private val sortedContactList: ArrayList<CardDetailsItem> by lazy {
+        ArrayList()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestReadContactPermission()
+        binding = getViewBinding()
         setUpObservers()
+        requestReadContactPermission()
+        initOnTextChangedListener()
     }
 
     private fun setUpObservers(){
-        contactListViewModel.cardListLiveData.observe(this) {
-
+        contactListViewModel.cardListLiveData.observe(this) { cardList ->
+            if (cardList.isNotEmpty()) {
+                compareContactList(cardList)
+            } else {
+                hideProgressBar()
+            }
         }
 
-        contactListViewModel.cardSearchLiveData.observe(this){
-
+        contactListViewModel.cardSearchLiveData.observe(this) { searchCardList ->
+            hideProgressBar()
+            setUpAdapter(ArrayList(searchCardList))
         }
+    }
+
+    private fun showProgressBar() {
+        binding.progressBarContainer.visible()
+    }
+
+    private fun hideProgressBar() {
+        binding.progressBarContainer.gone()
+    }
+
+    private fun initOnTextChangedListener() {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+
+            override fun afterTextChanged(editable: Editable) {
+                val searchData = binding.etSearch.text.toString()
+                val cardList = contactListViewModel.cardListLiveData.value ?: ArrayList()
+                if (searchData.isEmpty() && cardList.isNotEmpty()){
+                    setUpSearchDataInAdapter(cardList)
+                }
+            }
+        })
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setUpSearchDataInAdapter(cardList: List<CardDetailsItem>) {
+        contactListAdapter.addAll(cardList)
+        contactListAdapter.notifyDataSetChanged()
     }
 
     private fun requestReadContactPermission(){
         if (checkReadContactsPermission()){
-            val list = readContacts().distinct()
-            if (list.isNotEmpty()){
-                contactListViewModel.getCardList()
-            }
+            readContactsInBackgroundThread()
         } else {
             requestPermissions(
                 arrayOf(Manifest.permission.READ_CONTACTS),
@@ -71,10 +124,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
         when(requestCode){
             REQUEST_CODE_CONTACTS -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    val list = readContacts().distinct()
-                    if (list.isNotEmpty()){
-                        contactListViewModel.getCardList()
-                    }
+                    readContactsInBackgroundThread()
                 } else {
                     Toast.makeText(requireContext(), "Allow Permission", Toast.LENGTH_LONG).show()
                 }
@@ -82,9 +132,72 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
         }
     }
 
+
+    private fun readContactsInBackgroundThread() {
+        showProgressBar()
+        viewLifecycleOwner.lifecycleScope.launch {
+            val contactList = withContext(Dispatchers.IO){
+                readContacts()
+            }
+            if (contactList.isNotEmpty()){
+                contactListViewModel.getCardList()
+            } else {
+                hideProgressBar()
+            }
+        }
+    }
+
+    private fun compareContactList(cardList: List<CardDetailsItem>) {
+        viewLifecycleOwner.lifecycleScope.launch {
+            val list = withContext(Dispatchers.IO){
+                compareListInBackgroundThread(cardList)
+            }
+            hideProgressBar()
+            setUpAdapter(list)
+        }
+    }
+
+    private fun compareListInBackgroundThread(cardList: List<CardDetailsItem>) : ArrayList<CardDetailsItem> {
+        sortedContactList.clear()
+        for (contact in contactList) {
+            for (item in cardList){
+                if (item.contactNo == contact){
+                    sortedContactList.add(item)
+                    break
+                }
+            }
+        }
+        return sortedContactList
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setUpAdapter(cardList: ArrayList<CardDetailsItem>) {
+        contactListAdapter.addAll(cardList)
+        contactListAdapter.cardClickListener = object : BaseViewHolder.ItemCardClickCallback<CardDetailsItem> {
+            override fun onEditClicked(data: CardDetailsItem, pos: Int) {
+
+            }
+
+            override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {
+
+            }
+
+            override fun onShareClicked(data: CardDetailsItem, pos: Int) {
+
+            }
+
+            override fun onDeleteClicked(data: CardDetailsItem, pos: Int) {
+
+            }
+
+        }
+        binding.rvCardList.adapter = contactListAdapter
+        contactListAdapter.notifyDataSetChanged()
+    }
+
     // function to read contacts using content resolver
     @SuppressLint("Range")
-    private fun readContacts() : ArrayList<String> {
+    private fun readContacts() : List<String> {
         val contentResolver = requireContext().contentResolver
         val cursor = contentResolver.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null)
         if (cursor != null && cursor.moveToFirst()) {
@@ -108,7 +221,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
                 }
             } while (cursor.moveToNext())
         }
-        return contactList
+        return contactList.distinct()
     }
 
     override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentGetContactListBinding

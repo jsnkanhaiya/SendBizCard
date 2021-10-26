@@ -1,5 +1,6 @@
 package com.sendbizcard.ui.theme
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import com.sendbizcard.HomeActivity
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.base.BaseViewHolder
@@ -29,7 +31,6 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
 
     private lateinit var binding: FragmentThemeBinding
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
@@ -37,15 +38,19 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
         initOnClick()
         showProgressBar()
         themeViewModel.getThemeList()
-
     }
 
     private fun initOnClick() {
         binding.btnSave.setOnClickListener {
+
             val theme = themeAdapter.list.firstOrNull {
                 it.isSelected
             }
             themeViewModel.saveThemeId(theme?.id.toString())
+
+            var intent = Intent(requireContext(),HomeActivity::class.java)
+            requireActivity().startActivity(intent)
+            requireActivity().finish()
         }
     }
 

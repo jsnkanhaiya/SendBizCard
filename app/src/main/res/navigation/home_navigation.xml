@@ -130,7 +130,12 @@
         android:id="@+id/nav_select_theme"
         android:name="com.sendbizcard.ui.theme.ThemeFragment"
         android:label="@string/menu_select_theme"
-        tools:layout="@layout/fragment_theme" />
+        tools:layout="@layout/fragment_theme" >
+        <argument
+            android:name="isFromHome"
+            android:defaultValue="false"
+            app:argType="boolean" />
+    </fragment>
 
 
     <fragment

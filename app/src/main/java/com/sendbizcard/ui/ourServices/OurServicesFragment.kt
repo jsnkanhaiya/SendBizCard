@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
@@ -45,17 +46,24 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
             dialog.onSaveButtonClick = object : AddServicesDialog.OnSaveButtonClick {
                 @SuppressLint("NotifyDataSetChanged")
                 override fun addServicesItem(serviceEntered: String) {
-                    ourServicesAdapter.add(ServicesItem(name = serviceEntered))
-                    ourServicesAdapter.notifyDataSetChanged()
+
+                        ourServicesAdapter.add(ServicesItem(name = serviceEntered))
+                        ourServicesAdapter.notifyDataSetChanged()
+
                 }
             }
             dialog.show(parentFragmentManager,"add_services_dialog")
         }
 
         binding.btnSave.setOnClickListener {
+
             val ourServicesList = ourServicesAdapter.list
-            UserSessionManager.addDataInServiceList(ourServicesList)
-            showSuccessDialog()
+            if (!ourServicesList.isNullOrEmpty()){
+                UserSessionManager.addDataInServiceList(ourServicesList)
+                showSuccessDialog()
+            }else{
+                Toast.makeText(requireContext(),"Please add atleast one service",Toast.LENGTH_LONG).show()
+            }
         }
     }
 

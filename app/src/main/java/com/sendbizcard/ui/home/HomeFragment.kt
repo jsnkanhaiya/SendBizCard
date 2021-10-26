@@ -101,7 +101,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun hideProgressBar(){
-        binding.progressBarContainer.visible()
+        binding.progressBarContainer.gone()
     }
 
     private fun showErrorMessage(errorMessage: String) {

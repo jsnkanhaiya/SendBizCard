@@ -66,7 +66,6 @@ class RegisterViewModel @Inject constructor(
 
     }
 
-
     fun isValidRegisterData(
         name: String,
         mobileNo: String,

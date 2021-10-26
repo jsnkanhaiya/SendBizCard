@@ -5,6 +5,7 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
@@ -53,6 +54,7 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun setUpObservers() {
         registerViewModel.registerReponse.observe(viewLifecycleOwner, {
+          Toast.makeText(requireContext(), it.data?.contactOtp.toString(),Toast.LENGTH_LONG).show()
             hideProgressBar()
             findNavController().navigate(
                 R.id.nav_verifyOtp,

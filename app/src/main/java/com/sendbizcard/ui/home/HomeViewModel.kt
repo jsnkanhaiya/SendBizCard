@@ -40,7 +40,9 @@ class HomeViewModel @Inject constructor(
         mCompanyName: String
     ) {
         val addCardRequest = AddCardRequest().apply {
-            themeId = preferenceSourceImpl.themeID
+            themeId = if (preferenceSourceImpl.themeID.isNullOrEmpty()){"3"}else{
+                preferenceSourceImpl.themeID
+            }
             themeColor = mBackgroundColour
             name = mName
             userImg = mUserImageBase64String

@@ -14,6 +14,8 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentCreateNewPasswordBinding
 import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.dialog.ServerErrorDialogFragment
+import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -49,8 +51,12 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
             showErrorMessage(errorMessage)
         }
 
-        forgotPasswordViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        forgotPasswordViewModel.showServerError.observe(this) { serverError ->
+            if (serverError.code == 401) {
+                showServerErrorMessage()
+            } else {
+                showErrorMessage(serverError.errorMessage)
+            }
         }
     }
 
@@ -60,6 +66,19 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
 
     private fun hideProgressBar() {
         binding.progressBarContainer.gone()
+    }
+
+    private fun showServerErrorMessage() {
+        hideProgressBar()
+        val fragment = ServerErrorDialogFragment.newInstance()
+        fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
+            override fun onOKClicked() {
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+        }
+        fragment.show(parentFragmentManager, "CreateNewPasswordFragment")
     }
 
     private fun showErrorMessage(errorMessage: String) {

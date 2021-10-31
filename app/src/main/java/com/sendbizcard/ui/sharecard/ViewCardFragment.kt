@@ -75,7 +75,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
 
 
         viewCardViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+            showErrorMessage(errorMessage.errorMessage)
         }
     }
 

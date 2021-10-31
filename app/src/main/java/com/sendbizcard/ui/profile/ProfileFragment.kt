@@ -26,7 +26,9 @@ import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentProfileBinding
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
+import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.UserProfileResponse
+import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
@@ -79,10 +81,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
             showErrorMessage(errorMessage)
         }
 
-        profileViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        profileViewModel.showServerError.observe(this) { serverError ->
+            if (serverError.code == 401) {
+                showServerErrorMessage()
+            } else {
+                showErrorMessage(serverError.errorMessage)
+            }
         }
-
     }
 
     private fun showProgressBar() {
@@ -91,6 +96,19 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
 
     private fun hideProgressBar() {
         binding.progressBarContainer.gone()
+    }
+
+    private fun showServerErrorMessage() {
+        hideProgressBar()
+        val fragment = ServerErrorDialogFragment.newInstance()
+        fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
+            override fun onOKClicked() {
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+        }
+        fragment.show(parentFragmentManager, "ProfileFragment")
     }
 
     private fun showErrorMessage(errorMessage: String) {

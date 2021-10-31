@@ -93,7 +93,7 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
         }
 
         verifyOtpViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+            showErrorMessage(errorMessage.errorMessage)
         }
     }
 

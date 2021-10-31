@@ -71,8 +71,8 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
             showErrorMessage(errorMessage)
         }
 
-        loginViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        loginViewModel.showServerError.observe(this) { serverError ->
+            showErrorMessage(serverError.errorMessage)
         }
     }
 

@@ -80,7 +80,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
         homeViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+            showErrorMessage(errorMessage.errorMessage)
         }
     }
 

@@ -39,8 +39,6 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
         val bundle = this.arguments
         if (bundle != null) {
             isChangePassword = bundle.getBoolean("isChangepassword")
-            //binding.otpPinView.text=
-            //Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
         }
 
         if (isChangePassword) {
@@ -92,8 +90,8 @@ class ForgotPasswordFragment : BaseFragment<FragmentForgotPasswordBinding>() {
             showErrorMessage(errorMessage)
         }
 
-        forgotPasswordViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        forgotPasswordViewModel.showServerError.observe(this) { serverError ->
+            showErrorMessage(serverError.errorMessage)
         }
     }
 

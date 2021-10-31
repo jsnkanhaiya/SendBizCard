@@ -113,6 +113,7 @@ Terms of Service and Privacy Policy</string>
     <string name="ok_confirmation">OK</string>
     <string name="yes_confirmation">Yes</string>
     <string name="error">Error</string>
+    <string name="logged_out">You\'ve been logged out due to inactivity. Please log in again.</string>
 
     <!-- Theme -->
     <string name="select_your_theme">Select Your Theme</string>

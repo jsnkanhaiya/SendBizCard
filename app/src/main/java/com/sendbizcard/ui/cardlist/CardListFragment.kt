@@ -20,6 +20,8 @@ import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.databinding.FragmentCardListBinding
 import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.dialog.ServerErrorDialogFragment
+import com.sendbizcard.models.ServerError
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.models.response.CardListResponseModel
 import com.sendbizcard.ui.main.MainActivity
@@ -145,9 +147,26 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
             showErrorMessage(errorMessage)
         }
 
-        cardListViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        cardListViewModel.showServerError.observe(this) { serverError ->
+            if (serverError.code == 401) {
+                showServerErrorMessage()
+            } else {
+                showErrorMessage(serverError.errorMessage)
+            }
         }
+    }
+
+    private fun showServerErrorMessage() {
+        hideProgressBar()
+        val fragment = ServerErrorDialogFragment.newInstance()
+        fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
+            override fun onOKClicked() {
+                val intent = Intent(requireActivity(),MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+        }
+        fragment.show(parentFragmentManager, "CardListFragment")
     }
 
     private fun showErrorMessage(errorMessage: String) {

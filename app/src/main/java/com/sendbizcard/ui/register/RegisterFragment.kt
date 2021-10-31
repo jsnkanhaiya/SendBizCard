@@ -71,8 +71,8 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
             showErrorMessage(errorMessage)
         }
 
-        registerViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        registerViewModel.showServerError.observe(this) { serverError ->
+            showErrorMessage(serverError.errorMessage)
         }
     }
 

@@ -2,6 +2,7 @@ package com.sendbizcard.ui.contactList
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -17,8 +18,12 @@ import android.text.TextWatcher
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.sendbizcard.R
 import com.sendbizcard.base.BaseViewHolder
+import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
+import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
 import kotlinx.coroutines.Dispatchers
@@ -66,6 +71,42 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
             hideProgressBar()
             setUpAdapter(ArrayList(searchCardList))
         }
+
+        contactListViewModel.showUnknownError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+
+        contactListViewModel.showServerError.observe(this) { serverError ->
+            if (serverError.code == 401) {
+                showServerErrorMessage()
+            } else {
+                showErrorMessage(serverError.errorMessage)
+            }
+        }
+
+        contactListViewModel.showNetworkError.observe(this) { errorMessage ->
+            showErrorMessage(errorMessage)
+        }
+    }
+
+    private fun showServerErrorMessage() {
+        hideProgressBar()
+        val fragment = ServerErrorDialogFragment.newInstance()
+        fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
+            override fun onOKClicked() {
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+        }
+        fragment.show(parentFragmentManager, "ContactListFragment")
+    }
+
+    private fun showErrorMessage(errorMessage: String) {
+        hideProgressBar()
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
+            errorMessage,"", R.drawable.ic_icon_error)
+        fragment.show(parentFragmentManager,"ContactListFragment")
     }
 
     private fun showProgressBar() {

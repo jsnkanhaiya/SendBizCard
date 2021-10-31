@@ -16,6 +16,9 @@ import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentFeedbackBinding
 import com.sendbizcard.dialog.CommonDialogFragment
+import com.sendbizcard.dialog.ServerErrorDialogFragment
+import com.sendbizcard.models.ServerError
+import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
 import com.sendbizcard.utils.*
@@ -51,16 +54,33 @@ class FeedbackFragment : BaseFragment<FragmentFeedbackBinding>() {
         }
 
 
-        feedBackViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        feedBackViewModel.showServerError.observe(this) { serverError ->
+            if (serverError.code == 401){
+                showServerErrorMessage()
+            } else {
+                showErrorMessage(serverError.errorMessage)
+            }
         }
+    }
+
+    private fun showServerErrorMessage() {
+        hideProgressBar()
+        val fragment = ServerErrorDialogFragment.newInstance()
+        fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
+            override fun onOKClicked() {
+                val intent = Intent(requireActivity(), MainActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
+            }
+        }
+        fragment.show(parentFragmentManager, "CardListFragment")
     }
 
     private fun showErrorMessage(errorMessage: String) {
         hideProgressBar()
         val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
             errorMessage,"", R.drawable.ic_icon_error)
-        fragment.show(parentFragmentManager,"FeedbackFragment")
+        fragment.show(parentFragmentManager,"CardListFragment")
     }
 
     private fun initOnClicks() {

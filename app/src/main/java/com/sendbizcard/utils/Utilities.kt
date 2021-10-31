@@ -13,8 +13,10 @@ import javax.net.ssl.SSLHandshakeException
 import android.content.Intent
 import android.graphics.Bitmap
 import android.util.Base64
+import com.haroldadmin.cnradapter.NetworkResponse
 import com.sendbizcard.BuildConfig
 import com.sendbizcard.models.ErrorResponse
+import com.sendbizcard.models.ServerError
 import java.io.ByteArrayOutputStream
 
 
@@ -61,8 +63,10 @@ fun decodeUnknownError(throwable: Throwable): String {
     }
 }
 
-fun decodeServerError(errorResponse: ErrorResponse?): String {
-    return errorResponse?.message?.errors?.getOrNull(0) ?: "Something Went Wrong"
+fun decodeServerError(errorResponse: ErrorResponse?): ServerError {
+    val code = errorResponse?.errorCode ?: -1
+    val message = errorResponse?.message?.errors?.getOrNull(0) ?: "Something Went Wrong"
+    return ServerError(code,message)
 }
 
 fun shareApp(context: Context,text:String ){

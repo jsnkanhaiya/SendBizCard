@@ -68,8 +68,8 @@ class ThemeFragment : BaseFragment<FragmentThemeBinding>() {
             showErrorMessage(errorMessage)
         }
 
-        themeViewModel.showServerError.observe(this) { errorMessage ->
-            showErrorMessage(errorMessage)
+        themeViewModel.showServerError.observe(this) { serverError ->
+            showErrorMessage(serverError.errorMessage)
         }
 
     }

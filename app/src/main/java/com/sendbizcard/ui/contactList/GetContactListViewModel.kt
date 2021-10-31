@@ -37,7 +37,6 @@ class GetContactListViewModel @Inject constructor(
                         result.body.data?.cardDetails?.let { cardList ->
                             cardListLiveData.value = cardList
                         }
-
                     }
 
                     is NetworkResponse.ServerError -> {

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -13,10 +12,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.GravityCompat
-import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.navigation.NavDestination
 import androidx.navigation.Navigation
 import androidx.navigation.ui.*
 import com.sendbizcard.base.BaseActivity
@@ -24,7 +19,6 @@ import com.sendbizcard.databinding.ActivityHomeBinding
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.ui.main.MainActivity
-import com.sendbizcard.ui.profile.ProfileViewModel
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,11 +28,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private val homeViewModel: HomeViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
- //   private val profileViewModel: ProfileViewModel by viewModels()
-    lateinit var tvName : TextView
-    lateinit var imgFb : AppCompatImageView
-    lateinit var imgInsta : AppCompatImageView
-    lateinit var imgTwiter : AppCompatImageView
+
+    //   private val profileViewModel: ProfileViewModel by viewModels()
+    lateinit var tvName: TextView
+    lateinit var imgFb: AppCompatImageView
+    lateinit var imgInsta: AppCompatImageView
+    lateinit var imgTwiter: AppCompatImageView
 
     private val navController by lazy {
         Navigation.findNavController(this, R.id.nav_host_fragment_content_home)
@@ -48,6 +43,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
+
+
+
         setSupportActionBar(binding.appBarHome.toolbar)
         appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -63,6 +61,13 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         )
         setUpDrawerLayout()
         setUpObservers()
+
+        if (homeViewModel.getThemeId() == "3") {
+            navController.navigate(R.id.nav_home)
+        } else {
+            navController.navigate(R.id.nav_home_v2)
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -86,9 +91,11 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     private fun showErrorMessage(errorMessage: String) {
         binding.appBarHome.progressBarContainer.visibility = View.GONE
-        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
-            errorMessage,"",R.drawable.ic_icon_error)
-        fragment.show(supportFragmentManager,"HomeActivity")
+        val fragment = CommonDialogFragment.newInstance(
+            resources.getString(R.string.error),
+            errorMessage, "", R.drawable.ic_icon_error
+        )
+        fragment.show(supportFragmentManager, "HomeActivity")
     }
 
     override fun onSupportNavigateUp(): Boolean {
@@ -103,18 +110,29 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         setupActionBarWithNavController(navController, appBarConfiguration)
 
 
-        binding.navView.setNavigationItemSelectedListener {dest ->
-            when(dest.itemId) {
+        binding.navView.setNavigationItemSelectedListener { dest ->
+            when (dest.itemId) {
+                R.id.nav_home -> {
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+
+                    if (homeViewModel.getThemeId() == "3") {
+                        navController.navigate(R.id.nav_home)
+                    } else {
+                        navController.navigate(R.id.nav_home_v2)
+                    }
+                }
+
+
                 R.id.nav_share_app -> {
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
-                    shareApp(this,"")
+                    shareApp(this, "")
                 }
 
                 R.id.nav_logout -> {
 
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     showSuccessDialog()
-                  //  binding.appBarHome.progressBarContainer.visible()
+                    //  binding.appBarHome.progressBarContainer.visible()
 
                 }
 
@@ -127,16 +145,16 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             true
         }
 
-       binding.navView
+        binding.navView
 
         var headerview = binding.navView.getHeaderView(0);
         var socialMediaCL = binding.navView.findViewById<ConstraintLayout>(R.id.socialMediaCL);
-         tvName = headerview.findViewById<TextView>(R.id.tvName)
+        tvName = headerview.findViewById<TextView>(R.id.tvName)
         imgFb = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_fb)
         imgInsta = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_insta)
         imgTwiter = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_twitter)
 
-        tvName.text= homeViewModel.getUserName()
+        tvName.text = homeViewModel.getUserName()
 
         imgFb.setOnClickListener {
             val open = Intent(Intent.ACTION_VIEW, Uri.parse("http://facebook.com"))
@@ -164,8 +182,10 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun showSuccessDialog() {
-        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.success_title),
-            resources.getString(R.string.success_title_logout),"",R.drawable.ic_icon_success)
+        val fragment = CommonDialogFragment.newInstance(
+            resources.getString(R.string.success_title),
+            resources.getString(R.string.success_title_logout), "", R.drawable.ic_icon_success
+        )
         fragment.callbacks = object : CommonDialogFragment.Callbacks {
             override fun onDismissClicked() {
                 homeViewModel.clearAllData()
@@ -174,7 +194,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 finish()
             }
         }
-        fragment.show(supportFragmentManager,"HomeActivity")
+        fragment.show(supportFragmentManager, "HomeActivity")
     }
 
     override val bindingInflater: (LayoutInflater) -> ActivityHomeBinding

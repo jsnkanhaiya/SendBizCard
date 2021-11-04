@@ -88,6 +88,7 @@
                 style="@style/gilroy_regular_13"
                 android:imeOptions="actionNext"
                 android:background="@color/white"
+                android:inputType="textEmailAddress"
                 app:layout_constraintTop_toBottomOf="@+id/etMobile" />
         </com.google.android.material.textfield.TextInputLayout>
 

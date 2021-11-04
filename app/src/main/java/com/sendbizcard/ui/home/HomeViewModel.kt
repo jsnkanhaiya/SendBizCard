@@ -27,6 +27,10 @@ class HomeViewModel @Inject constructor(
        return preferenceSourceImpl.userName
     }
 
+    fun getThemeId() : String{
+        return preferenceSourceImpl.themeID
+    }
+
     fun addCardRequest(
         mName: String,
         mDesignation: String,

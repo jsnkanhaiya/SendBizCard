@@ -58,9 +58,10 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>() {
     private fun setupObservers() {
         loginViewModel.loginResponse.observe(this) {
             hideProgressBar()
-            val i = Intent(requireContext(), HomeActivity::class.java)
+            findNavController().navigate(R.id.nav_select_theme,null, getDefaultNavigationAnimation())
+           /* val i = Intent(requireContext(), HomeActivity::class.java)
             requireActivity().startActivity(i)
-            requireActivity().finish()
+            requireActivity().finish()*/
         }
 
         loginViewModel.showNetworkError.observe(this) { errorMessage ->

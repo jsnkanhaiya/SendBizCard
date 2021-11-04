@@ -85,4 +85,8 @@ class GetContactListViewModel @Inject constructor(
         )
     }
 
+    fun clearAllData(){
+        preferenceSourceImpl.clearData()
+    }
+
 }

@@ -103,6 +103,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
         val fragment = ServerErrorDialogFragment.newInstance()
         fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
             override fun onOKClicked() {
+                profileViewModel.clearAllData()
                 val intent = Intent(requireActivity(), MainActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()

@@ -64,7 +64,7 @@ fun decodeUnknownError(throwable: Throwable): String {
 }
 
 fun decodeServerError(errorResponse: ErrorResponse?): ServerError {
-    val code = errorResponse?.errorCode ?: -1
+    val code = errorResponse?.status ?: -1
     val message = errorResponse?.message?.errors?.getOrNull(0) ?: "Something Went Wrong"
     return ServerError(code,message)
 }

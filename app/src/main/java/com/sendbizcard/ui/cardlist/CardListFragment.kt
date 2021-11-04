@@ -161,6 +161,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         val fragment = ServerErrorDialogFragment.newInstance()
         fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
             override fun onOKClicked() {
+                cardListViewModel.clearAllData()
                 val intent = Intent(requireActivity(),MainActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()

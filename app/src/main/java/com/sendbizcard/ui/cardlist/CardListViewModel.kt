@@ -94,4 +94,8 @@ class CardListViewModel@Inject constructor(
         )
     }
 
+    fun clearAllData(){
+        preferenceSourceImpl.clearData()
+    }
+
 }

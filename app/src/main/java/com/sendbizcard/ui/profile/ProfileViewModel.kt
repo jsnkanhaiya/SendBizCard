@@ -126,6 +126,10 @@ class ProfileViewModel @Inject constructor(
 
     }
 
+    fun clearAllData(){
+        preferenceSourceImpl.clearData()
+    }
+
 
 
 

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class ErrorResponse(
 
     @field:SerializedName("error_code")
-    val errorCode: Int? = null,
+    val errorCode: Any? = null,
 
     @field:SerializedName("message")
     val message: Message? = null,

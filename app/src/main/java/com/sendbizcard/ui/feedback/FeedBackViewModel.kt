@@ -59,4 +59,8 @@ class FeedBackViewModel @Inject constructor(
         )
     }
 
+    fun clearAllData(){
+        preferenceSourceImpl.clearData()
+    }
+
 }

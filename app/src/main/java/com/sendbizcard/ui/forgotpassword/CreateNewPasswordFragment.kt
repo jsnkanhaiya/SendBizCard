@@ -73,6 +73,7 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         val fragment = ServerErrorDialogFragment.newInstance()
         fragment.callbacks = object : ServerErrorDialogFragment.Callbacks {
             override fun onOKClicked() {
+                forgotPasswordViewModel.clearAllData()
                 val intent = Intent(requireActivity(), MainActivity::class.java)
                 startActivity(intent)
                 requireActivity().finish()

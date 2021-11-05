@@ -62,8 +62,16 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
             object : BaseViewHolder.ItemCardClickCallback<CardDetailsItem> {
                 override fun onEditClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "EditClickedCallback")
-                    findNavController().navigate(R.id.nav_edit_card,null,
-                        getDefaultNavigationAnimation())
+                    if (cardListViewModel.getThemeId() == "3"){
+                        val directions = CardListFragmentDirections.actionCardListFragmentToEditCardFragment(data)
+                        findNavController().navigate(directions)
+                    } else {
+                        findNavController().navigate(R.id.nav_home_v2,null,
+                            getDefaultNavigationAnimation())
+                    }
+                    /*findNavController().navigate(R.id.nav_edit_card,null,
+                        getDefaultNavigationAnimation())*/
+
                 }
 
                 override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {

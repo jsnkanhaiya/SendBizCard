@@ -71,7 +71,7 @@
             />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/coloPattle"
+            android:id="@+id/colorPalette"
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:src="@drawable/ic_color_palette"
@@ -115,6 +115,17 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_edit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_name"
+            app:layout_constraintBottom_toBottomOf="@+id/et_name"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_edit"
+            android:visibility="invisible"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_mobile_number"

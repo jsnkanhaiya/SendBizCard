@@ -29,7 +29,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
 
-    //   private val profileViewModel: ProfileViewModel by viewModels()
+
     lateinit var tvName: TextView
     lateinit var imgFb: AppCompatImageView
     lateinit var imgInsta: AppCompatImageView
@@ -50,6 +50,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.nav_home,
+                R.id.nav_home_v2,
                 R.id.nav_my_profile,
                 R.id.nav_saved_cards,
                 R.id.nav_contact_list,
@@ -147,8 +148,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
         binding.navView
 
-        var headerview = binding.navView.getHeaderView(0);
-        var socialMediaCL = binding.navView.findViewById<ConstraintLayout>(R.id.socialMediaCL);
+        val headerview = binding.navView.getHeaderView(0);
+        val socialMediaCL = binding.navView.findViewById<ConstraintLayout>(R.id.socialMediaCL);
         tvName = headerview.findViewById<TextView>(R.id.tvName)
         imgFb = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_fb)
         imgInsta = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_insta)

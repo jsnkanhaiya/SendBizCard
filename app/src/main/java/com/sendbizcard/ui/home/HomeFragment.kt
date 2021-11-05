@@ -33,6 +33,7 @@ import com.sendbizcard.databinding.FragmentHomeBinding
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
 import com.sendbizcard.dialog.ServerErrorDialogFragment
+import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -62,6 +63,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
 
+    private var isFromEditCard = false
+    private var cardDetailsItem: CardDetailsItem? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -71,9 +75,31 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-
+        setDataToUI()
         initOnClicks()
         observeData()
+    }
+
+    private fun setDataToUI() {
+        if (isFromEditCard){
+            binding.imgEdit.visible()
+            binding.etName.isEnabled = false
+            binding.etDesignation.isEnabled = false
+            binding.etMobileNumber.isEnabled = false
+            binding.etEmail.isEnabled = false
+            binding.etWebsite.isEnabled = false
+            binding.etLocation.isEnabled = false
+            binding.colorPalette.isEnabled = false
+            binding.ourServicesCL.isEnabled = false
+            binding.socialMediaCL.isEnabled = false
+            binding.imgCompanyLogo.isEnabled = false
+            binding.etCompanyName.isEnabled = false
+            binding.imgSave.isEnabled = false
+            binding.imgShare.isEnabled = false
+
+        } else {
+            binding.imgEdit.invisible()
+        }
     }
 
 
@@ -133,12 +159,24 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun initOnClicks() {
 
-        binding.coloPattle.setOnClickListener {
-            showColourPattle()
+        binding.imgEdit.setOnClickListener {
+            binding.etName.isEnabled = true
+            binding.etDesignation.isEnabled = true
+            binding.etMobileNumber.isEnabled = true
+            binding.etEmail.isEnabled = true
+            binding.etWebsite.isEnabled = true
+            binding.etLocation.isEnabled = true
+            binding.colorPalette.isEnabled = true
+            binding.ourServicesCL.isEnabled = true
+            binding.socialMediaCL.isEnabled = true
+            binding.imgCompanyLogo.isEnabled = true
+            binding.etCompanyName.isEnabled = true
+            binding.imgSave.isEnabled = true
+            binding.imgShare.isEnabled = true
         }
 
-        binding.ourServicesCL.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services)
+        binding.colorPalette.setOnClickListener {
+            showColourPattle()
         }
 
         binding.socialMediaCL.setOnClickListener {

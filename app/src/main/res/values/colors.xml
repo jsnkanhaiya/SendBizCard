@@ -19,4 +19,5 @@
     <color name="colorGray">#BEBEBE</color>
     <color name="colorCompanyLogo">#0C0C0C</color>
     <color name="colorUsername">#9B9B9B</color>
+    <color name="cardInformationBgColor">#E5E5E5</color>
 </resources>

@@ -98,4 +98,6 @@ class CardListViewModel@Inject constructor(
         preferenceSourceImpl.clearData()
     }
 
+
+
 }

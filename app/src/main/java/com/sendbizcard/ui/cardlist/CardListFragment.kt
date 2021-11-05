@@ -63,14 +63,12 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
                 override fun onEditClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "EditClickedCallback")
                     if (cardListViewModel.getThemeId() == "3"){
-                        val directions = CardListFragmentDirections.actionCardListFragmentToEditCardFragment(data,true)
-                        findNavController().navigate(directions)
+                        findNavController().navigate(R.id.nav_home, bundleOf("cardItem" to data, "isFromEditCard" to true),
+                            getDefaultNavigationAnimation())
                     } else {
-                        findNavController().navigate(R.id.nav_home_v2,null,
+                        findNavController().navigate(R.id.nav_home_v2,bundleOf("cardItem" to data, "isFromEditCard" to true),
                             getDefaultNavigationAnimation())
                     }
-                    /*findNavController().navigate(R.id.nav_edit_card,null,
-                        getDefaultNavigationAnimation())*/
 
                 }
 

@@ -78,24 +78,43 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
     }
 
     private fun setDataToUI() {
-        if (isFromEditCard){
-            binding.imgEdit.visible()
-            binding.etName.isEnabled = false
-            binding.etDesignation.isEnabled = false
-            binding.etMobileNumber.isEnabled = false
-            binding.etEmail.isEnabled = false
-            binding.etWebsite.isEnabled = false
-            binding.etLocation.isEnabled = false
-            binding.colorPalette.isEnabled = false
-            binding.ourServicesCL.isEnabled = false
-            binding.socialMediaCL.isEnabled = false
-            binding.imgCompanyLogo.isEnabled = false
-            binding.etCompanyName.isEnabled = false
-            binding.imgSave.isEnabled = false
-            binding.imgShare.isEnabled = false
 
-        } else {
-            binding.imgEdit.invisible()
+        val bundle = this.arguments
+        if (bundle != null) {
+            isFromEditCard = bundle.getBoolean("isFromEditCard",false)
+            if (isFromEditCard){
+                cardDetailsItem = bundle.getParcelable("cardItem")
+                binding.imgEdit.visible()
+
+                binding.etName.isEnabled = false
+                binding.etName.setText(cardDetailsItem?.name ?: "")
+
+                binding.etDesignation.isEnabled = false
+                binding.etDesignation.setText(cardDetailsItem?.designation ?: "")
+
+                binding.etMobileNumber.isEnabled = false
+                binding.etMobileNumber.setText(cardDetailsItem?.contactNo ?: "")
+
+                binding.etEmail.isEnabled = false
+                binding.etEmail.setText(cardDetailsItem?.email ?: "")
+
+                binding.etWebsite.isEnabled = false
+                binding.etWebsite.setText(cardDetailsItem?.website ?: "")
+
+                binding.etLocation.isEnabled = false
+                binding.etLocation.setText(cardDetailsItem?.location ?: "")
+
+                binding.colorPalette.isEnabled = false
+                binding.ourServicesCL.isEnabled = false
+                binding.socialMediaCL.isEnabled = false
+                binding.imgCompanyLogo.isEnabled = false
+                binding.etCompanyName.isEnabled = false
+                binding.imgSave.isEnabled = false
+                binding.imgShare.isEnabled = false
+
+            } else {
+                binding.imgEdit.invisible()
+            }
         }
     }
 

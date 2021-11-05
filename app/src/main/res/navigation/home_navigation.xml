@@ -17,7 +17,10 @@
             app:nullable="true"
             android:defaultValue="@null" />
 
-
+        <argument
+            android:name="isFromEditCard"
+            android:defaultValue="false"
+            app:argType="boolean" />
     </fragment>
 
     <fragment
@@ -43,6 +46,16 @@
             android:defaultValue=""
             app:argType="string" />
 
+        <argument
+            android:name="cardItem"
+            app:argType="com.sendbizcard.models.response.CardDetailsItem"
+            app:nullable="true"
+            android:defaultValue="@null" />
+
+        <argument
+            android:name="isFromEditCard"
+            android:defaultValue="false"
+            app:argType="boolean" />
 
         <action
             android:id="@+id/actionCardListFragmentToViewCardFragment"
@@ -60,6 +73,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+
 
     </fragment>
 

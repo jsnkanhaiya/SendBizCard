@@ -81,6 +81,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun setDataToUI() {
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            isFromEditCard = bundle.getBoolean("isFromEditCard",false)
+            Toast.makeText(context, "isFromEditCard is " + isFromEditCard, Toast.LENGTH_LONG).show()
+            // Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
+            // Toast.makeText(context, "email id  is " + email, Toast.LENGTH_LONG).show()
+        }
+
         if (isFromEditCard){
             binding.imgEdit.visible()
             binding.etName.isEnabled = false
@@ -100,6 +109,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         } else {
             binding.imgEdit.invisible()
         }
+
+
     }
 
 

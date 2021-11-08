@@ -63,9 +63,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
 
-    private var isFromEditCard = false
-    private var cardDetailsItem: CardDetailsItem? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -75,55 +72,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        setDataToUI()
         initOnClicks()
         observeData()
-    }
-
-    private fun setDataToUI() {
-
-        val bundle = this.arguments
-        if (bundle != null) {
-            isFromEditCard = bundle.getBoolean("isFromEditCard",false)
-            if (isFromEditCard){
-                cardDetailsItem = bundle.getParcelable("cardItem")
-                binding.imgEdit.visible()
-
-                binding.etName.isEnabled = false
-                binding.etName.setText(cardDetailsItem?.name ?: "")
-
-                binding.etDesignation.isEnabled = false
-                binding.etDesignation.setText(cardDetailsItem?.designation ?: "")
-
-                binding.etMobileNumber.isEnabled = false
-                binding.etMobileNumber.setText(cardDetailsItem?.contactNo ?: "")
-
-                binding.etEmail.isEnabled = false
-                binding.etEmail.setText(cardDetailsItem?.email ?: "")
-
-                binding.etWebsite.isEnabled = false
-                binding.etWebsite.setText(cardDetailsItem?.website ?: "")
-
-                binding.etLocation.isEnabled = false
-                binding.etLocation.setText(cardDetailsItem?.location ?: "")
-
-                binding.colorPalette.isEnabled = false
-                binding.ourServicesCL.isEnabled = false
-                binding.socialMediaCL.isEnabled = false
-                binding.imgCompanyLogo.isEnabled = false
-                binding.etCompanyName.isEnabled = false
-                binding.imgSave.isEnabled = false
-                binding.imgShare.isEnabled = false
-
-                val userImageUrl = cardDetailsItem?.userImg ?: ""
-                if (userImageUrl.isNotEmpty()) {
-                    binding.imgUser.loadCircleImages("https://xapi.sendbusinesscard.com/storage/$userImageUrl")
-                }
-
-            } else {
-                binding.imgEdit.invisible()
-            }
-        }
     }
 
 
@@ -182,22 +132,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initOnClicks() {
-
-        binding.imgEdit.setOnClickListener {
-            binding.etName.isEnabled = true
-            binding.etDesignation.isEnabled = true
-            binding.etMobileNumber.isEnabled = true
-            binding.etEmail.isEnabled = true
-            binding.etWebsite.isEnabled = true
-            binding.etLocation.isEnabled = true
-            binding.colorPalette.isEnabled = true
-            binding.ourServicesCL.isEnabled = true
-            binding.socialMediaCL.isEnabled = true
-            binding.imgCompanyLogo.isEnabled = true
-            binding.etCompanyName.isEnabled = true
-            binding.imgSave.isEnabled = true
-            binding.imgShare.isEnabled = true
-        }
 
         binding.colorPalette.setOnClickListener {
             showColourPattle()
@@ -259,9 +193,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     ).show()
                     return@setOnClickListener
                 }
-                /*designation.isEmpty() -> {
-                    return@setOnClickListener
-                }*/
                 mobileNumber.isEmpty() -> {
                     Toast.makeText(
                         requireContext(),
@@ -278,9 +209,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     ).show()
                     return@setOnClickListener
                 }
-                /* website.isEmpty() -> {
-                     return@setOnClickListener
-                 }*/
                 location.isEmpty() -> {
                     Toast.makeText(
                         requireContext(),

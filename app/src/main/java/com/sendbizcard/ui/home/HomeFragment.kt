@@ -63,9 +63,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
 
-    private var isFromEditCard = false
-    private var cardDetailsItem: CardDetailsItem? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
@@ -75,42 +72,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        setDataToUI()
         initOnClicks()
         observeData()
-    }
-
-    private fun setDataToUI() {
-
-        val bundle = this.arguments
-        if (bundle != null) {
-            isFromEditCard = bundle.getBoolean("isFromEditCard",false)
-            Toast.makeText(context, "isFromEditCard is " + isFromEditCard, Toast.LENGTH_LONG).show()
-            // Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
-            // Toast.makeText(context, "email id  is " + email, Toast.LENGTH_LONG).show()
-        }
-
-        if (isFromEditCard){
-            binding.imgEdit.visible()
-            binding.etName.isEnabled = false
-            binding.etDesignation.isEnabled = false
-            binding.etMobileNumber.isEnabled = false
-            binding.etEmail.isEnabled = false
-            binding.etWebsite.isEnabled = false
-            binding.etLocation.isEnabled = false
-            binding.colorPalette.isEnabled = false
-            binding.ourServicesCL.isEnabled = false
-            binding.socialMediaCL.isEnabled = false
-            binding.imgCompanyLogo.isEnabled = false
-            binding.etCompanyName.isEnabled = false
-            binding.imgSave.isEnabled = false
-            binding.imgShare.isEnabled = false
-
-        } else {
-            binding.imgEdit.invisible()
-        }
-
-
     }
 
 
@@ -169,22 +132,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun initOnClicks() {
-
-        binding.imgEdit.setOnClickListener {
-            binding.etName.isEnabled = true
-            binding.etDesignation.isEnabled = true
-            binding.etMobileNumber.isEnabled = true
-            binding.etEmail.isEnabled = true
-            binding.etWebsite.isEnabled = true
-            binding.etLocation.isEnabled = true
-            binding.colorPalette.isEnabled = true
-            binding.ourServicesCL.isEnabled = true
-            binding.socialMediaCL.isEnabled = true
-            binding.imgCompanyLogo.isEnabled = true
-            binding.etCompanyName.isEnabled = true
-            binding.imgSave.isEnabled = true
-            binding.imgShare.isEnabled = true
-        }
 
         binding.colorPalette.setOnClickListener {
             showColourPattle()
@@ -246,9 +193,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     ).show()
                     return@setOnClickListener
                 }
-                /*designation.isEmpty() -> {
-                    return@setOnClickListener
-                }*/
                 mobileNumber.isEmpty() -> {
                     Toast.makeText(
                         requireContext(),
@@ -265,9 +209,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     ).show()
                     return@setOnClickListener
                 }
-                /* website.isEmpty() -> {
-                     return@setOnClickListener
-                 }*/
                 location.isEmpty() -> {
                     Toast.makeText(
                         requireContext(),

@@ -1,4 +1,4 @@
-package com.sendbizcard.ui.home
+package com.sendbizcard.ui.editcard
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -29,11 +29,12 @@ import com.github.dhaval2404.colorpicker.ColorPickerDialog
 import com.google.android.gms.location.*
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
-import com.sendbizcard.databinding.FragmentHomeV2Binding
+import com.sendbizcard.databinding.FragmentEditCardV2Binding
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
 import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
+import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,11 +42,11 @@ import java.io.*
 import java.util.*
 
 @AndroidEntryPoint
-class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
+class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
 
     private val APPNAME = "SendBizCardApp"
     private val homeViewModel: HomeViewModel by viewModels()
-    private lateinit var binding: FragmentHomeV2Binding
+    private lateinit var binding: FragmentEditCardV2Binding
     private var backgroundColour = "#ef5e42"
     private val REQUEST_CODE_CAMERA = 0x1001
     private val REQUEST_CODE_IMAGE_CAPTURE = 0x1002
@@ -60,7 +61,6 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
 
-    private var isFromEditCard = false
     private var cardDetailsItem: CardDetailsItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,8 +83,22 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
         if (bundle != null) {
             cardDetailsItem = bundle.getParcelable("cardItem")
 
+            binding.colorPalette.isEnabled = false
+            binding.imgCamera.isEnabled = false
+
+            val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""
+            if (companyLogoUrl.isNotEmpty()) {
+                binding.imgCompanyLogo.loadImages("https://xapi.sendbusinesscard.com/storage/$companyLogoUrl")
+            } else {
+                binding.imgCompanyLogo.setImageResource(R.drawable.ic_company_logo)
+            }
+            binding.imgCompanyLogo.isEnabled = false
+
             binding.etName.isEnabled = false
             binding.etName.setText(cardDetailsItem?.name ?: "")
+
+            binding.etCompanyName.setText(cardDetailsItem?.companyName ?: "")
+            binding.etCompanyName.isEnabled = false
 
             binding.etDesignation.isEnabled = false
             binding.etDesignation.setText(cardDetailsItem?.designation ?: "")
@@ -101,11 +115,12 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
             binding.etLocation.isEnabled = false
             binding.etLocation.setText(cardDetailsItem?.location ?: "")
 
-            binding.colorPalette.isEnabled = false
             binding.ourServicesCL.isEnabled = false
+            binding.imgArrow.isEnabled = false
+
             binding.socialMediaCL.isEnabled = false
-            binding.imgCompanyLogo.isEnabled = false
-            binding.etCompanyName.isEnabled = false
+            binding.imgArrowIcon.isEnabled = false
+
             binding.imgSave.isEnabled = false
             binding.imgShare.isEnabled = false
         }
@@ -166,6 +181,22 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
     }
 
     private fun initOnClicks() {
+
+        binding.imgEdit.setOnClickListener {
+            binding.etName.isEnabled = true
+            binding.etDesignation.isEnabled = true
+            binding.etMobileNumber.isEnabled = true
+            binding.etEmail.isEnabled = true
+            binding.etWebsite.isEnabled = true
+            binding.etLocation.isEnabled = true
+            binding.colorPalette.isEnabled = true
+            binding.ourServicesCL.isEnabled = true
+            binding.socialMediaCL.isEnabled = true
+            binding.imgCompanyLogo.isEnabled = true
+            binding.etCompanyName.isEnabled = true
+            binding.imgSave.isEnabled = true
+            binding.imgShare.isEnabled = true
+        }
 
         binding.colorPalette.setOnClickListener {
             showColourPattle()
@@ -231,6 +262,9 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
                     ).show()
                     return@setOnClickListener
                 }
+                /*designation.isEmpty() -> {
+                    return@setOnClickListener
+                }*/
                 mobileNumber.isEmpty() -> {
                     Toast.makeText(
                         requireContext(),
@@ -247,6 +281,9 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
                     ).show()
                     return@setOnClickListener
                 }
+                /* website.isEmpty() -> {
+                     return@setOnClickListener
+                 }*/
                 location.isEmpty() -> {
                     Toast.makeText(
                         requireContext(),
@@ -573,7 +610,7 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
 
                 }
                 else -> {
-                    Toast.makeText(requireContext(),"Size is not in limit",Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(),"Size is not in limit", Toast.LENGTH_LONG).show()
                 }
             }
         }
@@ -615,6 +652,6 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
             .show()
     }
 
-    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentHomeV2Binding
-        get() = FragmentHomeV2Binding::inflate
+    override val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> FragmentEditCardV2Binding
+        get() = FragmentEditCardV2Binding::inflate
 }

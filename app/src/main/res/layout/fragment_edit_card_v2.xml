@@ -36,6 +36,15 @@
             android:fontFamily="@font/gilroy_bold"
             android:textColor="@color/textcolour"/>
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_edit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tv_create_your"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_digital_card"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_edit" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_company_logo"
@@ -199,128 +208,128 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/emailCL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/cardInformationBgColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mobileNumberCL"
-        android:layout_marginTop="4dp"
-        android:padding="8dp">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_email"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="56dp"
-            android:src="@drawable/ic_email"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_email"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/emailCL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="56dp"
-            android:background="@null"
-            style="@style/gilroy_regular_13"
-            android:hint="@string/enter_email"
-            android:singleLine="true"
-            android:maxLines="1"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/colorGray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_email"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/websiteCL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/cardInformationBgColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailCL"
-        android:layout_marginTop="4dp"
-        android:padding="8dp">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_website"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="56dp"
-            android:src="@drawable/ic_website"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/cardInformationBgColor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mobileNumberCL"
+            android:layout_marginTop="4dp"
+            android:padding="8dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_website"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_email"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="56dp"
+                android:src="@drawable/ic_email"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_email"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="56dp"
+                android:background="@null"
+                style="@style/gilroy_regular_13"
+                android:hint="@string/enter_email"
+                android:singleLine="true"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
+                android:textColor="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_email"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/websiteCL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="56dp"
-            android:background="@null"
-            android:hint="@string/enter_website"
-            style="@style/gilroy_regular_13"
-            android:textColor="@color/colorGray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_website"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/addressCL"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@color/cardInformationBgColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/websiteCL"
-        android:layout_marginTop="4dp"
-        android:padding="8dp">
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_location"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="56dp"
-            android:src="@drawable/ic_map"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/cardInformationBgColor"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/emailCL"
+            android:layout_marginTop="4dp"
+            android:padding="8dp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/et_location"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_website"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="56dp"
+                android:src="@drawable/ic_website"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_website"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="56dp"
+                android:background="@null"
+                android:hint="@string/enter_website"
+                style="@style/gilroy_regular_13"
+                android:textColor="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_website"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/addressCL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="56dp"
-            android:background="@null"
-            android:hint="@string/enter_location"
-            style="@style/gilroy_regular_13"
-            android:textColor="@color/colorGray"
+            android:background="@color/cardInformationBgColor"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_location"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/websiteCL"
+            android:layout_marginTop="4dp"
+            android:padding="8dp">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/img_location"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="56dp"
+                android:src="@drawable/ic_map"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_location"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="56dp"
+                android:background="@null"
+                android:hint="@string/enter_location"
+                style="@style/gilroy_regular_13"
+                android:textColor="@color/colorGray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/img_location"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/ourServicesCL"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

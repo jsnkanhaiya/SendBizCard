@@ -79,6 +79,14 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_edit_card_v2"
+        android:name="com.sendbizcard.ui.editcard.EditCardFragmentV2"
+        android:label="@string/menu_my_profile"
+        tools:layout="@layout/fragment_edit_card">
+    </fragment>
+
+
+    <fragment
         android:id="@+id/nav_my_profile"
         android:name="com.sendbizcard.ui.profile.ProfileFragment"
         android:label="@string/menu_my_profile"

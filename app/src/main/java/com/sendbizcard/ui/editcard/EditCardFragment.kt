@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -86,7 +87,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
             cardDetailsItem = bundle.getParcelable("cardItem")
 
             binding.colorPalette.isEnabled = false
-            //binding.imgCardBack.setBackgroundColor(Integer.parseInt(cardDetailsItem))
+            binding.imgCardBack.setBackgroundColor(Color.parseColor(cardDetailsItem?.themeColor?:"#ef5e42"))
 
             binding.imgCamera.isEnabled = false
 

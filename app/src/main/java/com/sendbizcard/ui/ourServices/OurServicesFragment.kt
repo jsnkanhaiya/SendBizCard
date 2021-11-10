@@ -3,6 +3,7 @@ package com.sendbizcard.ui.ourServices
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,12 +31,28 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
 
     lateinit var binding: FragmentOurServicesBinding
 
+    var isFromEditCard = false
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
-        initOnClicks()
         setUpAdapter()
+        initOnClicks()
+        initViews()
+    }
+
+    private fun initViews() {
+        val bundle = this.arguments
+        if (bundle != null) {
+            isFromEditCard = bundle.getBoolean("isFromEdit")
+            if (isFromEditCard){
+                var dataServices = bundle.getParcelableArrayList<Parcelable>("services") as List<*>
+                ourServicesAdapter.addAll(dataServices as List<ServicesItem>)
+                ourServicesAdapter.notifyDataSetChanged()
+            }
+        }
+
     }
 
 

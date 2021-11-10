@@ -2,6 +2,7 @@ package com.sendbizcard.ui.socialMediaLinks
 
 import android.os.Build
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentEnterSocialMediaLinksBinding
+import com.sendbizcard.models.request.addCard.ServicesItem
 import com.sendbizcard.models.request.addCard.SocialLinksItem
 import com.sendbizcard.utils.AlertDialogWithImageView
 import com.sendbizcard.utils.SocialMediaLinksEnum
@@ -25,12 +27,47 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
 
     private val socialMediaLinksList: ArrayList<SocialLinksItem> by lazy { ArrayList() }
 
+    var isFromEditCard =false
+
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+        initViews()
         setDataToUI()
         initOnClicks()
+    }
+
+    private fun initViews() {
+
+        val bundle = this.arguments
+        if (bundle != null) {
+            isFromEditCard = bundle.getBoolean("isFromEdit")
+            if (isFromEditCard){
+                var dataSocialLinks = bundle.getParcelableArrayList<Parcelable>("socialLinks") as List<SocialLinksItem>
+
+                if (dataSocialLinks.isNotEmpty()) {
+                    dataSocialLinks.forEach { socialMediaItem ->
+                        when (socialMediaItem.name) {
+                            SocialMediaLinksEnum.FACEBOOK.socialMediaName -> {
+                                binding.etFbUsername.setText(socialMediaItem.link)
+                            }
+                            SocialMediaLinksEnum.INSTAGRAM.socialMediaName -> {
+                                binding.etInstaUsername.setText( socialMediaItem.link)
+
+                            }
+                            SocialMediaLinksEnum.TWITTER.socialMediaName -> {
+                                binding.etTwitterUsername.setText( socialMediaItem.link)
+                            }
+                            SocialMediaLinksEnum.LINKEDIN.socialMediaName -> {
+                                binding.etLinkedInUsername.setText( socialMediaItem.link)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
     }
 
     private fun setDataToUI() {

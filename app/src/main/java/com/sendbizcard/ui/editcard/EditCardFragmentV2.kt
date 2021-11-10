@@ -24,6 +24,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
@@ -206,11 +207,13 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         }
 
         binding.ourServicesCL.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services)
+            findNavController().navigate(R.id.nav_our_services, bundleOf("services" to cardDetailsItem?.services,"isFromEdit" to true))
         }
 
         binding.socialMediaCL.setOnClickListener {
-            findNavController().navigate(R.id.nav_social_media_links)
+           // findNavController().navigate(R.id.nav_social_media_links)
+            findNavController().navigate(R.id.nav_social_media_links, bundleOf("socialLinks" to cardDetailsItem?.socialLinks,"isFromEdit" to true))
+
         }
 
         binding.ourServicesCL.setOnClickListener {

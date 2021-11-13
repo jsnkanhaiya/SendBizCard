@@ -84,7 +84,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         val bundle = this.arguments
         if (bundle != null) {
             cardDetailsItem = bundle.getParcelable("cardItem")
-            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard")
+            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard",false)
 
             if (isFromPreviewCard) {
                 binding.imgEdit.visible()
@@ -202,6 +202,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             binding.etCompanyName.isEnabled = true
             binding.imgSave.isEnabled = true
             binding.imgShare.isEnabled = true
+            isFromPreviewCard=false
         }
 
         binding.colorPalette.setOnClickListener {
@@ -245,11 +246,11 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         }
 
         binding.imgArrow.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services)
+            findNavController().navigate(R.id.nav_our_services, bundleOf("isFromPreviewCard" to isFromPreviewCard))
         }
 
         binding.imgArrowIcon.setOnClickListener {
-            findNavController().navigate(R.id.nav_social_media_links)
+            findNavController().navigate(R.id.nav_social_media_links, bundleOf("isFromPreviewCard" to isFromPreviewCard))
         }
 
         binding.imgSave.setOnClickListener {

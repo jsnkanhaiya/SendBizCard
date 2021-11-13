@@ -21,7 +21,7 @@ class CardListViewHolder(private val binding: RowSavedCardItemBinding) : BaseVie
         binding.imgShare.setOnClickListener {
             itemCardClickCallback?.onShareClicked(receivedData,position)
         }
-        binding.imgPreVeiw.setOnClickListener {
+        binding.previewCL.setOnClickListener {
             itemCardClickCallback?.onPreviewClicked(receivedData,position)
         }
         binding.imgDelete.setOnClickListener {

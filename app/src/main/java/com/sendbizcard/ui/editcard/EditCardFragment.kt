@@ -24,6 +24,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.github.dhaval2404.colorpicker.ColorPickerDialog
@@ -85,7 +86,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
         val bundle = this.arguments
         if (bundle != null) {
             cardDetailsItem = bundle.getParcelable("cardItem")
-            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard")
+            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard",false)
 
             if (isFromPreviewCard) {
                 binding.imgEdit.visible()
@@ -98,9 +99,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
                 binding.etWebsite.isEnabled = false
                 binding.etLocation.isEnabled = false
                 binding.ourServicesCL.isEnabled = false
-                binding.imgArrow.isEnabled = false
                 binding.socialMediaCL.isEnabled = false
-                binding.imgArrowIcon.isEnabled = false
                 binding.imgCompanyLogo.isEnabled = false
                 binding.etCompanyName.isEnabled = false
                 binding.imgSave.isEnabled = false
@@ -211,6 +210,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
             binding.etCompanyName.isEnabled = true
             binding.imgSave.isEnabled = true
             binding.imgShare.isEnabled = true
+            isFromPreviewCard=false
         }
 
         binding.colorPalette.setOnClickListener {
@@ -248,11 +248,11 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
         }
 
         binding.imgArrow.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services)
+            findNavController().navigate(R.id.nav_our_services, bundleOf("isFromPreviewCard" to isFromPreviewCard))
         }
 
         binding.imgArrowIcon.setOnClickListener {
-            findNavController().navigate(R.id.nav_social_media_links)
+            findNavController().navigate(R.id.nav_social_media_links, bundleOf("isFromPreviewCard" to isFromPreviewCard))
         }
 
         binding.imgSave.setOnClickListener {

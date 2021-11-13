@@ -58,11 +58,12 @@ interface ApiService {
     @POST
     suspend fun deleteCard(@Url url: String, @Body deleteCardRequest: DeleteCardRequest) : NetworkResponse<BaseResponseModel, ErrorResponse>
 
-
     @POST
     suspend fun getCardListSearch(@Url url: String, @Body cardListRequestModel: CardListRequestModel) : NetworkResponse<CardListResponseModel, ErrorResponse>
 
     @POST
     suspend fun getCardList(@Url url: String) : NetworkResponse<CardListResponseModel, ErrorResponse>
 
+    @POST
+    suspend fun editCardRequest(@Url url: String, @Body addCardRequest: AddCardRequest) : NetworkResponse<BaseResponseModel,ErrorResponse>
 }

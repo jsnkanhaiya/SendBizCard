@@ -19,5 +19,6 @@ interface RemoteConfigProvider  {
     fun getCardShareURL(): String
     fun getCardListURL(): String
     fun getDeleteCardURL(): String
+    fun getEditCardURL(): String
 
 }

@@ -103,4 +103,9 @@ class ApiRepositoryImpl @Inject constructor(
         return apiService.getCardList(url)
     }
 
+    override suspend fun editCardRequest(addCardRequest: AddCardRequest): NetworkResponse<BaseResponseModel, ErrorResponse> {
+        val url = remoteConfigImpl.getEditCardURL()
+        return apiService.editCardRequest(url,addCardRequest)
+    }
+
 }

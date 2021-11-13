@@ -25,4 +25,5 @@ interface ApiRepository {
     suspend fun deleteCard(deleteCardRequest: DeleteCardRequest) : NetworkResponse<BaseResponseModel,ErrorResponse>
     suspend fun getCardListSearch(cardListRequest: CardListRequestModel) : NetworkResponse<CardListResponseModel,ErrorResponse>
     suspend fun getCardList() : NetworkResponse<CardListResponseModel,ErrorResponse>
+    suspend fun editCardRequest(addCardRequest: AddCardRequest) : NetworkResponse<BaseResponseModel,ErrorResponse>
 }

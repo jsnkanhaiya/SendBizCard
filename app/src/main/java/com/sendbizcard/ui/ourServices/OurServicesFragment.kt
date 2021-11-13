@@ -32,6 +32,7 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
     lateinit var binding: FragmentOurServicesBinding
 
     var isFromEditCard = false
+    var isFromPreviewCard = false
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -46,10 +47,16 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
         val bundle = this.arguments
         if (bundle != null) {
             isFromEditCard = bundle.getBoolean("isFromEdit")
+            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard")
             if (isFromEditCard){
                 var dataServices = bundle.getParcelableArrayList<Parcelable>("services") as List<*>
                 ourServicesAdapter.addAll(dataServices as List<ServicesItem>)
                 ourServicesAdapter.notifyDataSetChanged()
+            }
+
+            if (isFromPreviewCard) {
+                binding.btnSave.isEnabled = false
+                binding.btnAdd.isEnabled = false
             }
         }
 
@@ -90,8 +97,10 @@ class OurServicesFragment : BaseFragment<FragmentOurServicesBinding>() {
         ourServicesAdapter.positionListener = object : BaseViewHolder.ItemClickedPositionCallback {
             @SuppressLint("NotifyDataSetChanged")
             override fun onItemOfPositionClicked(t: Int) {
-                ourServicesAdapter.list.removeAt(t)
-                ourServicesAdapter.notifyDataSetChanged()
+                if (!isFromPreviewCard) {
+                    ourServicesAdapter.list.removeAt(t)
+                    ourServicesAdapter.notifyDataSetChanged()
+                }
             }
         }
         binding.rvOurServices.adapter = ourServicesAdapter

@@ -63,8 +63,8 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
     private var isCompanyLogoSelected = false
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
-
     private var cardDetailsItem: CardDetailsItem? = null
+    private var isFromPreviewCard = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,35 +85,41 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
         val bundle = this.arguments
         if (bundle != null) {
             cardDetailsItem = bundle.getParcelable("cardItem")
+            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard")
 
-            binding.colorPalette.isEnabled = false
-            binding.imgCardBack.setBackgroundColor(Color.parseColor(cardDetailsItem?.themeColor?:"#ef5e42"))
+            if (isFromPreviewCard) {
+                binding.colorPalette.isEnabled = false
+                binding.imgCamera.isEnabled = false
+                binding.etName.isEnabled = false
+                binding.etDesignation.isEnabled = false
+                binding.etMobileNumber.isEnabled = false
+                binding.etEmail.isEnabled = false
+                binding.etWebsite.isEnabled = false
+                binding.etLocation.isEnabled = false
+                binding.ourServicesCL.isEnabled = false
+                binding.imgArrow.isEnabled = false
+                binding.socialMediaCL.isEnabled = false
+                binding.imgArrowIcon.isEnabled = false
+                binding.imgCompanyLogo.isEnabled = false
+                binding.etCompanyName.isEnabled = false
+                binding.imgSave.isEnabled = false
+                binding.imgShare.isEnabled = false
+            }
 
-            binding.imgCamera.isEnabled = false
 
-            binding.etName.isEnabled = false
+            binding.imgCardBack.setBackgroundColor(Color.parseColor(cardDetailsItem?.themeColor ?: "#ef5e42"))
+
             binding.etName.setText(cardDetailsItem?.name ?: "")
 
-            binding.etDesignation.isEnabled = false
             binding.etDesignation.setText(cardDetailsItem?.designation ?: "")
 
-            binding.etMobileNumber.isEnabled = false
             binding.etMobileNumber.setText(cardDetailsItem?.contactNo ?: "")
 
-            binding.etEmail.isEnabled = false
             binding.etEmail.setText(cardDetailsItem?.email ?: "")
 
-            binding.etWebsite.isEnabled = false
             binding.etWebsite.setText(cardDetailsItem?.website ?: "")
 
-            binding.etLocation.isEnabled = false
             binding.etLocation.setText(cardDetailsItem?.location ?: "")
-
-            binding.ourServicesCL.isEnabled = false
-            binding.imgArrow.isEnabled = false
-
-            binding.socialMediaCL.isEnabled = false
-            binding.imgArrowIcon.isEnabled = false
 
             val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""
             if (companyLogoUrl.isNotEmpty()) {
@@ -122,13 +128,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
                 binding.imgCompanyLogo.setImageResource(R.drawable.ic_company_logo)
             }
 
-            binding.imgCompanyLogo.isEnabled = false
-
-            binding.etCompanyName.isEnabled = false
             binding.etCompanyName.setText(cardDetailsItem?.companyName ?: "")
-
-            binding.imgSave.isEnabled = false
-            binding.imgShare.isEnabled = false
 
             val userImageUrl = cardDetailsItem?.userImg ?: ""
             if (userImageUrl.isNotEmpty()) {

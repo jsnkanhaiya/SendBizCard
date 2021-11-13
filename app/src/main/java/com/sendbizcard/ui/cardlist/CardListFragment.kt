@@ -65,14 +65,10 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
                     if (cardListViewModel.getThemeId() == "3"){
                         findNavController().navigate(R.id.nav_edit_card, bundleOf("cardItem" to data),
                             getDefaultNavigationAnimation())
-                        /*val directions = CardListFragmentDirections.actionCardListFragmentToEditCardFragment(data,true)
-                        findNavController().navigate(directions)*/
                     } else {
                         findNavController().navigate(R.id.nav_edit_card_v2, bundleOf("cardItem" to data),
                             getDefaultNavigationAnimation())
                     }
-                    /*findNavController().navigate(R.id.nav_edit_card,null,
-                        getDefaultNavigationAnimation())*/
 
                 }
 

@@ -27,7 +27,8 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
 
     private val socialMediaLinksList: ArrayList<SocialLinksItem> by lazy { ArrayList() }
 
-    var isFromEditCard =false
+    var isFromEditCard = false
+    var isFromPreviewCard = false
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,8 +44,9 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
         val bundle = this.arguments
         if (bundle != null) {
             isFromEditCard = bundle.getBoolean("isFromEdit")
+            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard")
             if (isFromEditCard){
-                var dataSocialLinks = bundle.getParcelableArrayList<Parcelable>("socialLinks") as List<SocialLinksItem>
+                val dataSocialLinks = bundle.getParcelableArrayList<Parcelable>("socialLinks") as List<SocialLinksItem>
 
                 if (dataSocialLinks.isNotEmpty()) {
                     dataSocialLinks.forEach { socialMediaItem ->
@@ -54,7 +56,6 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
                             }
                             SocialMediaLinksEnum.INSTAGRAM.socialMediaName -> {
                                 binding.etInstaUsername.setText( socialMediaItem.link)
-
                             }
                             SocialMediaLinksEnum.TWITTER.socialMediaName -> {
                                 binding.etTwitterUsername.setText( socialMediaItem.link)
@@ -65,6 +66,10 @@ class SocialMediaLinksFragment : BaseFragment<FragmentEnterSocialMediaLinksBindi
                         }
                     }
                 }
+            }
+
+            if (isFromPreviewCard){
+                binding.btnSave.isEnabled = false
             }
         }
 

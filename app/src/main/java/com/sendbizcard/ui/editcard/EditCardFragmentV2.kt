@@ -87,6 +87,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             isFromPreviewCard = bundle.getBoolean("isFromPreviewCard")
 
             if (isFromPreviewCard) {
+                binding.imgEdit.visible()
                 binding.colorPalette.isEnabled = false
                 binding.imgCamera.isEnabled = false
                 binding.imgCompanyLogo.isEnabled = false

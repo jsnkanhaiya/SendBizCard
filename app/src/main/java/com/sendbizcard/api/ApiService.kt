@@ -52,6 +52,8 @@ interface ApiService {
     @POST
     suspend fun addCardRequest(@Url url: String, @Body addCardRequest: AddCardRequest) : NetworkResponse<BaseResponseModel,ErrorResponse>
 
+
+
     @POST
     suspend fun getCardUrl(@Url url: String, @Body viewCardRequest: ViewCardRequest) : NetworkResponse<ViewCardResponse, ErrorResponse>
 

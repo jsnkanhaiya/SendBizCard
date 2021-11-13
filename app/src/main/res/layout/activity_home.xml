@@ -56,18 +56,17 @@
                 android:layout_marginLeft="35dp"
                 android:tint="@color/white"
                 android:src="@drawable/ic_insta_white"
-                app:layout_constraintEnd_toStartOf="@+id/img_twitter"
+                app:layout_constraintEnd_toStartOf="@+id/img_linkedIn"
                 app:layout_constraintStart_toEndOf="@+id/img_fb"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/img_twitter"
+                android:id="@+id/img_linkedIn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:tint="@color/white"
                 android:layout_marginLeft="35dp"
-                android:src="@drawable/ic_twiter_white"
+                android:src="@drawable/ic_linkedin_white"
                 app:layout_constraintEnd_toStartOf="@+id/img_insta"
                 app:layout_constraintStart_toEndOf="@+id/img_insta"
                 app:layout_constraintTop_toTopOf="parent"

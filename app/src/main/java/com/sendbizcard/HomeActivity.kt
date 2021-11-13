@@ -33,7 +33,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     lateinit var tvName: TextView
     lateinit var imgFb: AppCompatImageView
     lateinit var imgInsta: AppCompatImageView
-    lateinit var imgTwiter: AppCompatImageView
+    lateinit var imgLinkedIn: AppCompatImageView
 
     private val navController by lazy {
         Navigation.findNavController(this, R.id.nav_host_fragment_content_home)
@@ -55,7 +55,6 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
                 R.id.nav_saved_cards,
                 R.id.nav_contact_list,
                 R.id.nav_feedback,
-                R.id.nav_select_theme,
                 R.id.nav_share_app,
                 R.id.nav_logout,
             ), binding.drawerLayout
@@ -153,7 +152,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         tvName = headerview.findViewById<TextView>(R.id.tvName)
         imgFb = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_fb)
         imgInsta = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_insta)
-        imgTwiter = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_twitter)
+        imgLinkedIn = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_linkedIn)
 
         tvName.text = homeViewModel.getUserName()
 
@@ -167,8 +166,8 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
             startActivity(open)
         }
 
-        imgTwiter.setOnClickListener {
-            val open = Intent(Intent.ACTION_VIEW, Uri.parse(" https://www.linkedin.com/company/sendbusinesscard"))
+        imgLinkedIn.setOnClickListener {
+            val open = Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"))
             startActivity(open)
         }
     }

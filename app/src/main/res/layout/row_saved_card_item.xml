@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:padding="15dp">
 
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/imgProfile"
         android:layout_width="36dp"

@@ -89,7 +89,63 @@ class HomeViewModel @Inject constructor(
 
     }
 
+    fun editCardRequest(
+        mName: String,
+        mDesignation: String,
+        mMobileNumber: String,
+        mEmailId: String,
+        mWebsite: String,
+        mLocation: String,
+        mUserImageBase64String: String,
+        mCompanyLogoBase64String: String,
+        mBackgroundColour: String,
+        mCompanyName: String
+    ) {
+        val addCardRequest = AddCardRequest().apply {
+            themeId = if (preferenceSourceImpl.themeID.isNullOrEmpty()){"3"}else{
+                preferenceSourceImpl.themeID
+            }
+            themeColor = mBackgroundColour
+            name = mName
+            userImg = mUserImageBase64String
+            designation = mDesignation
+            contactPrefix = "+91"
+            contactNo = mMobileNumber
+            email = mEmailId
+            website = mWebsite
+            location = mLocation
+            companyLogo = mCompanyLogoBase64String
+            companyName = mCompanyName
+            services = UserSessionManager.getDataFromServiceList()
+            socialLinks = null
+        }
+        jobList.add(
+            launch {
+                val result = withContext(Dispatchers.IO){
+                    apiRepositoryImpl.addCardRequest(addCardRequest)
+                }
+                when (result) {
+                    is NetworkResponse.Success -> {
+                        saveCardResponse.value=result.body
+                    }
 
+                    is NetworkResponse.ServerError -> {
+                        showServerError.value = decodeServerError(result.body)
+                    }
+
+                    is NetworkResponse.NetworkError -> {
+                        showNetworkError.value = decodeNetworkError(result.error)
+                    }
+
+                    is NetworkResponse.UnknownError -> {
+                        showUnknownError.value = decodeUnknownError(result.error)
+                    }
+                }
+            }
+        )
+
+
+    }
 
     fun logOutUser(){
         jobList.add(

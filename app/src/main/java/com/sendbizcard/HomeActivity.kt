@@ -167,7 +167,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
         imgLinkedIn.setOnClickListener {
-            val open = Intent(Intent.ACTION_VIEW, Uri.parse("http://google.com"))
+            val open = Intent(Intent.ACTION_VIEW, Uri.parse(" https://www.linkedin.com/company/sendbusinesscard"))
             startActivity(open)
         }
     }

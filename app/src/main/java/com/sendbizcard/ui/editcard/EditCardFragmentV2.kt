@@ -300,7 +300,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 }
                 else -> {
                     showProgressBar()
-                    homeViewModel.addCardRequest(
+                    homeViewModel.editCardRequest(
                         name,
                         designation,
                         mobileNumber,

@@ -101,7 +101,7 @@ class HomeViewModel @Inject constructor(
         mBackgroundColour: String,
         mCompanyName: String
     ) {
-        val addCardRequest = AddCardRequest().apply {
+        val editCardRequest = AddCardRequest().apply {
             themeId = if (preferenceSourceImpl.themeID.isNullOrEmpty()){"3"}else{
                 preferenceSourceImpl.themeID
             }
@@ -122,7 +122,7 @@ class HomeViewModel @Inject constructor(
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO){
-                    apiRepositoryImpl.addCardRequest(addCardRequest)
+                    apiRepositoryImpl.editCardRequest(editCardRequest)
                 }
                 when (result) {
                     is NetworkResponse.Success -> {

@@ -15,6 +15,7 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.base.BaseViewHolder
@@ -63,10 +64,10 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
                 override fun onEditClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "EditClickedCallback")
                     if (cardListViewModel.getThemeId() == "3"){
-                        findNavController().navigate(R.id.nav_edit_card, bundleOf("cardItem" to data),
+                        findNavController().navigate(R.id.nav_edit_card, bundleOf("cardItem" to data,"isFromPreviewCard" to false),
                             getDefaultNavigationAnimation())
                     } else {
-                        findNavController().navigate(R.id.nav_edit_card_v2, bundleOf("cardItem" to data),
+                        findNavController().navigate(R.id.nav_edit_card_v2, bundleOf("cardItem" to data,"isFromPreviewCard" to false),
                             getDefaultNavigationAnimation())
                     }
 
@@ -74,10 +75,17 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
                 override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {
                     Log.d("CardListFragment", "PreviewClickedCallback")
-                    findNavController().navigate(
+                    if (cardListViewModel.getThemeId() == "3"){
+                        findNavController().navigate(R.id.nav_edit_card, bundleOf("cardItem" to data,"isFromPreviewCard" to true),
+                            getDefaultNavigationAnimation())
+                    } else {
+                        findNavController().navigate(R.id.nav_edit_card_v2, bundleOf("cardItem" to data,"isFromPreviewCard" to true),
+                            getDefaultNavigationAnimation())
+                    }
+                    /*findNavController().navigate(
                         R.id.nav_view_card, bundleOf("id" to data.id),
                         getDefaultNavigationAnimation()
-                    )
+                    )*/
                 }
 
                 override fun onShareClicked(data: CardDetailsItem, pos: Int) {
@@ -94,6 +102,8 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
                 }
             }
+        val itemDecoration = DividerItemDecoration(context, DividerItemDecoration.VERTICAL)
+        binding.rvCardList.addItemDecoration(itemDecoration)
         binding.rvCardList.adapter = cardListAdapter
     }
 

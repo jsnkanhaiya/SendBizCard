@@ -58,6 +58,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_digital_card" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/roundImage"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginBottom="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_digital_card"
+            android:src="@drawable/image_border"
+            android:layout_marginTop="64dp"/>
+
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_camera"
@@ -346,7 +357,8 @@
             android:src="@drawable/ic_company_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/socialMediaCL" />
+            app:layout_constraintTop_toBottomOf="@+id/socialMediaCL"
+            />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tv_company_logo"
@@ -362,7 +374,8 @@
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_company_logo" />
+            app:layout_constraintTop_toBottomOf="@+id/img_company_logo"
+            />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_company_name"
@@ -382,37 +395,27 @@
             android:id="@+id/img_save"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:layout_marginStart="64dp"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_save_card"
-            app:layout_constraintEnd_toStartOf="@+id/img_preview"
+            app:layout_constraintEnd_toStartOf="@+id/img_share"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_company_name"
+            android:layout_marginEnd="24dp"
             />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_preview"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="24dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_preview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_company_name"
-            />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_share"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginTop="24dp"
-            android:layout_marginEnd="64dp"
             android:src="@drawable/ic_share"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_preview"
+            app:layout_constraintStart_toEndOf="@id/img_save"
             app:layout_constraintTop_toBottomOf="@+id/et_company_name"
-            />
+            android:layout_marginStart="24dp"
+            app:layout_constraintHorizontal_chainStyle="packed"/>
 
         <RelativeLayout
             android:id="@+id/progressBarContainer"

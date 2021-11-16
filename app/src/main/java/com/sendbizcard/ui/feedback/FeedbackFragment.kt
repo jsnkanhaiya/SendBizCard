@@ -106,13 +106,16 @@ class FeedbackFragment : BaseFragment<FragmentFeedbackBinding>() {
             requireFragmentManager().beginTransaction(),
             requireContext(),
             requireContext().resources.getString(R.string.success_title),
-            requireContext().resources.getString(R.string.success_title_feedback),
+            requireContext().resources.getString(R.string.thank_you),
             R.drawable.ic_success,
             onDismiss = {
                 if (fragmentManager != null) {
-                    val i = Intent(requireContext(), HomeActivity::class.java)
+
+                    findNavController().navigate(R.id.nav_rate_us)
+
+                    /*val i = Intent(requireContext(), HomeActivity::class.java)
                     requireActivity().startActivity(i)
-                    requireActivity().finish()
+                    requireActivity().finish()*/
                 }
             }
         )

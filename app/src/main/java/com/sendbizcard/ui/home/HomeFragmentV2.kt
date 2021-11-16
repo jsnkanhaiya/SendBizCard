@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -72,6 +73,7 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+        binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
         setDataToUI()
         initOnClicks()
         observeData()

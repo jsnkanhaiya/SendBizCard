@@ -36,6 +36,12 @@
         tools:layout="@layout/fragment_view_card" />
 
     <fragment
+        android:id="@+id/nav_rate_us"
+        android:name="com.sendbizcard.ui.feedback.RateUsFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_rate_us" />
+
+    <fragment
         android:id="@+id/nav_card_list"
         android:name="com.sendbizcard.ui.cardlist.CardListFragment"
         android:label="@string/menu_home"

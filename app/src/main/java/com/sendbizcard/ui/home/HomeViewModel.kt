@@ -99,7 +99,8 @@ class HomeViewModel @Inject constructor(
         mUserImageBase64String: String,
         mCompanyLogoBase64String: String,
         mBackgroundColour: String,
-        mCompanyName: String
+        mCompanyName: String,
+        cardId: Int
     ) {
         val editCardRequest = AddCardRequest().apply {
             themeId = if (preferenceSourceImpl.themeID.isNullOrEmpty()){"3"}else{
@@ -118,6 +119,7 @@ class HomeViewModel @Inject constructor(
             companyName = mCompanyName
             services = UserSessionManager.getDataFromServiceList()
             socialLinks = null
+            id = cardId
         }
         jobList.add(
             launch {

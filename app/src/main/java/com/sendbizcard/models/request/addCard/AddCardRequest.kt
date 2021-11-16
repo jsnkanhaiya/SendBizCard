@@ -44,5 +44,8 @@ data class AddCardRequest(
 	var designation: String? = null,
 
 	@field:SerializedName("email")
-	var email: String? = null
+	var email: String? = null,
+
+	@field:SerializedName("id")
+	var id: Int? = null
 )

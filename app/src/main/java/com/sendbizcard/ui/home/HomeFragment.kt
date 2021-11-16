@@ -5,6 +5,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
@@ -72,8 +74,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
+        binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
         initOnClicks()
         observeData()
+
     }
 
 
@@ -423,14 +427,21 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     context?.packageName.toString() + ".provider",
                     it
                 )
+
+               /* takePictureIntent .putExtra("crop", "true");
+                takePictureIntent .putExtra("outputX", 200);
+                takePictureIntent .putExtra("outputY", 200);
+                takePictureIntent .putExtra("aspectX", 1);
+                takePictureIntent .putExtra("aspectY", 1);
+                takePictureIntent .putExtra("scale", true);*/
+             //   takePictureIntent .putExtra(MediaStore.EXTRA_OUTPUT, uriWhereToStore);
+                
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 if (takePictureIntent.resolveActivity(requireContext().packageManager) != null) {
                     // Start the image capture intent to take photo
                     startActivityForResult(takePictureIntent, REQUEST_CODE_IMAGE_CAPTURE)
                 }
-
-
             }
         }
     }

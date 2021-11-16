@@ -305,18 +305,21 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
                 }
                 else -> {
                     showProgressBar()
-                    homeViewModel.editCardRequest(
-                        name,
-                        designation,
-                        mobileNumber,
-                        emailId,
-                        website,
-                        location,
-                        userImageBase64String,
-                        companyLogoBase64String,
-                        backgroundColour,
-                        companyName
-                    )
+                    cardDetailsItem?.id?.let { it1 ->
+                        homeViewModel.editCardRequest(
+                            name,
+                            designation,
+                            mobileNumber,
+                            emailId,
+                            website,
+                            location,
+                            userImageBase64String,
+                            companyLogoBase64String,
+                            backgroundColour,
+                            companyName,
+                            it1
+                        )
+                    }
                 }
             }
         }

@@ -64,6 +64,8 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
     private var companyLogoBase64String = ""
     private var cardDetailsItem: CardDetailsItem? = null
     private var isFromPreviewCard = false
+    private var isBackgroungColourChanged=false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +108,12 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 binding.imgShare.isEnabled = false
             }
 
-            binding.imgCardBack.setBackgroundColor(Color.parseColor(cardDetailsItem?.themeColor?:"#ef5e42"))
+            if (isBackgroungColourChanged){
+                binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
+            }else{
+                backgroundColour = cardDetailsItem?.themeColor ?: "#ef5e42"
+                binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
+            }
 
             val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""
             if (companyLogoUrl.isNotEmpty()) {
@@ -660,6 +667,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 // Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
                 backgroundColour= colorHex
                 binding.imgCardBack.setBackgroundColor(color)
+                isBackgroungColourChanged=true
             }
             .show()
     }

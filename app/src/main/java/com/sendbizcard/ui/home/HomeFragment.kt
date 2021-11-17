@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var isCompanyLogoSelected = false
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
+    var bitmap : Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,9 +76,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
         binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
+        bitmap?.let {
+            binding.imgUser.loadBitmap(it)
+        }
         initOnClicks()
         observeData()
-
     }
 
 
@@ -428,14 +431,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     it
                 )
 
-               /* takePictureIntent .putExtra("crop", "true");
-                takePictureIntent .putExtra("outputX", 200);
-                takePictureIntent .putExtra("outputY", 200);
-                takePictureIntent .putExtra("aspectX", 1);
-                takePictureIntent .putExtra("aspectY", 1);
-                takePictureIntent .putExtra("scale", true);*/
-             //   takePictureIntent .putExtra(MediaStore.EXTRA_OUTPUT, uriWhereToStore);
-                
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
                 takePictureIntent.addFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION or Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 if (takePictureIntent.resolveActivity(requireContext().packageManager) != null) {
@@ -465,6 +460,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         val galleryIntent = Intent(Intent.ACTION_GET_CONTENT).apply {
             type = IMAGE_MIME_TYPE
         }
+        galleryIntent.putExtra("crop", "true");
         startActivityForResult(galleryIntent, REQUEST_CODE_GALLERY)
     }
 
@@ -477,13 +473,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             REQUEST_CODE_IMAGE_CAPTURE -> {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
                     if (::currentPhotoPath.isInitialized){
-                        val bitmap =
+                         bitmap =
                             ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
 
-                        withDelayOnMain(300){
-                            binding.imgUser.loadBitmap(bitmap)
-                            userImageBase64String = convertBitmapToBase64(bitmap)
+                        bitmap?.let {
+                            withDelayOnMain(300){
+                                binding.imgUser.loadBitmap(it)
+                                userImageBase64String = convertBitmapToBase64(it)
+                            }
                         }
+
 
                     }
 
@@ -541,14 +540,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             when (file.length()) {
                 in 0..16000000 -> {
                     val path = file.path
-                    val bitmap =
+                     bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    if (isUserImageSelected){
-                        binding.imgUser.loadBitmap(bitmap)
-                        userImageBase64String = convertBitmapToBase64(bitmap)
-                    } else {
-                        companyLogoBase64String = convertBitmapToBase64(bitmap)
+                    bitmap?.let {
+                        if (isUserImageSelected){
+                            binding.imgUser.loadBitmap(it)
+                            userImageBase64String = convertBitmapToBase64(it)
+                        } else {
+                            companyLogoBase64String = convertBitmapToBase64(it)
+                        }
                     }
+
 
                 }
                 else -> {

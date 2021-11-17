@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
@@ -66,6 +67,10 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
     private var companyLogoBase64String = ""
     private var cardDetailsItem: CardDetailsItem? = null
     private var isFromPreviewCard = false
+    private var isBackgroungColourChanged=false
+    private var isUserImageChanged=false
+    var bitmap : Bitmap? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,8 +111,14 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
                 binding.imgShare.isEnabled = false
             }
 
+            if (isBackgroungColourChanged){
+                binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
+            }else{
+                backgroundColour = cardDetailsItem?.themeColor ?: "#ef5e42"
+                binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
+            }
 
-            binding.imgCardBack.setBackgroundColor(Color.parseColor(cardDetailsItem?.themeColor ?: "#ef5e42"))
+
 
             binding.etName.setText(cardDetailsItem?.name ?: "")
 
@@ -122,6 +133,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
             binding.etLocation.setText(cardDetailsItem?.location ?: "")
 
             val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""
+
             if (companyLogoUrl.isNotEmpty()) {
                 binding.imgCompanyLogo.loadImages("https://xapi.sendbusinesscard.com/storage/$companyLogoUrl")
             } else {
@@ -130,12 +142,17 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
 
             binding.etCompanyName.setText(cardDetailsItem?.companyName ?: "")
 
-            val userImageUrl = cardDetailsItem?.userImg ?: ""
-            if (userImageUrl.isNotEmpty()) {
+            if (isUserImageChanged){
+                bitmap?.let { binding.imgUser.loadBitmap(it) }
+            }else{
+                val userImageUrl = cardDetailsItem?.userImg ?: ""
+                if (userImageUrl.isNotEmpty()) {
                 binding.imgUser.loadCircleImages("https://xapi.sendbusinesscard.com/storage/$userImageUrl")
             } else {
                 binding.imgUser.setBackgroundResource(R.drawable.ic_user_img)
             }
+            }
+
         }
     }
 
@@ -555,13 +572,17 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
             REQUEST_CODE_IMAGE_CAPTURE -> {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
                     if (::currentPhotoPath.isInitialized){
-                        val bitmap =
+                         bitmap =
                             ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
 
-                        withDelayOnMain(300){
-                            binding.imgUser.loadBitmap(bitmap)
-                            userImageBase64String = convertBitmapToBase64(bitmap)
+                        bitmap?.let {
+                            withDelayOnMain(300){
+                                binding.imgUser.loadBitmap(it)
+                                userImageBase64String = convertBitmapToBase64(it)
+                                isUserImageChanged=true
+                            }
                         }
+
 
                     }
 
@@ -619,14 +640,19 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
             when (file.length()) {
                 in 0..16000000 -> {
                     val path = file.path
-                    val bitmap =
+                     bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    if (isUserImageSelected){
-                        binding.imgUser.loadBitmap(bitmap)
-                        userImageBase64String = convertBitmapToBase64(bitmap)
-                    } else {
-                        companyLogoBase64String = convertBitmapToBase64(bitmap)
+
+                    bitmap?.let {
+                        if (isUserImageSelected){
+                            binding.imgUser.loadBitmap(it)
+                            userImageBase64String = convertBitmapToBase64(it)
+                        } else {
+                            companyLogoBase64String = convertBitmapToBase64(it)
+                        }
+                        isUserImageChanged= true
                     }
+
 
                 }
                 else -> {
@@ -668,6 +694,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>(){
                 // Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
                 backgroundColour= colorHex
                 binding.imgCardBack.setBackgroundColor(color)
+                isBackgroungColourChanged=true
             }
             .show()
     }

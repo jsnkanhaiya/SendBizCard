@@ -44,8 +44,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_digital_card"
-            android:background="@color/colorPrimary"
-
             />
 
         <androidx.appcompat.widget.AppCompatImageView

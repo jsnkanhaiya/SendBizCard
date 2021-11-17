@@ -39,8 +39,8 @@ import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 import java.util.*
-
-
+import com.yalantis.ucrop.UCrop
+import com.yalantis.ucrop.UCropActivity
 
 
 @AndroidEntryPoint
@@ -57,11 +57,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private val REQUEST_CODE_LOCATION = 0x1005
     private val IMAGE_MIME_TYPE = "image/*"
     lateinit var currentPhotoPath: String
+    var photoURI: Uri? = null
     private var mFusedLocationClient: FusedLocationProviderClient? = null
     private var isUserImageSelected = false
     private var isCompanyLogoSelected = false
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
+    private var isCameraOptionSelected = false
+    private var isGalleryOptionSelected = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,11 +105,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         binding.progressBarContainer.visible()
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         binding.progressBarContainer.gone()
     }
 
@@ -126,9 +129,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
     private fun showErrorMessage(errorMessage: String) {
         hideProgressBar()
-        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
-            errorMessage,"",R.drawable.ic_icon_error)
-        fragment.show(parentFragmentManager,"HomeFragment")
+        val fragment = CommonDialogFragment.newInstance(
+            resources.getString(R.string.error),
+            errorMessage, "", R.drawable.ic_icon_error
+        )
+        fragment.show(parentFragmentManager, "HomeFragment")
     }
 
     private fun initOnClicks() {
@@ -150,11 +155,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
                 override fun onCameraOptionSelected() {
                     requestCameraPermission()
+                    isCameraOptionSelected = true
+                    isGalleryOptionSelected = false
                 }
 
                 override fun onGalleryOptionSelected() {
                     isUserImageSelected = true
                     isCompanyLogoSelected = false
+                    isCameraOptionSelected = false
+                    isGalleryOptionSelected = true
                     requestGalleryPermission()
                 }
             }
@@ -277,28 +286,32 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     }
 
     private fun requestLocationPermission() {
-        if (checkLocationPermission()){
+        if (checkLocationPermission()) {
             getLocation()
 
         } else {
             requestPermissions(
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ),
                 REQUEST_CODE_LOCATION
             )
         }
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLocation(){
-        if (isLocationEnabled()){
+    private fun getLocation() {
+        if (isLocationEnabled()) {
             mFusedLocationClient?.lastLocation?.addOnCompleteListener { task ->
                 val location: Location? = task.result
-                if (location != null){
+                if (location != null) {
                     val latitude = location.latitude
                     val longitude = location.longitude
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val addresses = geocoder.getFromLocation(latitude,longitude,1)
-                    val address = addresses.getOrNull(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                    val address = addresses.getOrNull(0)
+                        ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                     val city = addresses.getOrNull(0)?.locality
                     val state = addresses.getOrNull(0)?.adminArea
                     val country = addresses.getOrNull(0)?.countryName
@@ -337,15 +350,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             val latitude = mLastLocation.latitude
             val longitude = mLastLocation.longitude
             val geocoder = Geocoder(requireContext(), Locale.getDefault())
-            val addresses = geocoder.getFromLocation(latitude,longitude,1)
-            val address = addresses.getOrNull(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            val address = addresses.getOrNull(0)
+                ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             binding.etLocation.setText(address)
         }
     }
 
 
     private fun requestCameraPermission() {
-
         if (checkCameraPermission() && checkWriteStoragePermission()) {
             cameraIntent()
         } else {
@@ -375,9 +388,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-
         when (requestCode) {
-
             REQUEST_CODE_CAMERA -> {
                 if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     cameraIntent()
@@ -413,12 +424,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 createImageFile()
             } catch (ex: IOException) {
                 // Error occurred while creating the File
-                //  CoreUtility.printChatLog(TAG, "IOException occurred ${ex.localizedMessage}")
                 null
             }
             // Continue only if the File was successfully created
             photoFile?.also {
-                val photoURI: Uri = FileProvider.getUriForFile(
+                photoURI = FileProvider.getUriForFile(
                     requireContext(),
                     context?.packageName.toString() + ".provider",
                     it
@@ -429,8 +439,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     // Start the image capture intent to take photo
                     startActivityForResult(takePictureIntent, REQUEST_CODE_IMAGE_CAPTURE)
                 }
-
-
             }
         }
     }
@@ -446,7 +454,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         ).apply {
             // Save a file: path for use with ACTION_VIEW intents
             currentPhotoPath = absolutePath
-            printLog("TAG", "CURRENT PHOTO PATH $currentPhotoPath")
         }
     }
 
@@ -459,43 +466,46 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-
         super.onActivityResult(requestCode, resultCode, data)
-
-        when (requestCode) {
-            REQUEST_CODE_IMAGE_CAPTURE -> {
-                if (resultCode == AppCompatActivity.RESULT_OK) {
-                    if (::currentPhotoPath.isInitialized){
-                        val bitmap =
-                            ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
-
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_IMAGE_CAPTURE -> {
+                    if (photoURI != null) {
+                        startCrop(photoURI!!)
+                    } else {
+                        showErrorMessage("Selected image file might be invalid or not available on device")
+                    }
+                }
+                REQUEST_CODE_GALLERY -> {
+                    val imageUri = data?.data
+                    if (imageUri != null) {
+                        startCrop(imageUri)
+                    } else {
+                        showErrorMessage("Selected image file might be invalid or not available on device")
+                    }
+                }
+                UCrop.REQUEST_CROP -> {
+                    val uri = UCrop.getOutput(data!!)
+                    if (uri != null) {
+                        if (isCameraOptionSelected) {
+                            val bitmap =
+                        ImageCompressUtility.decodeSampledBitmapFromFile(File(uri.path!!).absolutePath, 300, 300)
                         withDelayOnMain(300){
                             binding.imgUser.loadBitmap(bitmap)
                             userImageBase64String = convertBitmapToBase64(bitmap)
+                            }
                         }
 
-                    }
-
-                }
-            }
-            REQUEST_CODE_GALLERY -> {
-                if (resultCode == AppCompatActivity.RESULT_OK) {
-
-                    val imageUri = data?.data
-                    printLog("TAG", "IMAGE URI $imageUri")
-
-                    if (imageUri != null) {
-
-                        val photoFile: File? = try {
-                            createImageFile()
-                        } catch (ex: IOException) {
-                            // Error occurred while creating the File
-                            printLog("TAG", "IOException occurred ${ex.localizedMessage}")
-                            null
-                        }
-                        // Continue only if the File was successfully created
-                        photoFile?.also {
-                            copyImageUriToExternalFilesDir(imageUri,photoFile)
+                        if (isGalleryOptionSelected) {
+                            val photoFile: File? = try {
+                                createImageFile()
+                            } catch (ex: IOException) {
+                                null
+                            }
+                            // Continue only if the File was successfully created
+                            photoFile?.also {
+                                copyImageUriToExternalFilesDir(uri, photoFile)
+                            }
                         }
                     } else {
                         showErrorMessage("Selected image file might be invalid or not available on device")
@@ -505,10 +515,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    private fun startCrop(uri: Uri) {
+        val destinationFileName = "SampleCropImage.jpg"
+        val uCrop =
+            UCrop.of(uri, Uri.fromFile(File(requireContext().cacheDir, destinationFileName)))
+        uCrop.start(requireContext(), this)
+    }
+
     private fun copyImageUriToExternalFilesDir(uri: Uri, fileName: File) {
 
         val inputStream = requireContext().contentResolver.openInputStream(uri)
-
         if (inputStream != null) {
 
             val file = File("$fileName")
@@ -532,7 +548,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     val path = file.path
                     val bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    if (isUserImageSelected){
+                    if (isUserImageSelected) {
                         binding.imgUser.loadBitmap(bitmap)
                         userImageBase64String = convertBitmapToBase64(bitmap)
                     } else {
@@ -541,14 +557,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
                 }
                 else -> {
-                    Toast.makeText(requireContext(),"Size is not in limit",Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Size is not in limit", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
@@ -568,16 +586,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         )
     }
 
-    private fun showColourPattle(){
+    private fun showColourPattle() {
         ColorPickerDialog
-            .Builder(requireContext())        				// Pass Activity Instance
-            .setTitle("Pick Theme")           	// Default "Choose Color"
-           // .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
+            .Builder(requireContext())                        // Pass Activity Instance
+            .setTitle("Pick Theme")            // Default "Choose Color"
+            // .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
             .setDefaultColor(R.color.orange_100)     // Pass Default Color
             .setColorListener { color, colorHex ->
                 // Handle Color Selection
-               // Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
-                backgroundColour= colorHex
+                // Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
+                backgroundColour = colorHex
                 binding.imgCardBack.setBackgroundColor(color)
             }
             .show()

@@ -38,11 +38,10 @@ import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
+import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 import java.util.*
-import com.yalantis.ucrop.UCrop
-import com.yalantis.ucrop.UCropActivity
 
 
 @AndroidEntryPoint

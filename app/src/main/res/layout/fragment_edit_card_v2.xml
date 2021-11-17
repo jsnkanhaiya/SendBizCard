@@ -49,23 +49,27 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_company_logo"
-            android:layout_width="64dp"
-            android:layout_height="24dp"
+            android:layout_width="160dp"
+            android:layout_height="60dp"
+            android:visibility="gone"
             android:layout_marginTop="24dp"
             android:src="@drawable/ic_company_logo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_digital_card" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/tv_company_logo"
+            style="@style/gilroy_regular_13_white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/gilroy_bold"
-            android:text="@string/company_logo"
-            android:textColor="@color/colorCompanyLogo"
-            android:textSize="18sp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_rectangle"
+            android:paddingLeft="15sp"
+            android:paddingRight="15sp"
+            android:text="@string/upload_company_logo"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_company_logo" />
@@ -74,7 +78,7 @@
             android:id="@+id/et_company_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="10dp"
             android:fontFamily="@font/gilroy_medium"
             android:hint="@string/enter_company_name"
             android:textColor="@color/textcolour"

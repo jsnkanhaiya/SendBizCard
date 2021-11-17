@@ -5,6 +5,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
@@ -37,6 +38,7 @@ import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
+import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 import java.util.*
@@ -60,6 +62,9 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
     private var isCompanyLogoSelected = false
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
+    private var isCameraOptionSelected = false
+    private var isGalleryOptionSelected = false
+    var bitmap : Bitmap? = null
 
     private var isFromEditCard = false
     private var cardDetailsItem: CardDetailsItem? = null
@@ -190,18 +195,22 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
             dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
                 override fun onCameraOptionSelected() {
                     requestCameraPermission()
+                    isCameraOptionSelected = true
+                    isGalleryOptionSelected = false
                 }
 
                 override fun onGalleryOptionSelected() {
                     isUserImageSelected = true
                     isCompanyLogoSelected = false
+                    isCameraOptionSelected = false
+                    isGalleryOptionSelected = true
                     requestGalleryPermission()
                 }
             }
             dialog.show(parentFragmentManager, "Select Camera Gallery")
         }
 
-        binding.imgCompanyLogo.setOnClickListener {
+        binding.tvCompanyLogo.setOnClickListener {
             isUserImageSelected = false
             isCompanyLogoSelected = true
             requestGalleryPermission()
@@ -514,6 +523,46 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
                 }
             }
             REQUEST_CODE_GALLERY -> {
+                val imageUri = data?.data
+                if (imageUri != null) {
+                    startCrop(imageUri)
+                } else {
+                    showErrorMessage("Selected image file might be invalid or not available on device")
+                }
+            }
+            UCrop.REQUEST_CROP -> {
+                val uri = UCrop.getOutput(data!!)
+                if (uri != null) {
+                    if (isCameraOptionSelected) {
+                        bitmap =
+                            ImageCompressUtility.decodeSampledBitmapFromFile(File(uri.path!!).absolutePath, 300, 300)
+
+                        bitmap?.let {
+                            withDelayOnMain(300){
+                                binding.imgCompanyLogo.visible()
+                                binding.imgCompanyLogo.loadBitmap(it)
+                                userImageBase64String = convertBitmapToBase64(it)
+                            }
+                        }
+
+                    }
+
+                    if (isGalleryOptionSelected) {
+                        val photoFile: File? = try {
+                            createImageFile()
+                        } catch (ex: IOException) {
+                            null
+                        }
+                        // Continue only if the File was successfully created
+                        photoFile?.also {
+                            copyImageUriToExternalFilesDir(uri, photoFile)
+                        }
+                    }
+                } else {
+                    showErrorMessage("Selected image file might be invalid or not available on device")
+                }
+            }
+            /*REQUEST_CODE_GALLERY -> {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
 
                     val imageUri = data?.data
@@ -536,9 +585,17 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
                         showErrorMessage("Selected image file might be invalid or not available on device")
                     }
                 }
-            }
+            }*/
         }
     }
+
+    private fun startCrop(uri: Uri) {
+        val destinationFileName = "SampleCropImage.jpg"
+        val uCrop =
+            UCrop.of(uri, Uri.fromFile(File(requireContext().cacheDir, destinationFileName)))
+        uCrop.start(requireContext(), this)
+    }
+
 
     private fun copyImageUriToExternalFilesDir(uri: Uri, fileName: File) {
 

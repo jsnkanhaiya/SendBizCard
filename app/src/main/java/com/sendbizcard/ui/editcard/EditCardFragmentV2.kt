@@ -2,6 +2,7 @@ package com.sendbizcard.ui.editcard
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +17,7 @@ import android.os.Environment
 import android.os.Looper
 import android.provider.MediaStore
 import android.provider.Settings
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -193,6 +195,31 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         fragment.show(parentFragmentManager,"HomeFragment")
     }
 
+
+    protected fun sendEmail(email:String) {
+        Log.i("Send email", "")
+        val TO = arrayOf(email)
+        //  val CC = arrayOf("xyz@gmail.com")
+        val emailIntent = Intent(Intent.ACTION_SEND)
+        emailIntent.data = Uri.parse("mailto:")
+        emailIntent.type = "text/plain"
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO)
+        //  emailIntent.putExtra(Intent.EXTRA_CC, CC)
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject")
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here")
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+            activity?.finish()
+            ///  Log.i("Finished sending email...", "")
+        } catch (ex: ActivityNotFoundException) {
+            Toast.makeText(
+                requireContext(),
+                "There is no email client installed.", Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
     private fun initOnClicks() {
 
         binding.imgEdit.setOnClickListener {
@@ -211,6 +238,38 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             binding.imgShare.isEnabled = true
             isFromPreviewCard=false
         }
+
+        binding.imgMobileNumber.setOnClickListener {
+            val callIntent = Intent(Intent.ACTION_CALL)
+            callIntent.data = Uri.parse("tel:" + cardDetailsItem?.contactNo) //change the number
+            startActivity(callIntent)
+        }
+
+        binding.imgEmail.setOnClickListener {
+            cardDetailsItem?.email?.let { it1 -> sendEmail(it1) }
+        }
+
+        binding.imgWebsite.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(cardDetailsItem?.website))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.setPackage("com.android.chrome")
+            try {
+                // Log.d(TAG, "onClick: inTryBrowser")
+                startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                //  Log.e(TAG, "onClick: in inCatchBrowser", ex)
+                intent.setPackage(null)
+                startActivity(Intent.createChooser(intent, "Select Browser"))
+            }
+        }
+
+        binding.imgLocation.setOnClickListener {
+            val mapUri = Uri.parse("geo:0,0?q=" + Uri.encode(cardDetailsItem?.location))
+            val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+        }
+
 
         binding.colorPalette.setOnClickListener {
             showColourPattle()

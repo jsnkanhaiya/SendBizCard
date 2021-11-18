@@ -35,7 +35,6 @@ import com.sendbizcard.databinding.FragmentHomeBinding
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.dialog.SelectCameraGalleryDialog
 import com.sendbizcard.dialog.ServerErrorDialogFragment
-import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
 import com.yalantis.ucrop.UCrop
@@ -64,7 +63,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var isCompanyLogoSelected = false
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
-    var bitmap : Bitmap? = null
+    var bitmap: Bitmap? = null
     private var isCameraOptionSelected = false
     private var isGalleryOptionSelected = false
 
@@ -176,9 +175,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             dialog.show(parentFragmentManager, "Select Camera Gallery")
         }
 
-        binding.imgCompanyLogo.setOnClickListener {
+        binding.tvCompanyLogo.setOnClickListener {
             isUserImageSelected = false
             isCompanyLogoSelected = true
+            isCameraOptionSelected = false
+            isGalleryOptionSelected = true
             requestGalleryPermission()
         }
 
@@ -496,15 +497,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                     val uri = UCrop.getOutput(data!!)
                     if (uri != null) {
                         if (isCameraOptionSelected) {
-                             bitmap =
-                        ImageCompressUtility.decodeSampledBitmapFromFile(File(uri.path!!).absolutePath, 300, 300)
+                            bitmap =
+                                ImageCompressUtility.decodeSampledBitmapFromFile(
+                                    File(uri.path!!).absolutePath,
+                                    300,
+                                    300
+                                )
 
-                        bitmap?.let {
-                            withDelayOnMain(300){
-                                binding.imgUser.loadBitmap(it)
-                                userImageBase64String = convertBitmapToBase64(it)
+                            bitmap?.let {
+                                withDelayOnMain(300) {
+                                    binding.imgUser.loadBitmap(it)
+                                    userImageBase64String = convertBitmapToBase64(it)
+                                }
                             }
-                        }
 
                         }
 
@@ -557,14 +562,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
             when (file.length()) {
                 in 0..16000000 -> {
+
                     val path = file.path
-                     bitmap =
+                    bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
                     bitmap?.let {
                         if (isUserImageSelected) {
                             binding.imgUser.loadBitmap(it)
                             userImageBase64String = convertBitmapToBase64(it)
                         } else {
+                            binding.imgCompanyLogo.visible()
+                            binding.imgCompanyLogo.loadCompanyBitmap(it)
                             companyLogoBase64String = convertBitmapToBase64(it)
                         }
                     }

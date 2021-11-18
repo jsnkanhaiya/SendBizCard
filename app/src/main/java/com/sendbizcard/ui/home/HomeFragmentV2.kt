@@ -213,6 +213,7 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
         binding.tvCompanyLogo.setOnClickListener {
             isUserImageSelected = false
             isCompanyLogoSelected = true
+            isGalleryOptionSelected=true
             requestGalleryPermission()
         }
 
@@ -539,8 +540,7 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
 
                         bitmap?.let {
                             withDelayOnMain(300){
-                                binding.imgCompanyLogo.visible()
-                                binding.imgCompanyLogo.loadBitmap(it)
+
                                 userImageBase64String = convertBitmapToBase64(it)
                             }
                         }
@@ -624,11 +624,12 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
                     val path = file.path
                     val bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    if (isUserImageSelected){
-                        userImageBase64String = convertBitmapToBase64(bitmap)
-                    } else {
-                        companyLogoBase64String = convertBitmapToBase64(bitmap)
+                    bitmap?.let {
+                        binding.imgCompanyLogo.visible()
+                        binding.imgCompanyLogo.loadCompanyBitmap(it)
+                        companyLogoBase64String = convertBitmapToBase64(it)
                     }
+
 
                 }
                 else -> {

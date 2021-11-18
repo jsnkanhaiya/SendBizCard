@@ -6,6 +6,7 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.location.Geocoder
 import android.location.Location
@@ -41,6 +42,7 @@ import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
+import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 import java.util.*
@@ -66,8 +68,10 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
     private var companyLogoBase64String = ""
     private var cardDetailsItem: CardDetailsItem? = null
     private var isFromPreviewCard = false
-    private var isBackgroungColourChanged=false
-
+    private var isBackgroungColourChanged = false
+    private var isCameraOptionSelected = false
+    private var isGalleryOptionSelected = false
+    var bitmap: Bitmap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,7 +92,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         val bundle = this.arguments
         if (bundle != null) {
             cardDetailsItem = bundle.getParcelable("cardItem")
-            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard",false)
+            isFromPreviewCard = bundle.getBoolean("isFromPreviewCard", false)
 
             if (isFromPreviewCard) {
                 binding.imgEdit.visible()
@@ -110,19 +114,24 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 binding.imgShare.isEnabled = false
             }
 
-            if (isBackgroungColourChanged){
+            if (isBackgroungColourChanged) {
                 binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
-            }else{
+            } else {
                 backgroundColour = cardDetailsItem?.themeColor ?: "#ef5e42"
                 binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
             }
-
-            val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""
-            if (companyLogoUrl.isNotEmpty()) {
-                binding.imgCompanyLogo.loadImages("https://xapi.sendbusinesscard.com/storage/$companyLogoUrl")
+            binding.imgCompanyLogo.visible()
+            if (isGalleryOptionSelected) {
+                bitmap?.let { binding.imgCompanyLogo.loadCompanyBitmap(it) }
             } else {
-                binding.imgCompanyLogo.setImageResource(R.drawable.ic_company_logo)
+                val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""
+                if (companyLogoUrl.isNotEmpty()) {
+                    binding.imgCompanyLogo.loadImages("https://xapi.sendbusinesscard.com/storage/$companyLogoUrl")
+                } else {
+                    binding.imgCompanyLogo.setImageResource(R.drawable.ic_company_logo)
+                }
             }
+
 
             binding.etName.setText(cardDetailsItem?.name ?: "")
 
@@ -137,7 +146,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             binding.etWebsite.setText(cardDetailsItem?.website ?: "")
 
             binding.etLocation.setText(cardDetailsItem?.location ?: "")
-            
+
         }
     }
 
@@ -166,11 +175,11 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         }
     }
 
-    private fun showProgressBar(){
+    private fun showProgressBar() {
         binding.progressBarContainer.visible()
     }
 
-    private fun hideProgressBar(){
+    private fun hideProgressBar() {
         binding.progressBarContainer.gone()
     }
 
@@ -190,13 +199,15 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
 
     private fun showErrorMessage(errorMessage: String) {
         hideProgressBar()
-        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.error),
-            errorMessage,"", R.drawable.ic_icon_error)
-        fragment.show(parentFragmentManager,"HomeFragment")
+        val fragment = CommonDialogFragment.newInstance(
+            resources.getString(R.string.error),
+            errorMessage, "", R.drawable.ic_icon_error
+        )
+        fragment.show(parentFragmentManager, "HomeFragment")
     }
 
 
-    protected fun sendEmail(email:String) {
+    protected fun sendEmail(email: String) {
         Log.i("Send email", "")
         val TO = arrayOf(email)
         //  val CC = arrayOf("xyz@gmail.com")
@@ -236,7 +247,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             binding.etCompanyName.isEnabled = true
             binding.imgSave.isEnabled = true
             binding.imgShare.isEnabled = true
-            isFromPreviewCard=false
+            isFromPreviewCard = false
         }
 
         binding.imgMobileNumber.setOnClickListener {
@@ -276,12 +287,18 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         }
 
         binding.ourServicesCL.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services, bundleOf("services" to cardDetailsItem?.services,"isFromEdit" to true))
+            findNavController().navigate(
+                R.id.nav_our_services,
+                bundleOf("services" to cardDetailsItem?.services, "isFromEdit" to true)
+            )
         }
 
         binding.socialMediaCL.setOnClickListener {
-           // findNavController().navigate(R.id.nav_social_media_links)
-            findNavController().navigate(R.id.nav_social_media_links, bundleOf("socialLinks" to cardDetailsItem?.socialLinks,"isFromEdit" to true))
+            // findNavController().navigate(R.id.nav_social_media_links)
+            findNavController().navigate(
+                R.id.nav_social_media_links,
+                bundleOf("socialLinks" to cardDetailsItem?.socialLinks, "isFromEdit" to true)
+            )
 
         }
 
@@ -294,29 +311,40 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
                 override fun onCameraOptionSelected() {
                     requestCameraPermission()
+                    isCameraOptionSelected = true
+                    isGalleryOptionSelected = false
                 }
 
                 override fun onGalleryOptionSelected() {
                     isUserImageSelected = true
                     isCompanyLogoSelected = false
+                    isCameraOptionSelected = false
+                    isGalleryOptionSelected = true
                     requestGalleryPermission()
                 }
             }
             dialog.show(parentFragmentManager, "Select Camera Gallery")
         }
 
-        binding.imgCompanyLogo.setOnClickListener {
+        binding.tvCompanyLogo.setOnClickListener {
             isUserImageSelected = false
             isCompanyLogoSelected = true
+            isGalleryOptionSelected = true
             requestGalleryPermission()
         }
 
         binding.imgArrow.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services, bundleOf("isFromPreviewCard" to isFromPreviewCard))
+            findNavController().navigate(
+                R.id.nav_our_services,
+                bundleOf("isFromPreviewCard" to isFromPreviewCard)
+            )
         }
 
         binding.imgArrowIcon.setOnClickListener {
-            findNavController().navigate(R.id.nav_social_media_links, bundleOf("isFromPreviewCard" to isFromPreviewCard))
+            findNavController().navigate(
+                R.id.nav_social_media_links,
+                bundleOf("isFromPreviewCard" to isFromPreviewCard)
+            )
         }
 
         binding.imgSave.setOnClickListener {
@@ -426,28 +454,32 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
     }
 
     private fun requestLocationPermission() {
-        if (checkLocationPermission()){
+        if (checkLocationPermission()) {
             getLocation()
 
         } else {
             requestPermissions(
-                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(
+                    Manifest.permission.ACCESS_COARSE_LOCATION,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ),
                 REQUEST_CODE_LOCATION
             )
         }
     }
 
     @SuppressLint("MissingPermission")
-    private fun getLocation(){
-        if (isLocationEnabled()){
+    private fun getLocation() {
+        if (isLocationEnabled()) {
             mFusedLocationClient?.lastLocation?.addOnCompleteListener { task ->
                 val location: Location? = task.result
-                if (location != null){
+                if (location != null) {
                     val latitude = location.latitude
                     val longitude = location.longitude
                     val geocoder = Geocoder(requireContext(), Locale.getDefault())
-                    val addresses = geocoder.getFromLocation(latitude,longitude,1)
-                    val address = addresses.getOrNull(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+                    val address = addresses.getOrNull(0)
+                        ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
                     val city = addresses.getOrNull(0)?.locality
                     val state = addresses.getOrNull(0)?.adminArea
                     val country = addresses.getOrNull(0)?.countryName
@@ -486,8 +518,9 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             val latitude = mLastLocation.latitude
             val longitude = mLastLocation.longitude
             val geocoder = Geocoder(requireContext(), Locale.getDefault())
-            val addresses = geocoder.getFromLocation(latitude,longitude,1)
-            val address = addresses.getOrNull(0)?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            val address = addresses.getOrNull(0)
+                ?.getAddressLine(0) // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
             binding.etLocation.setText(address)
         }
     }
@@ -607,6 +640,14 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
     }
 
 
+    private fun startCrop(uri: Uri) {
+        val destinationFileName = "SampleCropImage.jpg"
+        val uCrop =
+            UCrop.of(uri, Uri.fromFile(File(requireContext().cacheDir, destinationFileName)))
+        uCrop.start(requireContext(), this)
+    }
+
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -614,11 +655,15 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         when (requestCode) {
             REQUEST_CODE_IMAGE_CAPTURE -> {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
-                    if (::currentPhotoPath.isInitialized){
+                    if (::currentPhotoPath.isInitialized) {
                         val bitmap =
-                            ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
+                            ImageCompressUtility.decodeSampledBitmapFromFile(
+                                currentPhotoPath,
+                                300,
+                                300
+                            )
 
-                        withDelayOnMain(300){
+                        withDelayOnMain(300) {
                             userImageBase64String = convertBitmapToBase64(bitmap)
                         }
 
@@ -627,29 +672,49 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 }
             }
             REQUEST_CODE_GALLERY -> {
-                if (resultCode == AppCompatActivity.RESULT_OK) {
+                val imageUri = data?.data
+                if (imageUri != null) {
+                    startCrop(imageUri)
+                } else {
+                    showErrorMessage("Selected image file might be invalid or not available on device")
+                }
+            }
+            UCrop.REQUEST_CROP -> {
+                val uri = UCrop.getOutput(data!!)
+                if (uri != null) {
+                    if (isCameraOptionSelected) {
+                        bitmap =
+                            ImageCompressUtility.decodeSampledBitmapFromFile(
+                                File(uri.path!!).absolutePath,
+                                300,
+                                300
+                            )
 
-                    val imageUri = data?.data
-                    printLog("TAG", "IMAGE URI $imageUri")
+                        bitmap?.let {
+                            withDelayOnMain(300) {
 
-                    if (imageUri != null) {
+                                userImageBase64String = convertBitmapToBase64(it)
+                            }
+                        }
 
+                    }
+
+                    if (isGalleryOptionSelected) {
                         val photoFile: File? = try {
                             createImageFile()
                         } catch (ex: IOException) {
-                            // Error occurred while creating the File
-                            printLog("TAG", "IOException occurred ${ex.localizedMessage}")
                             null
                         }
                         // Continue only if the File was successfully created
                         photoFile?.also {
-                            copyImageUriToExternalFilesDir(imageUri,photoFile)
+                            copyImageUriToExternalFilesDir(uri, photoFile)
                         }
-                    } else {
-                        showErrorMessage("Selected image file might be invalid or not available on device")
                     }
+                } else {
+                    showErrorMessage("Selected image file might be invalid or not available on device")
                 }
             }
+
         }
     }
 
@@ -678,24 +743,30 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             when (file.length()) {
                 in 0..16000000 -> {
                     val path = file.path
-                    val bitmap =
+                    bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    if (isUserImageSelected){
-                        userImageBase64String = convertBitmapToBase64(bitmap)
-                    } else {
-                        companyLogoBase64String = convertBitmapToBase64(bitmap)
+                    bitmap?.let {
+                        if (isUserImageSelected) {
+                            userImageBase64String = convertBitmapToBase64(it)
+                        } else {
+                            binding.imgCompanyLogo.visible()
+                            binding.imgCompanyLogo.loadCompanyBitmap(it)
+                            companyLogoBase64String = convertBitmapToBase64(it)
+                            companyLogoBase64String = convertBitmapToBase64(it)
+                        }
                     }
-
                 }
                 else -> {
-                    Toast.makeText(requireContext(),"Size is not in limit", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), "Size is not in limit", Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }
     }
 
     private fun isLocationEnabled(): Boolean {
-        val locationManager: LocationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager: LocationManager =
+            requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER
         )
@@ -715,18 +786,18 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         )
     }
 
-    private fun showColourPattle(){
+    private fun showColourPattle() {
         ColorPickerDialog
-            .Builder(requireContext())        				// Pass Activity Instance
-            .setTitle("Pick Theme")           	// Default "Choose Color"
+            .Builder(requireContext())                        // Pass Activity Instance
+            .setTitle("Pick Theme")            // Default "Choose Color"
             // .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
             .setDefaultColor(R.color.orange_100)     // Pass Default Color
             .setColorListener { color, colorHex ->
                 // Handle Color Selection
                 // Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()
-                backgroundColour= colorHex
+                backgroundColour = colorHex
                 binding.imgCardBack.setBackgroundColor(color)
-                isBackgroungColourChanged=true
+                isBackgroungColourChanged = true
             }
             .show()
     }

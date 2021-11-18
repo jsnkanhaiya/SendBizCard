@@ -51,6 +51,12 @@ fun AppCompatImageView.loadBitmap(bitmap: Bitmap) {
         .into(this)
 }
 
+fun AppCompatImageView.loadCompanyBitmap(bitmap: Bitmap) {
+    Glide.with(context)
+        .load(bitmap)
+        .into(this)
+}
+
 fun DialogFragment.setWidthPercent(percentage: Int) {
     val percent = percentage.toFloat() / 100
     val dm = Resources.getSystem().displayMetrics

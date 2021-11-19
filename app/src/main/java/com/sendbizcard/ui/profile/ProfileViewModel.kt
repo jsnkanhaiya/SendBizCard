@@ -41,6 +41,7 @@ class ProfileViewModel @Inject constructor(
                         preferenceSourceImpl.userEmail= result.body.user?.email.toString()
                         preferenceSourceImpl.userMobileNO= result.body.user?.contact.toString()
                         preferenceSourceImpl.userId= result.body.user?.id.toString()
+                        preferenceSourceImpl.profileImage= result.body.user?.userImg.toString()
 
                             userProfileResponse.value=result.body
                     }

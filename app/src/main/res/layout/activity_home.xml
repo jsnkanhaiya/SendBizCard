@@ -66,7 +66,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginLeft="35dp"
-                android:src="@drawable/ic_linkedin_white"
+                android:src="@drawable/ic_linkedin_icon_white_withoutborder"
                 app:layout_constraintEnd_toStartOf="@+id/img_insta"
                 app:layout_constraintStart_toEndOf="@+id/img_insta"
                 app:layout_constraintTop_toTopOf="parent"

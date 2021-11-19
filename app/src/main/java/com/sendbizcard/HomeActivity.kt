@@ -19,6 +19,7 @@ import com.sendbizcard.databinding.ActivityHomeBinding
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.ui.main.MainActivity
+import com.sendbizcard.ui.profile.ProfileViewModel
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,10 +27,11 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     private val homeViewModel: HomeViewModel by viewModels()
+    private val profileViewModel: ProfileViewModel by viewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
 
-
+    private lateinit var userImage : AppCompatImageView
     lateinit var tvName: TextView
     lateinit var imgFb: AppCompatImageView
     lateinit var imgInsta: AppCompatImageView
@@ -43,7 +45,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = getViewBinding()
-
+        profileViewModel.getUserProfileData()
 
 
         setSupportActionBar(binding.appBarHome.toolbar)
@@ -72,6 +74,12 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun setUpObservers() {
+
+        profileViewModel.userProfileResponse.observe(this) {
+            userImage.loadCircleImages(AppConstants.IMAGE_BASE_URL+homeViewModel.getUserImage())
+            tvName.setText(homeViewModel.getUserName())
+        }
+
         homeViewModel.logoutResponse.observe(this) {
             binding.appBarHome.progressBarContainer.gone()
             showSuccessDialog()
@@ -153,8 +161,9 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         imgFb = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_fb)
         imgInsta = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_insta)
         imgLinkedIn = socialMediaCL.findViewById<AppCompatImageView>(R.id.img_linkedIn)
+        userImage = headerview.findViewById<AppCompatImageView>(R.id.img_user)
 
-        tvName.text = homeViewModel.getUserName()
+      //  tvName.text = homeViewModel.getUserName()
 
         imgFb.setOnClickListener {
             val open = Intent(Intent.ACTION_VIEW, Uri.parse("www.facebook.com/SendBusinessCardDigitally"))

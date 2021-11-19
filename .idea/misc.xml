@@ -71,6 +71,8 @@
         <entry key="app/src/main/res/drawable/ic_linkedin_white.xml" value="0.23148148148148148" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.2175925925925926" />
         <entry key="app/src/main/res/drawable/ic_think.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/drawable/ic_user_white.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/drawable/image_border.xml" value="0.22314814814814815" />
         <entry key="app/src/main/res/font/roboto.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12284701114488349" />
@@ -98,6 +100,7 @@
         <entry key="app/src/main/res/layout/fragment_siginup.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_succssesful_message.xml" value="0.12335359675785208" />
         <entry key="app/src/main/res/layout/fragment_verify_forgot_password.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/nav_header_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/row_item_saved_card.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/row_saved_card_item.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/row_theme_item.xml" value="0.12284701114488349" />

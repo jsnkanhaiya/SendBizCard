@@ -27,6 +27,10 @@ class HomeViewModel @Inject constructor(
        return preferenceSourceImpl.userName
     }
 
+    fun getUserImage() : String{
+        return preferenceSourceImpl.profileImage
+    }
+
     fun getThemeId() : String{
         return preferenceSourceImpl.themeID
     }

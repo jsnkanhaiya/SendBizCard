@@ -346,7 +346,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         binding.ourServicesCL.setOnClickListener {
             findNavController().navigate(
                 R.id.nav_our_services,
-                bundleOf("services" to cardDetailsItem?.services, "isFromEdit" to true)
+                bundleOf("services" to cardDetailsItem?.services, "isFromEdit" to true,"isFromPreviewCard" to isFromPreviewCard)
             )
         }
 
@@ -354,13 +354,9 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             // findNavController().navigate(R.id.nav_social_media_links)
             findNavController().navigate(
                 R.id.nav_social_media_links,
-                bundleOf("socialLinks" to cardDetailsItem?.socialLinks, "isFromEdit" to true)
+                bundleOf("socialLinks" to cardDetailsItem?.socialLinks, "isFromEdit" to true,"isFromPreviewCard" to isFromPreviewCard)
             )
 
-        }
-
-        binding.ourServicesCL.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services)
         }
 
         binding.imgCamera.setOnClickListener {
@@ -390,19 +386,6 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             requestGalleryPermission()
         }
 
-        binding.imgArrow.setOnClickListener {
-            findNavController().navigate(
-                R.id.nav_our_services,
-                bundleOf("isFromPreviewCard" to isFromPreviewCard)
-            )
-        }
-
-        binding.imgArrowIcon.setOnClickListener {
-            findNavController().navigate(
-                R.id.nav_social_media_links,
-                bundleOf("isFromPreviewCard" to isFromPreviewCard)
-            )
-        }
 
         binding.imgSave.setOnClickListener {
             val name = binding.etName.text.toString()

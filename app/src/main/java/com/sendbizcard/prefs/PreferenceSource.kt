@@ -5,6 +5,7 @@ interface PreferenceSource {
     var userId : String
     var userToken : String
     var userName : String
+    var profileImage : String
     var userEmail : String
     var userMobileNO : String
     var themeID : String

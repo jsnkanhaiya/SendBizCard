@@ -364,12 +364,22 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
         }
 
         binding.socialMediaCL.setOnClickListener {
-            findNavController().navigate(R.id.nav_social_media_links)
+            // findNavController().navigate(R.id.nav_social_media_links)
+            findNavController().navigate(
+                R.id.nav_social_media_links,
+                bundleOf("socialLinks" to cardDetailsItem?.socialLinks, "isFromEdit" to true,"isFromPreviewCard" to isFromPreviewCard)
+            )
+
         }
 
         binding.ourServicesCL.setOnClickListener {
-            findNavController().navigate(R.id.nav_our_services)
+            findNavController().navigate(
+                R.id.nav_our_services,
+                bundleOf("services" to cardDetailsItem?.services, "isFromEdit" to true,"isFromPreviewCard" to isFromPreviewCard)
+            )
         }
+
+
 
         binding.imgCamera.setOnClickListener {
             val dialog = SelectCameraGalleryDialog.newInstance()
@@ -423,19 +433,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
         }
 
 
-        binding.imgArrow.setOnClickListener {
-            findNavController().navigate(
-                R.id.nav_our_services,
-                bundleOf("isFromPreviewCard" to isFromPreviewCard)
-            )
-        }
 
-        binding.imgArrowIcon.setOnClickListener {
-            findNavController().navigate(
-                R.id.nav_social_media_links,
-                bundleOf("isFromPreviewCard" to isFromPreviewCard)
-            )
-        }
 
         binding.imgSave.setOnClickListener {
             val name = binding.etName.text.toString()

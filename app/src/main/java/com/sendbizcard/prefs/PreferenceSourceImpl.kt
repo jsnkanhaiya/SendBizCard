@@ -11,6 +11,7 @@ class PreferenceSourceImpl @Inject constructor(private val preferences: SharedPr
         const val USER_ID = "USER_ID"
         const val USER_TOKEN = "USER_TOKEN"
         const val USER_NAME = "USER_NAME"
+        const val PROFILE_IMAGE = "PROFILE_IMAGE"
         const val USER_EMAIL = "USER_EMAIL"
         const val USER_THEME_ID = "USER_THEME_ID"
         const val USER_MOBILE_NO = "USER_MOBILE_NO"
@@ -51,6 +52,12 @@ class PreferenceSourceImpl @Inject constructor(private val preferences: SharedPr
         get() = preferences.getString(USER_NAME,"") ?: ""
         set(value) {
             preferences.edit().putString(USER_NAME,value).apply()
+        }
+
+    override var profileImage: String
+        get() = preferences.getString(PROFILE_IMAGE,"") ?: ""
+        set(value) {
+            preferences.edit().putString(PROFILE_IMAGE,value).apply()
         }
 
 

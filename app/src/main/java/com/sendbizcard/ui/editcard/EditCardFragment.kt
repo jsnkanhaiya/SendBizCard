@@ -103,6 +103,8 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
 
             if (isFromPreviewCard) {
                 binding.imgEdit.visible()
+                binding.colorPalette.gone()
+                binding.imgCamera.gone()
                 binding.colorPalette.isEnabled = false
                 binding.imgCamera.isEnabled = false
                 binding.etName.isEnabled = false

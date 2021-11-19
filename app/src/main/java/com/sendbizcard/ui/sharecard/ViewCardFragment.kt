@@ -46,7 +46,7 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
 
         val bundle = this.arguments
         if (bundle != null) {
-            cardId = bundle.getString("id").toString()
+            cardId = bundle.getInt("id").toString()
         }
     }
 
@@ -67,15 +67,18 @@ class ViewCardFragment : BaseFragment<FragmentViewCardBinding>(){
 
         viewCardViewModel.showNetworkError.observe(this) { errorMessage ->
             showErrorMessage(errorMessage)
+            hideProgressBar()
         }
 
         viewCardViewModel.showUnknownError.observe(this) { errorMessage ->
             showErrorMessage(errorMessage)
+            hideProgressBar()
         }
 
 
         viewCardViewModel.showServerError.observe(this) { errorMessage ->
             showErrorMessage(errorMessage.errorMessage)
+            hideProgressBar()
         }
     }
 

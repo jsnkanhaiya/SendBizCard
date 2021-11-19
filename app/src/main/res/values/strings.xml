@@ -30,6 +30,7 @@
     <string name="enter_emailIDor_contct">Enter Email ID or Contact no.</string>
     <string name="enter_emailID">Enter Email ID</string>
     <string name="enter_feedback">Please enter feedback</string>
+    <string name="no_contacts">No contacts found</string>
     <string name="select_terms">Please select terms and Privacy policy</string>
     <string name="enter_otp">Enter 5 Digit OTP</string>
     <string name="enter_otp6">Enter 6 Digit OTP</string>

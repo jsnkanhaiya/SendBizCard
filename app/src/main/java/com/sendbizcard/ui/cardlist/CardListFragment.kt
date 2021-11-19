@@ -226,7 +226,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
             override fun afterTextChanged(editable: Editable) {
                 val searchData = binding.etSearch.text.toString()
                 val cardList = cardListViewModel.cardListLiveData.value ?: ArrayList()
-                if (searchData.isEmpty() && cardList.isNotEmpty()){
+                if (searchData.isEmpty() && cardList.isNotEmpty() && searchData.length>3){
                     setUpSearchDataInAdapter(cardList)
                 }
             }

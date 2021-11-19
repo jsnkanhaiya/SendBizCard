@@ -150,7 +150,6 @@
             android:maxLines="1"
             android:maxLength="10"
             android:inputType="number"
-            android:textColor="@color/colorGray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_mobile_number"
             app:layout_constraintTop_toBottomOf="@+id/et_designation" />
@@ -180,7 +179,6 @@
             android:singleLine="true"
             android:maxLines="1"
             android:inputType="textEmailAddress"
-            android:textColor="@color/colorGray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_email"
             app:layout_constraintTop_toBottomOf="@+id/et_mobile_number" />
@@ -207,7 +205,6 @@
             android:hint="@string/enter_website"
             android:padding="8dp"
             style="@style/gilroy_regular_13"
-            android:textColor="@color/colorGray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_website"
             app:layout_constraintTop_toBottomOf="@+id/et_email" />
@@ -234,7 +231,6 @@
             android:hint="@string/enter_location"
             android:padding="8dp"
             style="@style/gilroy_regular_13"
-            android:textColor="@color/colorGray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_location"
             app:layout_constraintTop_toBottomOf="@+id/et_website" />
@@ -268,8 +264,7 @@
                 android:layout_marginEnd="12dp"
                 android:padding="8dp"
                 android:hint="@string/our_services"
-                android:textColor="@color/colorGray"
-                style="@style/gilroy_regular_13"
+                    style="@style/gilroy_regular_13"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/img_arrow"
                 app:layout_constraintStart_toEndOf="@+id/img_our_services"

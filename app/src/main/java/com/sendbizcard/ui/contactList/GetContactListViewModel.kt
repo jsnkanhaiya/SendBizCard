@@ -25,6 +25,10 @@ class GetContactListViewModel @Inject constructor(
     val cardListLiveData : SingleLiveEvent<List<CardDetailsItem>> by lazy { SingleLiveEvent() }
     val cardSearchLiveData : SingleLiveEvent<List<CardDetailsItem>> by lazy { SingleLiveEvent() }
 
+    fun getThemeId():String{
+        return preferenceSourceImpl.themeID
+    }
+
     fun getCardList() {
       //  val cardListRequestModel = CardListRequestModel("",0,10,null,"")
         jobList.add(

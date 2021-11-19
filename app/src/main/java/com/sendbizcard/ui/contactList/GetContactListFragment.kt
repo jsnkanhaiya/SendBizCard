@@ -15,16 +15,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.sendbizcard.R
 import com.sendbizcard.base.BaseViewHolder
 import com.sendbizcard.dialog.CommonDialogFragment
 import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.ui.main.MainActivity
+import com.sendbizcard.ui.sharecard.ViewCardViewModel
+import com.sendbizcard.utils.getDefaultNavigationAnimation
 import com.sendbizcard.utils.gone
+import com.sendbizcard.utils.shareApp
 import com.sendbizcard.utils.visible
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -37,10 +43,11 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
 
     @Inject
     lateinit var contactListAdapter: ContactListAdapter
+    private val viewCardViewModel: ViewCardViewModel by viewModels()
 
     private val contactListViewModel: GetContactListViewModel by viewModels()
     private lateinit var binding: FragmentGetContactListBinding
-
+    var deletedId = -1
     private val REQUEST_CODE_CONTACTS = 0x1006
     private val contactList: ArrayList<String> by lazy {
         ArrayList()
@@ -59,6 +66,32 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
     }
 
     private fun setUpObservers(){
+
+        viewCardViewModel.deleteCardResponse.observe(this) {
+            binding.progressBarContainer.gone()
+            hideProgressBar()
+            var deletedCardIndex = -1
+
+            for ((index, value) in contactListAdapter.list.withIndex()) {
+                val id = value.id ?: -1
+                if (id == deletedId){
+                    deletedCardIndex = index
+                    break
+                }
+            }
+            if (deletedCardIndex!=-1){
+                showSuccessDialog()
+                contactListAdapter.list.removeAt(deletedCardIndex)
+                contactListAdapter.notifyItemRemoved(deletedCardIndex)
+            }
+        }
+
+        viewCardViewModel.viewCardResponse.observe(this) { cardList ->
+            hideProgressBar()
+            cardList.redirectUrl?.let { shareApp(requireContext(), it) }
+        }
+
+
         contactListViewModel.cardListLiveData.observe(this) { cardList ->
             if (cardList.isNotEmpty()) {
                 compareContactList(cardList)
@@ -88,6 +121,13 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
             showErrorMessage(errorMessage)
         }
     }
+
+    private fun showSuccessDialog() {
+        val fragment = CommonDialogFragment.newInstance(resources.getString(R.string.success_title),
+            resources.getString(R.string.success_title_card_delete),"",R.drawable.ic_icon_success)
+        fragment.show(parentFragmentManager,"CardListFragment")
+    }
+
 
     private fun showServerErrorMessage() {
         hideProgressBar()
@@ -127,7 +167,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
             override fun afterTextChanged(editable: Editable) {
                 val searchData = binding.etSearch.text.toString()
                 val cardList = contactListViewModel.cardListLiveData.value ?: ArrayList()
-                if (searchData.isEmpty() && cardList.isNotEmpty()){
+                if (searchData.isEmpty() && cardList.isNotEmpty()&& searchData.length>3){
                     setUpSearchDataInAdapter(cardList)
                 }
             }
@@ -195,7 +235,19 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
                 compareListInBackgroundThread(cardList)
             }
             hideProgressBar()
-            setUpAdapter(list)
+            if (list.isNotEmpty()){
+                binding.tvNotfound.gone()
+                binding.rvCardList.visible()
+                binding.clSearchBar.visible()
+                setUpAdapter(list)
+            }
+            else
+            {
+                binding.rvCardList.gone()
+                binding.clSearchBar.gone()
+                binding.tvNotfound.visible()
+            }
+
         }
     }
 
@@ -217,18 +269,47 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
         contactListAdapter.addAll(cardList)
         contactListAdapter.cardClickListener = object : BaseViewHolder.ItemCardClickCallback<CardDetailsItem> {
             override fun onEditClicked(data: CardDetailsItem, pos: Int) {
+                Log.d("CardListFragment", "EditClickedCallback")
+                if (contactListViewModel.getThemeId() == "3"){
+                    findNavController().navigate(R.id.nav_edit_card, bundleOf("cardItem" to data,"isFromPreviewCard" to false),
+                        getDefaultNavigationAnimation()
+                    )
+                } else {
+                    findNavController().navigate(R.id.nav_edit_card_v2, bundleOf("cardItem" to data,"isFromPreviewCard" to false),
+                        getDefaultNavigationAnimation()
+                    )
+                }
 
             }
 
             override fun onPreviewClicked(data: CardDetailsItem, pos: Int) {
-
+                Log.d("CardListFragment", "PreviewClickedCallback")
+                /*if (contactListViewModel.getThemeId() == "3"){
+                    findNavController().navigate(R.id.nav_edit_card, bundleOf("cardItem" to data,"isFromPreviewCard" to true),
+                        getDefaultNavigationAnimation()
+                    )
+                } else {
+                    findNavController().navigate(R.id.nav_edit_card_v2, bundleOf("cardItem" to data,"isFromPreviewCard" to true),
+                        getDefaultNavigationAnimation()
+                    )
+                }*/
+                findNavController().navigate(
+                    R.id.nav_view_card, bundleOf("id" to data.id),
+                    getDefaultNavigationAnimation()
+                )
             }
 
             override fun onShareClicked(data: CardDetailsItem, pos: Int) {
-
+                Log.d("CardListFragment", "ShareClickedCallback")
+                viewCardViewModel.getCardURL(data.id.toString(), contactListViewModel.getThemeId())
+                // shareApp(requireContext(),data.)
             }
 
             override fun onDeleteClicked(data: CardDetailsItem, pos: Int) {
+                Log.d("CardListFragment", "DeleteClickedCallback")
+                deletedId = data.id ?: -1
+                binding.progressBarContainer.visible()
+                viewCardViewModel.deleteCard(data.id.toString())
 
             }
 

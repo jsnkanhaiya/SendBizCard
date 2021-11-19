@@ -87,6 +87,7 @@
         <entry key="app/src/main/res/layout/fragment_feedback_thank_you.xml" value="0.19293478260869565" />
         <entry key="app/src/main/res/layout/fragment_forgot_password.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_gallery.xml" value="0.2346014492753623" />
+        <entry key="app/src/main/res/layout/fragment_get_contact_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.2346014492753623" />
         <entry key="app/src/main/res/layout/fragment_home_v2.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.25" />

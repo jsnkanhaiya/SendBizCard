@@ -59,6 +59,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
     private val REQUEST_CODE_GALLERY = 0x1003
     private val REQUEST_CODE_READ_EXTERNAL_STORAGE = 0x1004
     private val REQUEST_CODE_LOCATION = 0x1005
+    private val REQUEST_CALL_PERMISSION = 0x1006
     private val IMAGE_MIME_TYPE = "image/*"
     lateinit var currentPhotoPath: String
     private var mFusedLocationClient: FusedLocationProviderClient? = null
@@ -72,6 +73,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
     private var isCameraOptionSelected = false
     private var isGalleryOptionSelected = false
     var bitmap: Bitmap? = null
+    var mobileNumber = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -206,28 +208,30 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         fragment.show(parentFragmentManager, "HomeFragment")
     }
 
+    private fun checkCallPermission(): Boolean {
+        val result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+        return result == PackageManager.PERMISSION_GRANTED
+    }
 
-    protected fun sendEmail(email: String) {
-        Log.i("Send email", "")
-        val TO = arrayOf(email)
-        //  val CC = arrayOf("xyz@gmail.com")
-        val emailIntent = Intent(Intent.ACTION_SEND)
-        emailIntent.data = Uri.parse("mailto:")
-        emailIntent.type = "text/plain"
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, TO)
-        //  emailIntent.putExtra(Intent.EXTRA_CC, CC)
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject")
-        emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here")
+    private fun makeCall() {
+        val intent = Intent(Intent.ACTION_DIAL);
+        intent.data = Uri.parse("tel:$mobileNumber");
+        startActivity(Intent.createChooser(intent, "Complete action using?"));
+    }
+
+
+    private fun openEmailClient(emailId: String) {
         try {
-            startActivity(Intent.createChooser(emailIntent, "Send mail..."))
-            activity?.finish()
-            ///  Log.i("Finished sending email...", "")
-        } catch (ex: ActivityNotFoundException) {
-            Toast.makeText(
-                requireContext(),
-                "There is no email client installed.", Toast.LENGTH_SHORT
-            ).show()
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(emailId))
+                putExtra(Intent.EXTRA_SUBJECT, "Request for subscription of MI Membership in bulk account")
+            }
+            startActivity(intent)
+        } catch (exception: Exception) {
+            Toast.makeText(activity, "There are no email client installed on your device.", Toast.LENGTH_SHORT).show()
         }
+
     }
 
 
@@ -251,13 +255,21 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
         }
 
         binding.imgMobileNumber.setOnClickListener {
-            val callIntent = Intent(Intent.ACTION_CALL)
-            callIntent.data = Uri.parse("tel:" + cardDetailsItem?.contactNo) //change the number
-            startActivity(callIntent)
+            mobileNumber = binding.etMobileNumber.text.toString()
+            if (mobileNumber.length == 10) {
+                if (checkCallPermission()) {
+                    makeCall()
+                } else {
+                    requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL_PERMISSION)
+                }
+            }
         }
 
         binding.imgEmail.setOnClickListener {
-            cardDetailsItem?.email?.let { it1 -> sendEmail(it1) }
+            val emailId = cardDetailsItem?.email ?: ""
+            if (emailId.isNotEmpty()) {
+                openEmailClient(emailId)
+            }
         }
 
         binding.imgWebsite.setOnClickListener {
@@ -581,6 +593,14 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                     getLocation()
                 } else {
                     Toast.makeText(requireContext(), "Allow Permission", Toast.LENGTH_LONG).show()
+                }
+            }
+
+            REQUEST_CALL_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && requestCode == REQUEST_CALL_PERMISSION) {
+                    makeCall()
+                } else {
+                    Toast.makeText(requireContext(), "Please allow permission to continue.", Toast.LENGTH_LONG).show()
                 }
             }
         }

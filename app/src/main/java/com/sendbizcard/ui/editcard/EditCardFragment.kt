@@ -72,6 +72,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
     private var isBackgroungColourChanged = false
     private var isUserImageChanged = false
     var bitmap: Bitmap? = null
+    var companyBitmap: Bitmap? = null
     private var isCameraOptionSelected = false
     private var isGalleryOptionSelected = false
     var photoURI: Uri? = null
@@ -139,8 +140,8 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
             binding.etLocation.setText(cardDetailsItem?.location ?: "")
 
             binding.imgCompanyLogo.visible()
-            if (isGalleryOptionSelected) {
-                bitmap?.let { binding.imgCompanyLogo.loadCompanyBitmap(it) }
+            if (isCompanyLogoSelected) {
+                companyBitmap?.let { binding.imgCompanyLogo.loadCompanyBitmap(it) }
             } else {
                 val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""
                 if (companyLogoUrl.isNotEmpty()) {
@@ -152,7 +153,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
 
             binding.etCompanyName.setText(cardDetailsItem?.companyName ?: "")
 
-            if (isUserImageChanged) {
+            if (isUserImageSelected) {
                 bitmap?.let { binding.imgUser.loadBitmap(it) }
             } else {
                 val userImageUrl = cardDetailsItem?.userImg ?: ""
@@ -740,19 +741,23 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
             when (file.length()) {
                 in 0..16000000 -> {
                     val path = file.path
-                    bitmap =
-                        ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    bitmap?.let {
-                        if (isUserImageSelected) {
+
+                    if (isUserImageSelected) {
+                        bitmap =
+                            ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
+                        bitmap?.let {
                             binding.imgUser.loadBitmap(it)
-                            userImageBase64String = convertBitmapToBase64(it)
-                        } else {
-                            binding.imgCompanyLogo.visible()
+                            userImageBase64String = convertBitmapToBase64(it)}
+                    } else {
+                        binding.imgCompanyLogo.visible()
+                        companyBitmap =
+                            ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
+                        companyBitmap?.let {
                             binding.imgCompanyLogo.loadCompanyBitmap(it)
                             companyLogoBase64String = convertBitmapToBase64(it)
                         }
-                    }
 
+                    }
 
                 }
                 else -> {

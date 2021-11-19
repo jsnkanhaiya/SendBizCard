@@ -121,7 +121,7 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
             }
             binding.imgCompanyLogo.visible()
-            if (isGalleryOptionSelected) {
+            if (isCompanyLogoSelected) {
                 bitmap?.let { binding.imgCompanyLogo.loadCompanyBitmap(it) }
             } else {
                 val companyLogoUrl = cardDetailsItem?.companyLogo ?: ""

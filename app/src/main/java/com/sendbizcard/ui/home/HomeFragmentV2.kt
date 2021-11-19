@@ -79,6 +79,10 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
         super.onViewCreated(view, savedInstanceState)
         binding = getViewBinding()
         binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
+        bitmap?.let {
+            binding.imgCompanyLogo.visible()
+            binding.imgCompanyLogo.loadCompanyBitmap(it)
+        }
         setDataToUI()
         initOnClicks()
         observeData()
@@ -509,10 +513,10 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
         super.onActivityResult(requestCode, resultCode, data)
 
         when (requestCode) {
-            REQUEST_CODE_IMAGE_CAPTURE -> {
+           /* REQUEST_CODE_IMAGE_CAPTURE -> {
                 if (resultCode == AppCompatActivity.RESULT_OK) {
                     if (::currentPhotoPath.isInitialized){
-                        val bitmap =
+                         bitmap =
                             ImageCompressUtility.decodeSampledBitmapFromFile(currentPhotoPath, 300, 300)
 
                         withDelayOnMain(300){
@@ -522,7 +526,7 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
                     }
 
                 }
-            }
+            }*/
             REQUEST_CODE_GALLERY -> {
                 val imageUri = data?.data
                 if (imageUri != null) {
@@ -622,7 +626,7 @@ class HomeFragmentV2  : BaseFragment<FragmentHomeV2Binding>(){
             when (file.length()) {
                 in 0..16000000 -> {
                     val path = file.path
-                    val bitmap =
+                     bitmap =
                         ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
                     bitmap?.let {
                         binding.imgCompanyLogo.visible()

@@ -64,6 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private var userImageBase64String = ""
     private var companyLogoBase64String = ""
     var bitmap: Bitmap? = null
+    var companyBitmap: Bitmap? = null
     private var isCameraOptionSelected = false
     private var isGalleryOptionSelected = false
 
@@ -79,6 +80,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         binding.imgCardBack.setBackgroundColor(Color.parseColor(backgroundColour))
         bitmap?.let {
             binding.imgUser.loadBitmap(it)
+        }
+        companyBitmap?.let {
+            binding.imgCompanyLogo.visible()
+            binding.imgCompanyLogo.loadCompanyBitmap(it)
         }
         initOnClicks()
         observeData()
@@ -564,18 +569,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
                 in 0..16000000 -> {
 
                     val path = file.path
-                    bitmap =
-                        ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
-                    bitmap?.let {
+
+
                         if (isUserImageSelected) {
+                            bitmap =
+                                ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
+                            bitmap?.let {
                             binding.imgUser.loadBitmap(it)
-                            userImageBase64String = convertBitmapToBase64(it)
+                            userImageBase64String = convertBitmapToBase64(it)}
                         } else {
                             binding.imgCompanyLogo.visible()
-                            binding.imgCompanyLogo.loadCompanyBitmap(it)
-                            companyLogoBase64String = convertBitmapToBase64(it)
+                            companyBitmap =
+                                ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
+                            companyBitmap?.let {
+                                binding.imgCompanyLogo.loadCompanyBitmap(it)
+                                companyLogoBase64String = convertBitmapToBase64(it)
+                            }
+
                         }
-                    }
+
 
 
                 }

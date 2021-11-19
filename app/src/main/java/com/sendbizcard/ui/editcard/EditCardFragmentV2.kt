@@ -253,6 +253,11 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             binding.imgSave.isEnabled = true
             binding.imgShare.isEnabled = true
             isFromPreviewCard = false
+            binding.colorPalette.visible()
+        }
+
+        binding.imgShare.setOnClickListener {
+            shareApp(requireContext(), "")
         }
 
         binding.imgMobileNumber.setOnClickListener {
@@ -271,6 +276,45 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             if (emailId.isNotEmpty()) {
                 openEmailClient(emailId)
             }
+        }
+
+        binding.etMobileNumber.setOnClickListener {
+            mobileNumber = binding.etMobileNumber.text.toString()
+            if (mobileNumber.length == 10) {
+                if (checkCallPermission()) {
+                    makeCall()
+                } else {
+                    requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL_PERMISSION)
+                }
+            }
+        }
+
+        binding.etEmail.setOnClickListener {
+            val emailId = cardDetailsItem?.email ?: ""
+            if (emailId.isNotEmpty()) {
+                openEmailClient(emailId)
+            }
+        }
+
+        binding.etWebsite.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(cardDetailsItem?.website))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.setPackage("com.android.chrome")
+            try {
+                // Log.d(TAG, "onClick: inTryBrowser")
+                startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                //  Log.e(TAG, "onClick: in inCatchBrowser", ex)
+                intent.setPackage(null)
+                startActivity(Intent.createChooser(intent, "Select Browser"))
+            }
+        }
+
+        binding.etLocation.setOnClickListener {
+            val mapUri = Uri.parse("geo:0,0?q=" + Uri.encode(cardDetailsItem?.location))
+            val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
         }
 
         binding.imgWebsite.setOnClickListener {

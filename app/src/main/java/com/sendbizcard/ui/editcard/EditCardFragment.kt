@@ -262,13 +262,20 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
             binding.etWebsite.isEnabled = true
             binding.etLocation.isEnabled = true
             binding.colorPalette.isEnabled = true
+            binding.colorPalette.visible()
             binding.ourServicesCL.isEnabled = true
             binding.socialMediaCL.isEnabled = true
             binding.imgCompanyLogo.isEnabled = true
             binding.etCompanyName.isEnabled = true
             binding.imgSave.isEnabled = true
             binding.imgShare.isEnabled = true
+            binding.imgCamera.visible()
+            binding.colorPalette.visible()
             isFromPreviewCard = false
+        }
+
+        binding.imgShare.setOnClickListener {
+            shareApp(requireContext(), "")
         }
 
         binding.imgMobileNumber.setOnClickListener {
@@ -311,6 +318,47 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
         }
 
 
+        binding.etMobileNumber.setOnClickListener {
+            mobileNumber = binding.etMobileNumber.text.toString()
+            if (mobileNumber.length == 10) {
+                if (checkCallPermission()) {
+                    makeCall()
+                } else {
+                    requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL_PERMISSION)
+                }
+            }
+        }
+
+        binding.etEmail.setOnClickListener {
+            val emailId = cardDetailsItem?.email ?: ""
+            if (emailId.isNotEmpty()) {
+                openEmailClient(emailId)
+            }
+        }
+
+        binding.etWebsite.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(cardDetailsItem?.website))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.setPackage("com.android.chrome")
+            try {
+                // Log.d(TAG, "onClick: inTryBrowser")
+                startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                //  Log.e(TAG, "onClick: in inCatchBrowser", ex)
+                intent.setPackage(null)
+                startActivity(Intent.createChooser(intent, "Select Browser"))
+            }
+        }
+
+        binding.etLocation.setOnClickListener {
+            val mapUri = Uri.parse("geo:0,0?q=" + Uri.encode(cardDetailsItem?.location))
+            val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+            mapIntent.setPackage("com.google.android.apps.maps")
+            startActivity(mapIntent)
+        }
+
+
+
         binding.colorPalette.setOnClickListener {
             showColourPattle()
         }
@@ -343,6 +391,29 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
             }
             dialog.show(parentFragmentManager, "Select Camera Gallery")
         }
+
+        binding.roundImage.setOnClickListener {
+            val dialog = SelectCameraGalleryDialog.newInstance()
+            dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
+                override fun onCameraOptionSelected() {
+                    requestCameraPermission()
+                    isUserImageSelected = true
+                    isCameraOptionSelected = true
+                    isGalleryOptionSelected = false
+                }
+
+                override fun onGalleryOptionSelected() {
+                    isUserImageSelected = true
+                    isCompanyLogoSelected = false
+                    isCameraOptionSelected = false
+                    isGalleryOptionSelected = true
+                    requestGalleryPermission()
+                }
+            }
+            dialog.show(parentFragmentManager, "Select Camera Gallery")
+        }
+
+
 
         binding.tvCompanyLogo.setOnClickListener {
             isUserImageSelected = false

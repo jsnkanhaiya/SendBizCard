@@ -180,6 +180,28 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             dialog.show(parentFragmentManager, "Select Camera Gallery")
         }
 
+        binding.roundImage.setOnClickListener {
+            val dialog = SelectCameraGalleryDialog.newInstance()
+            dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
+                override fun onCameraOptionSelected() {
+                    requestCameraPermission()
+                    isCameraOptionSelected = true
+                    isGalleryOptionSelected = false
+                }
+
+                override fun onGalleryOptionSelected() {
+                    isUserImageSelected = true
+                    isCompanyLogoSelected = false
+                    isCameraOptionSelected = false
+                    isGalleryOptionSelected = true
+                    requestGalleryPermission()
+                }
+            }
+            dialog.show(parentFragmentManager, "Select Camera Gallery")
+        }
+
+
+
         binding.tvCompanyLogo.setOnClickListener {
             isUserImageSelected = false
             isCompanyLogoSelected = true

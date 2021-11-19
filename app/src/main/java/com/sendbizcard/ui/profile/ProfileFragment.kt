@@ -1,6 +1,7 @@
 package com.sendbizcard.ui.profile
 
 import android.Manifest
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -45,10 +46,12 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
     private val REQUEST_CODE_IMAGE_CAPTURE = 0x1002
     private val REQUEST_CODE_GALLERY = 0x1003
     private val REQUEST_CODE_READ_EXTERNAL_STORAGE = 0x1004
+    private val REQUEST_CALL_PERMISSION = 0x1006
 
     private val IMAGE_MIME_TYPE = "image/*"
     lateinit var currentPhotoPath: String
     private var userImageBase64String = ""
+    var mobileNumber = ""
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -119,7 +122,81 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
         fragment.show(parentFragmentManager,"ProfileFragment")
     }
 
+    private fun checkCallPermission(): Boolean {
+        val result = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CALL_PHONE)
+        return result == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun makeCall() {
+        val intent = Intent(Intent.ACTION_DIAL);
+        intent.data = Uri.parse("tel:$mobileNumber");
+        startActivity(Intent.createChooser(intent, "Complete action using?"));
+    }
+
+    private fun openEmailClient(emailId: String) {
+        try {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:")
+                putExtra(Intent.EXTRA_EMAIL, arrayOf(emailId))
+                putExtra(Intent.EXTRA_SUBJECT, "Request for subscription of MI Membership in bulk account")
+            }
+            startActivity(intent)
+        } catch (exception: Exception) {
+            Toast.makeText(activity, "There are no email client installed on your device.", Toast.LENGTH_SHORT).show()
+        }
+
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when(requestCode) {
+            REQUEST_CALL_PERMISSION -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED && requestCode == REQUEST_CALL_PERMISSION) {
+                    makeCall()
+                } else {
+                    Toast.makeText(context, "Please allow permission to continue.", Toast.LENGTH_LONG).show()
+                }
+            }
+        }
+
+    }
+
     private fun initOnClicks() {
+
+        binding.imgWebsite.setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(binding.etWebsite.text?.toString()))
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.setPackage("com.android.chrome")
+            try {
+                // Log.d(TAG, "onClick: inTryBrowser")
+                startActivity(intent)
+            } catch (ex: ActivityNotFoundException) {
+                //  Log.e(TAG, "onClick: in inCatchBrowser", ex)
+                intent.setPackage(null)
+                startActivity(Intent.createChooser(intent, "Select Browser"))
+            }
+        }
+
+        binding.imgEmail.setOnClickListener {
+            val emailId = binding.etMobileNumber.text?.toString() ?: ""
+            if (emailId.isNotEmpty()) {
+                openEmailClient(emailId)
+            }
+        }
+
+        binding.imgMobileNumber.setOnClickListener {
+            mobileNumber = binding.etMobileNumber.text.toString()
+            if (mobileNumber.length == 10) {
+                if (checkCallPermission()) {
+                    makeCall()
+                } else {
+                    requestPermissions(arrayOf(Manifest.permission.CALL_PHONE), REQUEST_CALL_PERMISSION)
+                }
+            }
+        }
 
         binding.imgCamera.setOnClickListener {
             val dialog = SelectCameraGalleryDialog.newInstance()

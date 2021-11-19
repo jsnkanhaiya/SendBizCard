@@ -124,7 +124,6 @@
         android:hint="@string/enter_mobile_number"
         android:padding="8dp"
         android:enabled="false"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/img_mobile_number"
         app:layout_constraintTop_toBottomOf="@+id/et_designation" />

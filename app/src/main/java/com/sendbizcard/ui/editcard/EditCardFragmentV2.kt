@@ -138,7 +138,6 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 }
             }
 
-
             binding.etName.setText(cardDetailsItem?.name ?: "")
 
             binding.etCompanyName.setText(cardDetailsItem?.companyName ?: "")

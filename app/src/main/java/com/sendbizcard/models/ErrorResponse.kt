@@ -23,6 +23,6 @@ data class Message(
     val email: List<String?>? = null,
 
     @field:SerializedName("contact")
-    val password: List<String?>? = null
+    val contact: List<String?>? = null
 
 )

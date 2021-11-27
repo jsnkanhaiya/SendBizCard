@@ -152,7 +152,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
         cardListViewModel.cardSearchLiveData.observe(this) { searchCardList ->
             hideProgressBar()
-            setUpAdapter(searchCardList)
+            setUpSearchDataInAdapter(searchCardList)
         }
 
         cardListViewModel.showNetworkError.observe(this) { errorMessage ->

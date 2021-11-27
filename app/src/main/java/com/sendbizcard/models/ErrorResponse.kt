@@ -19,12 +19,10 @@ data class Message(
     @field:SerializedName("errors")
     val errors: List<String?>? = null,
 
-   /* @field:SerializedName("email")
+    @field:SerializedName("email")
     val email: List<String?>? = null,
 
-    @field:SerializedName("errors")
-    val password: List<String?>? = null,
+    @field:SerializedName("contact")
+    val password: List<String?>? = null
 
-    @field:SerializedName("mobile")
-    val mobile: List<String?>? = null,*/
 )

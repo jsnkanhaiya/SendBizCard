@@ -40,6 +40,7 @@
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="mobile_number">Enter Mobile Number</string>
+    <string name="feedback_hint">Describe your thought or suggestion</string>
     <string name="send_otp_text">We ve sent you OTP on your \nregistered Email ID</string>
     <string name="already_have_account">Already have an account? </string>
     <string name="password_reset_successfully">Your password has been reset successfully</string>

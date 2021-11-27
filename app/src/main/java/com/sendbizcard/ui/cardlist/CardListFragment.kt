@@ -221,14 +221,20 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-
-            override fun afterTextChanged(editable: Editable) {
-                val searchData = binding.etSearch.text.toString()
-                val cardList = cardListViewModel.cardListLiveData.value ?: ArrayList()
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                val searchData = charSequence.toString()
+                /*val cardList = cardListViewModel.cardListLiveData.value ?: ArrayList()
                 if (searchData.isEmpty() && cardList.isNotEmpty() && searchData.length>3){
                     setUpSearchDataInAdapter(cardList)
+                }*/
+                if (searchData.isNotEmpty() && searchData.length>3) {
+                    showProgressBar()
+                    cardListViewModel.getCardSearchList(searchData)
                 }
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+
             }
         })
 

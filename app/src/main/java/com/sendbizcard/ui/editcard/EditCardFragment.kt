@@ -41,6 +41,7 @@ import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.CardDetailsItem
 import com.sendbizcard.ui.home.HomeViewModel
 import com.sendbizcard.ui.main.MainActivity
+import com.sendbizcard.ui.sharecard.ViewCardViewModel
 import com.sendbizcard.utils.*
 import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,6 +79,8 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
     private var isGalleryOptionSelected = false
     var photoURI: Uri? = null
     var mobileNumber = ""
+    private val viewCardViewModel: ViewCardViewModel by viewModels()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -118,7 +121,7 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
                 binding.imgCompanyLogo.isEnabled = false
                 binding.etCompanyName.isEnabled = false
                 binding.imgSave.isEnabled = false
-                binding.imgShare.isEnabled = false
+              //  binding.imgShare.isEnabled = false
             }
 
             if (isBackgroungColourChanged) {
@@ -173,6 +176,11 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun observeData() {
+
+        viewCardViewModel.viewCardResponse.observe(this) { cardList ->
+            hideProgressBar()
+            cardList.redirectUrl?.let { shareApp(requireContext(), it) }
+        }
 
         homeViewModel.saveCardResponse.observe(this) {
             hideProgressBar()
@@ -275,7 +283,8 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding>() {
         }
 
         binding.imgShare.setOnClickListener {
-            shareApp(requireContext(), "")
+            showProgressBar()
+            viewCardViewModel.getCardURL(cardDetailsItem?.id.toString(), homeViewModel.getThemeId())
         }
 
         binding.imgMobileNumber.setOnClickListener {

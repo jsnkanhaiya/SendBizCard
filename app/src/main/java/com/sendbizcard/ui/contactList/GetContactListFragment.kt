@@ -162,14 +162,16 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-
-            override fun afterTextChanged(editable: Editable) {
-                val searchData = binding.etSearch.text.toString()
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                val searchData = charSequence.toString()
                 val cardList = contactListViewModel.cardListLiveData.value ?: ArrayList()
                 if (searchData.isEmpty() && cardList.isNotEmpty()&& searchData.length>3){
                     setUpSearchDataInAdapter(cardList)
                 }
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+
             }
         })
     }

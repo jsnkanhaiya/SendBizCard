@@ -648,7 +648,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
             .Builder(requireContext())                        // Pass Activity Instance
             .setTitle("Pick Theme")            // Default "Choose Color"
             // .setColorShape(ColorShape.SQAURE)   // Default ColorShape.CIRCLE
-            .setDefaultColor(R.color.orange_100)     // Pass Default Color
+            .setDefaultColor(R.color.colorPrimary)     // Pass Default Color
             .setColorListener { color, colorHex ->
                 // Handle Color Selection
                 // Toast.makeText(requireContext(), colorHex.toString(), Toast.LENGTH_LONG).show()

@@ -1,7 +1,9 @@
 package com.sendbizcard.models.response
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class RegisterResponseModel(
 
 	@field:SerializedName("expires")
@@ -17,6 +19,7 @@ data class RegisterResponseModel(
 	val token: String? = null
 )
 
+@Keep
 data class Data(
 
 	@field:SerializedName("otp_expiry_time")

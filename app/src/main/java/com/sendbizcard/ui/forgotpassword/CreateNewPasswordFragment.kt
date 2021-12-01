@@ -96,13 +96,10 @@ class CreateNewPasswordFragment : BaseFragment<FragmentCreateNewPasswordBinding>
         val bundle = this.arguments
         if (bundle != null) {
             otp = bundle.getString("otp").toString()
-            //binding.otpPinView.text=
-            // Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
         }
         if (bundle != null) {
             isChangePassword = bundle.getBoolean("isChangepassword")
-            //binding.otpPinView.text=
-            //  Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
+
         }
 
         if (isChangePassword) {

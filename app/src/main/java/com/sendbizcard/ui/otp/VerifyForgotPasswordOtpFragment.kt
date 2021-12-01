@@ -113,9 +113,6 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
              isChangePassword = bundle.getBoolean("isChangepassword")
             email = bundle.getString("emailID","")
             otp = bundle.getString("otp").toString()
-            Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
-           // Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
-           // Toast.makeText(context, "email id  is " + email, Toast.LENGTH_LONG).show()
         }
 
 

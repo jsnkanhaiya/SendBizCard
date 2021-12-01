@@ -32,6 +32,7 @@ import com.sendbizcard.utils.visible
 import com.sendbizcard.ui.sharecard.ViewCardViewModel
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -58,7 +59,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
     }
 
     private fun setUpAdapter(cardList: List<CardDetailsItem>) {
-        cardListAdapter.addAll(cardList)
+        cardListAdapter.addAll(cardList.reversed())
         cardListAdapter.cardClickListener =
             object : BaseViewHolder.ItemCardClickCallback<CardDetailsItem> {
                 override fun onEditClicked(data: CardDetailsItem, pos: Int) {

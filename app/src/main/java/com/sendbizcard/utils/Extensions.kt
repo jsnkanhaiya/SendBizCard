@@ -98,10 +98,10 @@ fun TextInputEditText.checkValidations(fieldName: String,password: String? = "")
             }
         }
         FieldEnum.OTP.fieldName -> {
-            return if (strInputField.length == 6){
+            return if (strInputField.length == 5){
                 true
             } else {
-                textInputLayout.error = "Enter 6 Digit OTP"
+                textInputLayout.error = "Enter 5 Digit OTP"
                 false
             }
         }

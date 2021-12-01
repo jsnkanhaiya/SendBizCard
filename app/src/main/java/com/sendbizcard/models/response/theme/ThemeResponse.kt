@@ -1,7 +1,9 @@
 package com.sendbizcard.models.response.theme
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class ThemeResponse(
 
 	@field:SerializedName("data")
@@ -14,12 +16,14 @@ data class ThemeResponse(
 	val status: Int? = null
 )
 
+@Keep
 data class Data(
 
 	@field:SerializedName("list_theme")
 	val listTheme: List<ListThemeItem>? = null
 )
 
+@Keep
 data class ListThemeItem(
 
 	@field:SerializedName("card_img")

@@ -1,7 +1,9 @@
 package com.sendbizcard.models
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class ErrorResponse(
 
     @field:SerializedName("error_code")
@@ -14,6 +16,7 @@ data class ErrorResponse(
     val status: Int? = null
 )
 
+@Keep
 data class Message(
 
     @field:SerializedName("errors")

@@ -18,6 +18,7 @@ data class CardListResponseModel(
 	val status: Int? = null
 )
 
+@Keep
 @Parcelize
 @Keep
 data class SocialLinksItem(
@@ -35,6 +36,7 @@ data class SocialLinksItem(
 	val id: Int? = null
 ): Parcelable
 
+@Keep
 @Parcelize
 @Keep
 data class ServicesItem(
@@ -49,12 +51,14 @@ data class ServicesItem(
 	val id: Int? = null
 ) : Parcelable
 
+@Keep
 data class DataCardDetail(
 
 	@field:SerializedName("card_details")
 	val cardDetails: List<CardDetailsItem>? = null
 )
 
+@Keep
 @Parcelize
 @Keep
 data class CardDetailsItem(
@@ -120,6 +124,7 @@ data class CardDetailsItem(
 	val status: Int? = null
 ) : Parcelable
 
+@Keep
 @Parcelize
 @Keep
 data class ThemeDetails(

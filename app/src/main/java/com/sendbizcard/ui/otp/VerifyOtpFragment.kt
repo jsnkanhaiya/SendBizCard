@@ -43,6 +43,26 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
 
 
     private fun initSpanUI() {
+
+        binding.tvAlreadyAccount.movementMethod =
+            LinkMovementMethod.getInstance() // without LinkMovementMethod, click will not work
+        binding.tvAlreadyAccount.text = span {
+            +"Dont receive the OTP?"
+            span {
+                text =" "+ "RESEND OTP"
+                textColor = ResourcesCompat.getColor(
+                    requireContext().resources,
+                    R.color.colorPrimary3,
+                    null
+                )
+                onClick = {
+                    showProgressBar()
+                    verifyOtpViewModel.resendOTP()
+
+                }
+            }
+        }
+
         binding.cbprivacy.movementMethod =
             LinkMovementMethod.getInstance() // without LinkMovementMethod, click will not work
         binding.cbprivacy.text = span {
@@ -88,6 +108,10 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
             showErrorMessage(errorMessage)
         }
 
+        verifyOtpViewModel.otpResponseReSendModel.observe(this) {
+            hideProgressBar()
+        }
+
         verifyOtpViewModel.showUnknownError.observe(this) { errorMessage ->
             showErrorMessage(errorMessage)
         }
@@ -120,9 +144,6 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
         val bundle = this.arguments
         if (bundle != null) {
             otp = bundle.getString("otp").toString()
-            Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
-            // Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
-            // Toast.makeText(context, "email id  is " + email, Toast.LENGTH_LONG).show()
         }
 
         val callback: OnBackPressedCallback =

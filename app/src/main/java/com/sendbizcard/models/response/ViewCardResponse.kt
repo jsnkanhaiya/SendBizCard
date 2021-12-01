@@ -1,7 +1,9 @@
 package com.sendbizcard.models.response
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class ViewCardResponse(
 
 	@field:SerializedName("message")

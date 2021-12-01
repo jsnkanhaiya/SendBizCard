@@ -72,13 +72,27 @@ fun decodeServerError(errorResponse: ErrorResponse?): ServerError {
     } else {
         val contactErrorMessage = errorResponse?.message?.contact?.getOrNull(0) ?: ""
         val emailErrorMessage = errorResponse?.message?.email?.getOrNull(0) ?: ""
+        val usernameErrorMessage = errorResponse?.message?.username?.getOrNull(0) ?: ""
+        val passwordErrorMessage = errorResponse?.message?.password?.getOrNull(0) ?: ""
+        val idErrorMessage = errorResponse?.message?.id?.getOrNull(0) ?: ""
+        val otpErrorMessage = errorResponse?.message?.otp?.getOrNull(0) ?: ""
         errorMessage = if (contactErrorMessage.isNotEmpty() && emailErrorMessage.isNotEmpty()){
             contactErrorMessage + "\n" + emailErrorMessage
         } else if (contactErrorMessage.isNotEmpty()){
             contactErrorMessage
+        }else if (usernameErrorMessage.isNotEmpty()){
+            usernameErrorMessage
+        } else if (passwordErrorMessage.isNotEmpty()){
+            passwordErrorMessage
+        } else if (passwordErrorMessage.isNotEmpty()){
+            passwordErrorMessage
         } else if (emailErrorMessage.isNotEmpty()){
             emailErrorMessage
-        } else {
+        } else if (idErrorMessage.isNotEmpty()){
+            idErrorMessage
+        } else if (otpErrorMessage.isNotEmpty()){
+            otpErrorMessage
+        }   else {
             "Something Went Wrong"
         }
         return ServerError(code,errorMessage)

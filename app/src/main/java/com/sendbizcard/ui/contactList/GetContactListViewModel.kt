@@ -60,7 +60,8 @@ class GetContactListViewModel @Inject constructor(
     }
 
     fun getCardSearchList(mStrSearch: String) {
-        val cardListRequestModel = CardListRequestModel(mStrSearch,0,10,preferenceSourceImpl.userId.toInt(),"")
+        val cardListRequestModel = CardListRequestModel(mStrSearch)
+      //  val cardListRequestModel = CardListRequestModel(mStrSearch,0,10,preferenceSourceImpl.userId.toInt(),"")
         jobList.add(
             launch {
                 val result = withContext(Dispatchers.IO) {

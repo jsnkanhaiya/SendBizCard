@@ -1,9 +1,11 @@
 package com.sendbizcard.models.response
 
 import android.os.Parcelable
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Keep
 data class CardListResponseModel(
 
 	@field:SerializedName("data")
@@ -17,6 +19,7 @@ data class CardListResponseModel(
 )
 
 @Parcelize
+@Keep
 data class SocialLinksItem(
 
 	@field:SerializedName("name")
@@ -33,6 +36,7 @@ data class SocialLinksItem(
 ): Parcelable
 
 @Parcelize
+@Keep
 data class ServicesItem(
 
 	@field:SerializedName("name")
@@ -52,6 +56,7 @@ data class DataCardDetail(
 )
 
 @Parcelize
+@Keep
 data class CardDetailsItem(
 
 	@field:SerializedName("card_theme_id")
@@ -116,6 +121,7 @@ data class CardDetailsItem(
 ) : Parcelable
 
 @Parcelize
+@Keep
 data class ThemeDetails(
 
 	@field:SerializedName("card_img")
@@ -133,3 +139,4 @@ data class ThemeDetails(
 	@field:SerializedName("card_slug")
 	val cardSlug: String? = null
 ) : Parcelable
+

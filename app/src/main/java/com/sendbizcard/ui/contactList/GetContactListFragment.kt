@@ -49,6 +49,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
     private lateinit var binding: FragmentGetContactListBinding
     var deletedId = -1
     private val REQUEST_CODE_CONTACTS = 0x1006
+    var isSearch = false
     private val contactList: ArrayList<String> by lazy {
         ArrayList()
     }
@@ -102,7 +103,7 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
 
         contactListViewModel.cardSearchLiveData.observe(this) { searchCardList ->
             hideProgressBar()
-            setUpAdapter(ArrayList(searchCardList))
+            setUpSearchDataInAdapter(ArrayList(searchCardList))
         }
 
         contactListViewModel.showUnknownError.observe(this) { errorMessage ->
@@ -164,10 +165,20 @@ class GetContactListFragment : BaseFragment<FragmentGetContactListBinding>() {
 
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 val searchData = charSequence.toString()
-                val cardList = contactListViewModel.cardListLiveData.value ?: ArrayList()
-                if (searchData.isEmpty() && cardList.isNotEmpty()&& searchData.length>3){
+                /*val cardList = contactListViewModel.cardListLiveData.value ?: ArrayList()
+                if (searchData.isEmpty() && cardList.isNotEmpty()&& searchData.length>=3){
                     setUpSearchDataInAdapter(cardList)
+                }*/
+                if (searchData.isNotEmpty() && searchData.length>=3) {
+                    showProgressBar()
+                    isSearch = true
+                    contactListViewModel.getCardSearchList(searchData)
+                }else if (searchData.isEmpty() && isSearch){
+                    showProgressBar()
+                    isSearch =false
+                    contactListViewModel.getCardList()
                 }
+
             }
 
             override fun afterTextChanged(editable: Editable) {

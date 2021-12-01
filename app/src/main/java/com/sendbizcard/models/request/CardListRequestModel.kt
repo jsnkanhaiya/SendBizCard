@@ -7,7 +7,7 @@ data class CardListRequestModel(
 	@field:SerializedName("search")
 	val search: String? = null,
 
-	@field:SerializedName("offset")
+	/*@field:SerializedName("offset")
 	val offset: Int? = null,
 
 	@field:SerializedName("limit")
@@ -17,5 +17,5 @@ data class CardListRequestModel(
 	val id: Int? = null,
 
 	@field:SerializedName("sort")
-	val sort: String? = null
+	val sort: String? = null*/
 )

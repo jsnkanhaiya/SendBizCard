@@ -23,6 +23,18 @@ data class Message(
     val email: List<String?>? = null,
 
     @field:SerializedName("contact")
-    val contact: List<String?>? = null
+    val contact: List<String?>? = null,
+
+    @field:SerializedName("id")
+    val id: List<String?>? = null,
+
+    @field:SerializedName("username")
+    val username: List<String?>? = null,
+
+    @field:SerializedName("password")
+    val password: List<String?>? = null,
+
+    @field:SerializedName("otp")
+    val otp: List<String?>? = null
 
 )

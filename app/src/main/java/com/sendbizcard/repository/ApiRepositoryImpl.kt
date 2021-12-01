@@ -95,7 +95,7 @@ class ApiRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getCardListSearch(cardListRequest: CardListRequestModel): NetworkResponse<CardListResponseModel, ErrorResponse> {
-        val url = remoteConfigImpl.getCardShareURL()
+        val url = remoteConfigImpl.getCardListURL()
         return apiService.getCardListSearch(url,cardListRequest)
     }
 

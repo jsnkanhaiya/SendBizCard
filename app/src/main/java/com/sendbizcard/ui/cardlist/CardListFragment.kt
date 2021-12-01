@@ -45,6 +45,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
     private val cardListViewModel: CardListViewModel by viewModels()
     private val viewCardViewModel: ViewCardViewModel by viewModels()
     private lateinit var binding: FragmentCardListBinding
+    var isSearch = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -227,9 +228,14 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
                 if (searchData.isEmpty() && cardList.isNotEmpty() && searchData.length>3){
                     setUpSearchDataInAdapter(cardList)
                 }*/
-                if (searchData.isNotEmpty() && searchData.length>3) {
+                if (searchData.isNotEmpty() && searchData.length>=3) {
                     showProgressBar()
+                    isSearch = true
                     cardListViewModel.getCardSearchList(searchData)
+                }else if (searchData.isEmpty() && isSearch){
+                    showProgressBar()
+                    isSearch =false
+                    cardListViewModel.getCardList()
                 }
             }
 

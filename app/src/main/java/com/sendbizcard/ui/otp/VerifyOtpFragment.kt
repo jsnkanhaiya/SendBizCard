@@ -179,7 +179,8 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true /* enabled by default */) {
                 override fun handleOnBackPressed() {
-                    findNavController().popBackStack()
+                    findNavController().navigate(R.id.nav_sign_up)
+
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)

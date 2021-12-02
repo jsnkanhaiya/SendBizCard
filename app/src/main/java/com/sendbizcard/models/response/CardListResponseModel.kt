@@ -20,7 +20,6 @@ data class CardListResponseModel(
 
 @Keep
 @Parcelize
-@Keep
 data class SocialLinksItem(
 
 	@field:SerializedName("name")
@@ -38,7 +37,6 @@ data class SocialLinksItem(
 
 @Keep
 @Parcelize
-@Keep
 data class ServicesItem(
 
 	@field:SerializedName("name")
@@ -60,7 +58,6 @@ data class DataCardDetail(
 
 @Keep
 @Parcelize
-@Keep
 data class CardDetailsItem(
 
 	@field:SerializedName("card_theme_id")
@@ -126,7 +123,6 @@ data class CardDetailsItem(
 
 @Keep
 @Parcelize
-@Keep
 data class ThemeDetails(
 
 	@field:SerializedName("card_img")

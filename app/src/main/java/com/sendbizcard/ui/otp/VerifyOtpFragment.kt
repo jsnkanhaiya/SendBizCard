@@ -24,6 +24,12 @@ import com.sendbizcard.utils.gone
 import com.sendbizcard.utils.visible
 import dagger.hilt.android.AndroidEntryPoint
 import me.gujun.android.span.span
+import android.text.Editable
+
+import android.text.TextWatcher
+
+
+
 
 @AndroidEntryPoint
 class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding>() {
@@ -144,6 +150,30 @@ class VerifyOtpFragment : BaseFragment<FragmentChangePasswordVerificationBinding
         val bundle = this.arguments
         if (bundle != null) {
             otp = bundle.getString("otp").toString()
+        }
+
+        binding.otpPinView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.length==5) {
+                    otp = s.toString()
+                    binding.btnverify.isEnabled= true
+                    binding.tvOtpError.gone()
+                } else {
+                    binding.btnverify.isEnabled= false
+                    binding.tvOtpError.visible()
+                    binding.tvOtpError.text = resources.getString(R.string.enter_otp6)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+            }
+        })
+
+        binding.tvBack.setOnClickListener {
+           // findNavController().popBackStack()
+            findNavController().navigate(R.id.nav_sign_up)
         }
 
         val callback: OnBackPressedCallback =

@@ -33,7 +33,7 @@
     <string name="no_contacts">No contacts found</string>
     <string name="select_terms">Please select terms and Privacy policy</string>
     <string name="enter_otp">Enter 5 Digit OTP</string>
-    <string name="enter_otp6">Enter 6 Digit OTP</string>
+    <string name="enter_otp6">Enter 5 Digit OTP</string>
     <string name="enter_password">Enter Password</string>
     <string name="full_name">Full Name</string>
     <string name="password">Password</string>

@@ -33,13 +33,14 @@
     <string name="no_contacts">No contacts found</string>
     <string name="select_terms">Please select terms and Privacy policy</string>
     <string name="enter_otp">Enter 5 Digit OTP</string>
-    <string name="enter_otp6">Enter 6 Digit OTP</string>
+    <string name="enter_otp6">Enter 5 Digit OTP</string>
     <string name="enter_password">Enter Password</string>
     <string name="full_name">Full Name</string>
     <string name="password">Password</string>
     <string name="new_password">New Password</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="mobile_number">Enter Mobile Number</string>
+    <string name="feedback_hint">Describe your thought or suggestion</string>
     <string name="send_otp_text">We ve sent you OTP on your \nregistered Email ID</string>
     <string name="already_have_account">Already have an account? </string>
     <string name="password_reset_successfully">Your password has been reset successfully</string>

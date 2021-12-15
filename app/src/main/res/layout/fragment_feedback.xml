@@ -27,7 +27,7 @@
         android:background="@drawable/rectangle"
         android:gravity="top|start"
         android:padding="10dp"
-        android:hint="@string/mobile_number"
+        android:hint="@string/feedback_hint"
         android:inputType="textMultiLine"
         android:lines="8"
         android:maxLines="10"

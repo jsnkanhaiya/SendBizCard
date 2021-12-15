@@ -54,7 +54,6 @@ class RegisterFragment : BaseFragment<FragmentRegisterBinding>() {
 
     private fun setUpObservers() {
         registerViewModel.registerReponse.observe(viewLifecycleOwner, {
-          Toast.makeText(requireContext(), it.data?.contactOtp.toString(),Toast.LENGTH_LONG).show()
             hideProgressBar()
             findNavController().navigate(
                 R.id.nav_verifyOtp,

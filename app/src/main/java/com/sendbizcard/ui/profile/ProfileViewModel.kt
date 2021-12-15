@@ -119,9 +119,6 @@ class ProfileViewModel @Inject constructor(
             website.isNullOrEmpty() -> {
                 false
             }
-            designation.isNullOrEmpty() -> {
-                false
-            }
             else -> true
         }
 

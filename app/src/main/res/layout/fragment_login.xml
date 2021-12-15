@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:hint="@string/enter_emailID"
-                android:text="atmiyakaushal@gmail.com"
+                tools:text="atmiyakaushal@gmail.com"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:hint="@string/password"
-                android:text="Password123"
+                tools:text="Password123"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>

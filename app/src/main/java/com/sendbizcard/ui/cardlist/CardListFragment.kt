@@ -32,6 +32,7 @@ import com.sendbizcard.utils.visible
 import com.sendbizcard.ui.sharecard.ViewCardViewModel
 import com.sendbizcard.utils.*
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +46,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
     private val cardListViewModel: CardListViewModel by viewModels()
     private val viewCardViewModel: ViewCardViewModel by viewModels()
     private lateinit var binding: FragmentCardListBinding
+    var isSearch = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -58,7 +60,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
     }
 
     private fun setUpAdapter(cardList: List<CardDetailsItem>) {
-        cardListAdapter.addAll(cardList)
+        cardListAdapter.addAll(cardList.reversed())
         cardListAdapter.cardClickListener =
             object : BaseViewHolder.ItemCardClickCallback<CardDetailsItem> {
                 override fun onEditClicked(data: CardDetailsItem, pos: Int) {
@@ -152,7 +154,7 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
 
         cardListViewModel.cardSearchLiveData.observe(this) { searchCardList ->
             hideProgressBar()
-            setUpAdapter(searchCardList)
+            setUpSearchDataInAdapter(searchCardList)
         }
 
         cardListViewModel.showNetworkError.observe(this) { errorMessage ->
@@ -221,14 +223,25 @@ class CardListFragment : BaseFragment<FragmentCardListBinding>() {
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-
-            override fun afterTextChanged(editable: Editable) {
-                val searchData = binding.etSearch.text.toString()
-                val cardList = cardListViewModel.cardListLiveData.value ?: ArrayList()
+            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+                val searchData = charSequence.toString()
+                /*val cardList = cardListViewModel.cardListLiveData.value ?: ArrayList()
                 if (searchData.isEmpty() && cardList.isNotEmpty() && searchData.length>3){
                     setUpSearchDataInAdapter(cardList)
+                }*/
+                if (searchData.isNotEmpty() && searchData.length>=3) {
+                    showProgressBar()
+                    isSearch = true
+                    cardListViewModel.getCardSearchList(searchData)
+                }else if (searchData.isEmpty() && isSearch){
+                    showProgressBar()
+                    isSearch =false
+                    cardListViewModel.getCardList()
                 }
+            }
+
+            override fun afterTextChanged(editable: Editable) {
+
             }
         })
 

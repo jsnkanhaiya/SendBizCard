@@ -1,7 +1,9 @@
 package com.sendbizcard.models.request.addCard
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class AddCardRequest(
 
 	@field:SerializedName("theme_color")

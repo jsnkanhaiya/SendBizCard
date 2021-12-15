@@ -228,8 +228,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
             if (profileViewModel.isValidUserProfileData(name,mobile,email,website,designation)){
                 showProgressBar()
                 profileViewModel.updateUserData(name,mobile,email,website,designation,userImageBase64String)
+            }else{
+                Toast.makeText(requireContext(),"Please enter required details!",Toast.LENGTH_LONG).show()
             }
-
         }
 
 

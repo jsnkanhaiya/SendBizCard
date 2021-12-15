@@ -1,7 +1,9 @@
 package com.sendbizcard.models.response
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class LoginResponseModel(
 
 	@field:SerializedName("expires")
@@ -17,6 +19,6 @@ data class LoginResponseModel(
 	val token: String? = null,
 
 	@field:SerializedName("data")
-val data: Data? = null,
+	val data: Data? = null,
 
 )

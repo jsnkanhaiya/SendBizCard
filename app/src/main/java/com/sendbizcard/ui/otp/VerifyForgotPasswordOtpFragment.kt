@@ -2,6 +2,8 @@ package com.sendbizcard.ui.otp
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
@@ -113,9 +115,6 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
              isChangePassword = bundle.getBoolean("isChangepassword")
             email = bundle.getString("emailID","")
             otp = bundle.getString("otp").toString()
-            Toast.makeText(context, "Otp is " + otp, Toast.LENGTH_LONG).show()
-           // Toast.makeText(context, "isChangePassword is " + isChangePassword, Toast.LENGTH_LONG).show()
-           // Toast.makeText(context, "email id  is " + email, Toast.LENGTH_LONG).show()
         }
 
 
@@ -132,9 +131,8 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
 
         binding.progressBarContainer.visibility = View.GONE
         binding.btnSave.setOnClickListener {
-            otp = binding.otpPinView.text.toString()
 
-            if (verifyOtpViewModel.isValidForgotOtpData(otp)){
+            if (otp.isNotEmpty() && otp.length==5){
                     binding.tvOtpError.gone()
                 showProgressBar()
                 verifyOtpViewModel.verifyForGotOtp(otp,email)
@@ -145,6 +143,25 @@ class VerifyForgotPasswordOtpFragment : BaseFragment<FragmentVerifyForgotPasswor
             }
 
         }
+
+        binding.otpPinView.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.length==5) {
+                    otp = s.toString()
+                    binding.tvOtpError.gone()
+                } else {
+                    binding.tvOtpError.visible()
+                    binding.tvOtpError.text = resources.getString(R.string.enter_otp6)
+                }
+            }
+
+            override fun afterTextChanged(s: Editable) {
+
+            }
+        })
+
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

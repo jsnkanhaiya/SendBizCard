@@ -1,7 +1,9 @@
 package com.sendbizcard.models.response
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class UserProfileResponse(
 
 	@field:SerializedName("message")
@@ -14,6 +16,7 @@ data class UserProfileResponse(
 	val status: Int? = null
 )
 
+@Keep
 data class User(
 
 	@field:SerializedName("website")

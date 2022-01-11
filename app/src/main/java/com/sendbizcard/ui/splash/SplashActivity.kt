@@ -24,11 +24,12 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>() {
     private fun observeData() {
         splashViewModel.configParsed.observe(this) { isConfigParsed ->
             if (isConfigParsed) {
-                val intent = if (splashViewModel.checkIfUserIsLoggedIn()) {
+                val intent = Intent(this@SplashActivity, MainActivity::class.java)
+               /* val intent = if (splashViewModel.checkIfUserIsLoggedIn()) {
                     Intent(this@SplashActivity, HomeActivity::class.java)
                 } else {
                     Intent(this@SplashActivity, MainActivity::class.java)
-                }
+                }*/
                 startActivity(intent)
                 finish()
             }

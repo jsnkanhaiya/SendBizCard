@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/theme1"/>
+        android:background="@drawable/theme_2"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_skip"

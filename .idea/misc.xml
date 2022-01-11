@@ -79,9 +79,11 @@
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.21666666666666667" />
         <entry key="app/src/main/res/drawable/ic_share.xml" value="0.2175925925925926" />
         <entry key="app/src/main/res/drawable/ic_think.xml" value="0.21666666666666667" />
+        <entry key="app/src/main/res/drawable/splash_background.xml" value="0.20092592592592592" />
         <entry key="app/src/main/res/font/roboto.xml" value="0.2222222222222222" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.12284701114488349" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1693840579710145" />
         <entry key="app/src/main/res/layout/app_bar_home.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_fragment.xml" value="0.12284701114488349" />
         <entry key="app/src/main/res/layout/feedback_thankyou_fragment.xml" value="0.12284701114488349" />

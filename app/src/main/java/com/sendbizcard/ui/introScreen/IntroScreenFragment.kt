@@ -1,6 +1,5 @@
 package com.sendbizcard.ui.introScreen
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.sendbizcard.R
-import com.sendbizcard.base.BaseActivity
 import com.sendbizcard.base.BaseFragment
 import com.sendbizcard.databinding.FragmentIntroScreenBinding
 import com.sendbizcard.utils.gone
@@ -53,10 +51,10 @@ class IntroScreenFragment : BaseFragment<FragmentIntroScreenBinding>() {
 
     private fun setUpAdapter() {
         val listOfIntroScreenImages = ArrayList<Int>()
-        listOfIntroScreenImages.add(R.drawable.theme4)
-        listOfIntroScreenImages.add(R.drawable.theme2)
-        listOfIntroScreenImages.add(R.drawable.theme1)
-        listOfIntroScreenImages.add(R.drawable.theme3)
+        listOfIntroScreenImages.add(R.drawable.theme_1)
+        listOfIntroScreenImages.add(R.drawable.theme_2)
+        listOfIntroScreenImages.add(R.drawable.theme_3)
+        listOfIntroScreenImages.add(R.drawable.theme_4)
 
         introScreenAdapter.addAll(listOfIntroScreenImages)
 

@@ -100,6 +100,8 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             isFromPreviewCard = bundle.getBoolean("isFromPreviewCard", false)
 
             if (isFromPreviewCard) {
+                binding.tvCreateYour.gone()
+                binding.tvDigitalCard.gone()
                 binding.imgEdit.visible()
                 binding.colorPalette.gone()
                 binding.colorPalette.isEnabled = false
@@ -117,7 +119,12 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
                 binding.socialMediaCL.isEnabled = false
                 binding.imgArrowIcon.isEnabled = false
                 binding.imgSave.isEnabled = false
+                binding.tvCompanyLogo.gone()
+                binding.imgSave.gone()
                // binding.imgShare.isEnabled = false
+            }else{
+                binding.tvCreateYour.visible()
+                binding.tvDigitalCard.visible()
             }
 
             if (isBackgroungColourChanged) {
@@ -246,6 +253,8 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
     private fun initOnClicks() {
 
         binding.imgEdit.setOnClickListener {
+            binding.tvCreateYour.visible()
+            binding.tvDigitalCard.visible()
             binding.etName.isEnabled = true
             binding.etDesignation.isEnabled = true
             binding.etMobileNumber.isEnabled = true
@@ -261,6 +270,8 @@ class EditCardFragmentV2 : BaseFragment<FragmentEditCardV2Binding>() {
             binding.imgShare.isEnabled = true
             isFromPreviewCard = false
             binding.colorPalette.visible()
+            binding.tvCompanyLogo.visible()
+            binding.imgSave.visible()
         }
 
         binding.imgShare.setOnClickListener {

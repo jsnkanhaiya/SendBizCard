@@ -13,7 +13,10 @@ data class ErrorResponse(
     val message: Message? = null,
 
     @field:SerializedName("status")
-    val status: Int? = null
+    val status: Int? = null,
+
+   /* @field:SerializedName("message")
+    val errorMessage: String? = null*/
 )
 
 @Keep

@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -31,6 +32,7 @@ import com.sendbizcard.dialog.ServerErrorDialogFragment
 import com.sendbizcard.models.response.UserProfileResponse
 import com.sendbizcard.ui.main.MainActivity
 import com.sendbizcard.utils.*
+import com.yalantis.ucrop.UCrop
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.*
 
@@ -47,11 +49,16 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
     private val REQUEST_CODE_GALLERY = 0x1003
     private val REQUEST_CODE_READ_EXTERNAL_STORAGE = 0x1004
     private val REQUEST_CALL_PERMISSION = 0x1006
+    var photoURI: Uri? = null
+    var bitmap: Bitmap? = null
+    private var isUserImageSelected = false
 
     private val IMAGE_MIME_TYPE = "image/*"
     lateinit var currentPhotoPath: String
     private var userImageBase64String = ""
     var mobileNumber = ""
+    private var isCameraOptionSelected = false
+    private var isGalleryOptionSelected = false
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -203,10 +210,14 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
             dialog.callbacks = object : SelectCameraGalleryDialog.Callbacks {
                 override fun onCameraOptionSelected() {
                     requestCameraPermission()
+                    isCameraOptionSelected = true
+                    isGalleryOptionSelected = false
                 }
 
                 override fun onGalleryOptionSelected() {
                     requestGalleryPermission()
+                    isCameraOptionSelected = false
+                    isGalleryOptionSelected = true
                 }
             }
             dialog.show(parentFragmentManager, "Select Camera Gallery")
@@ -303,7 +314,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
             }
             // Continue only if the File was successfully created
             photoFile?.also {
-                val photoURI: Uri = FileProvider.getUriForFile(
+                 photoURI = FileProvider.getUriForFile(
                     requireContext(),
                     context?.packageName.toString() + ".provider",
                     it
@@ -343,6 +354,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
     }
 
 
+/*
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 
         super.onActivityResult(requestCode, resultCode, data)
@@ -388,7 +400,75 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
             }
         }
     }
+*/
 
+    private fun startCrop(uri: Uri) {
+        val destinationFileName = "SampleCropImage.jpg"
+        val uCrop =
+            UCrop.of(uri, Uri.fromFile(File(requireContext().cacheDir, destinationFileName)))
+        uCrop.start(requireContext(), this)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == AppCompatActivity.RESULT_OK) {
+            when (requestCode) {
+                REQUEST_CODE_IMAGE_CAPTURE -> {
+                    if (photoURI != null) {
+                        startCrop(photoURI!!)
+                    } else {
+                        showErrorMessage("Selected image file might be invalid or not available on device")
+                    }
+                }
+                REQUEST_CODE_GALLERY -> {
+                    val imageUri = data?.data
+                    if (imageUri != null) {
+                        startCrop(imageUri)
+                    } else {
+                        showErrorMessage("Selected image file might be invalid or not available on device")
+                    }
+                }
+                UCrop.REQUEST_CROP -> {
+                    val uri = UCrop.getOutput(data!!)
+                    if (uri != null) {
+                        if (isCameraOptionSelected) {
+                            bitmap =
+                                ImageCompressUtility.decodeSampledBitmapFromFile(
+                                    File(uri.path!!).absolutePath,
+                                    300,
+                                    300
+                                )
+
+                            bitmap?.let {
+                                withDelayOnMain(300) {
+                                    binding.imgUser.loadBitmap(it)
+                                    userImageBase64String = convertBitmapToBase64(it)
+                                }
+                            }
+
+                        }
+
+                        if (isGalleryOptionSelected) {
+                            val photoFile: File? = try {
+                                createImageFile()
+                            } catch (ex: IOException) {
+                                null
+                            }
+                            // Continue only if the File was successfully created
+                            photoFile?.also {
+                                copyImageUriToExternalFilesDir(uri, photoFile)
+                            }
+                        }
+                    } else {
+                        showErrorMessage("Selected image file might be invalid or not available on device")
+                    }
+                }
+            }
+        }
+    }
+
+
+/*
     private fun copyImageUriToExternalFilesDir(uri: Uri, fileName: File) {
 
         val inputStream = requireContext().contentResolver.openInputStream(uri)
@@ -426,6 +506,49 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(){
             }
         }
     }
+*/
+
+    private fun copyImageUriToExternalFilesDir(uri: Uri, fileName: File) {
+
+        val inputStream = requireContext().contentResolver.openInputStream(uri)
+        if (inputStream != null) {
+
+            val file = File("$fileName")
+            val fos = FileOutputStream(file)
+            val bis = BufferedInputStream(inputStream)
+            val bos = BufferedOutputStream(fos)
+            val byteArray = ByteArray(4096)
+            var bytes = bis.read(byteArray)
+
+            while (bytes > 0) {
+                bos.write(byteArray, 0, bytes)
+                bos.flush()
+                bytes = bis.read(byteArray)
+            }
+
+            bos.close()
+            fos.close()
+
+            when (file.length()) {
+                in 0..16000000 -> {
+
+                    val path = file.path
+
+                    bitmap =
+                        ImageCompressUtility.decodeSampledBitmapFromFile(path, 300, 300)
+                    bitmap?.let {
+                        binding.imgUser.loadBitmap(it)
+                        userImageBase64String = convertBitmapToBase64(it)}
+
+                }
+                else -> {
+                    Toast.makeText(requireContext(), "Size is not in limit", Toast.LENGTH_LONG)
+                        .show()
+                }
+            }
+        }
+    }
+
 
     private fun setUserData(userProfileResponse: UserProfileResponse) {
          binding.etName.setText(userProfileResponse.user?.name)

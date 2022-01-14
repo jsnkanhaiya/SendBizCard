@@ -47,6 +47,10 @@ class RateUsFragment : BaseFragment<FragmentRateUsBinding>() {
             launchMarket()
         }
 
+        binding.tvRateUs.setOnClickListener {
+            launchMarket()
+        }
+
         binding.shareGoogleAppImage.setOnClickListener {
             shareApp(requireContext(),"")
         }

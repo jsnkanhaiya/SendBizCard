@@ -166,7 +166,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
       //  tvName.text = homeViewModel.getUserName()
 
         imgFb.setOnClickListener {
-            val open = Intent(Intent.ACTION_VIEW, Uri.parse("www.facebook.com/SendBusinessCardDigitally"))
+            val open = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/SendBusinessCardDigitally/"))
             startActivity(open)
         }
 
@@ -176,7 +176,7 @@ class HomeActivity : BaseActivity<ActivityHomeBinding>() {
         }
 
         imgLinkedIn.setOnClickListener {
-            val open = Intent(Intent.ACTION_VIEW, Uri.parse(" https://www.linkedin.com/company/sendbusinesscard"))
+            val open = Intent(Intent.ACTION_VIEW, Uri.parse("https://www.linkedin.com/company/sendbusinesscard"))
             startActivity(open)
         }
     }

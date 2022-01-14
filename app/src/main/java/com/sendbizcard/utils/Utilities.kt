@@ -71,6 +71,7 @@ fun decodeServerError(errorResponse: ErrorResponse?): ServerError {
         return ServerError(code,errorMessage)
     } else {
         val contactErrorMessage = errorResponse?.message?.contact?.getOrNull(0) ?: ""
+       // val errorMessageString = errorResponse?.errorMessage?: ""
         val emailErrorMessage = errorResponse?.message?.email?.getOrNull(0) ?: ""
         val usernameErrorMessage = errorResponse?.message?.username?.getOrNull(0) ?: ""
         val passwordErrorMessage = errorResponse?.message?.password?.getOrNull(0) ?: ""

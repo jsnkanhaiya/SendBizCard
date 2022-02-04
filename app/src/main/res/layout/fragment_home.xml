@@ -146,10 +146,9 @@
             style="@style/gilroy_regular_13"
             android:hint="@string/enter_mobile_number"
             android:padding="8dp"
+            android:digits="1234567890()+ "
             android:singleLine="true"
             android:maxLines="1"
-            android:maxLength="10"
-            android:inputType="number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/img_mobile_number"
             app:layout_constraintTop_toBottomOf="@+id/et_designation" />

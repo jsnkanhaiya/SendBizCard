@@ -193,7 +193,7 @@
                 android:singleLine="true"
                 android:maxLines="1"
                 android:maxLength="10"
-                android:inputType="number"
+                android:digits="1234567890()+ "
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/img_mobile_number"
                 app:layout_constraintTop_toTopOf="parent"
